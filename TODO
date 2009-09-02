@@ -1,0 +1,21 @@
+2006.11.06	Arrange formal class for check.marker-class, scan.gwaa-class
+		and scan.gwaa.2D-class
+
+2007.02.14	Implement Fisher Product Method for multiple traits and 
+		multiple SNPs
+
+2007.02.23	Permutations (adaptive) for qtscore nominal significance
+
+2007.03.16	Add "corrected" statistics to the P-P plot from estlambda,
+		may be it is good idea if it will also return "corrected" 
+		Ps (chi2s)
+
+2007.11.04	QC: checks for autosomal SNPs which predict sex
+
+2007.12.21	Add Pc2df to scan.gwaa output
+
+2008.05.05	reg.gwaa: add permutations and report back residual variance
+
+2008.09.18	Lambda correction with no. people
+
+2008.09.18	mlreg with intercept & SNP only, no covariates
