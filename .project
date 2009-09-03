@@ -3,6 +3,7 @@
 	<name>GenABEL</name>
 	<comment></comment>
 	<projects>
+		<project>ABEL tutorial</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
