@@ -1,0 +1,501 @@
+***** v. 1.4-4 (2009.09.02)
+
+bug fix in hom() and perid.summary() -- only polymorphic markers were used to 
+report call rate etc. Many thanks to Patrice Godard, who has reported the bug!
+The bug only appeared in version 1.4-3 
+
+project submitted to r-forge
+
+***** v. 1.4-3 (2009.07.21)
+
+qvalue moved to "suggests"; no strict dependency on availability of that anymore
+(thanks to Beate Glaser for noting that tcltk is not so obvious component 
+of all systems)
+
+changes to C++ LM code to improve portability (Solaris 10)
+
+hom() function updated, now producing variances (to be used as diagonal 
+elements of the genomic kinshp matrix when doing EIGENSTRAT analysis).
+Many thanks to John Barnard for contributing the code!
+
+all class checks changed to ensure compatibility with S4 
+(thanks to Maxime Rotival)
+
+
+***** v. 1.4-2b (2009.02.20)
+
+small fix in merge.gwaa.data (by="id")
+
+***** v. 1.4-2 (2009.01.28)
+
+Changes in polygenic()/mmscore() to allow for sub-setting on 
+IDs
+
+Bug fix in mmscore(). The bug concernes estimates of beta, the 
+P-values reported by mmscore() were not affected.  
+
+***** v. 1.4-1 (2008.11.26)
+
+merge.gwaa.data, merge.snp.data well tested and 
+recommended for wider use (special thanks to Arne 
+Schillert and Michael Preuss)
+
+Modifications of some functions for better parallelizability. 
+[user-invisible] changes to: ibs, hom, r2fast, perid.summary
+(thanks to Surakameth Mahasirimongkol and Unitsa Sangket)
+
+Resolved R 2.8.0 issues with load.gwaa.data.
+(thanks to many people reporting the problem)
+
+Partly resolving incompatibility between the way GenABEL
+computes the diagonal elemnts of the "covariance matrix" 
+for use in egscore() and the original EIGENSTRAT matrix 
+(many thanks to Guiseppe Palermo)
+
+***** v 1.4-0e (2008.09.18)
+
+Small changes in mlreg for consistency to formetascore required input
+
+Bug fix in mlreg (would produce meaningful results when no. snps is 
+dividable by 4)
+
+***** v 1.4-0d (2008.08.21)
+
+bug fix in merge.snp.data() -- many thanks to Arne Schillert and Michael Preuss
+
+***** v 1.4-0c (2008.07.25)
+
+bug fix in estlambda() -- many thanks to Franz Quehenberger
+
+***** v 1.4-0b (2008.07.21)
+
+Multiple fixes in merge.snp.data
+
+Fix in check.marker (for Y-chromosome, the call rate 
+was estimated using all people)
+
+
+***** v 1.3-9 (2008.04.23)
+
+Function mlreg() (aka reg.gwaa()) added. Implements maximum likelihood 
+estimation and Wald test for linear and logistic regression and Cox 
+proportional hazards models. 
+
+Function convert.snp.affymetrix() added
+
+***** v 1.3-7 (2008.04.16)
+
+Function merge.gwaa.data() added
+
+Modifications to formetascore() (now can run with mmscore())
+
+Few cleanups 
+
+***** v 1.3-6 (2008.03.20)
+
+Function merge.snp.data() added
+
+npsubtreated() updated with new functionality
+
+"quality" measure used in convert.snp.mach changed to 7th column (r2)
+
+plot.scan.gwaa(): option df="all" removed, options col, ystart added
+add.plot(): option colors added
+
+Improvement of formetascore function
+
+***** v 1.3-5c (2008.02.27)
+
+Bug fix in check.maker.internal (with "lower" option, would not exclude 
+on IBS).
+
+Small bug fix estlambda (would not run if supplied with P-values, and 
+some P-values are < 1.e-16). This bug did not affect any other function.
+
+***** v 1.3-5b (2008.02.21)
+
+Bug fix in ztransform(): would not work without data argument, 
+if formula supplied will not use it. This bug also affected rntransform().
+
+***** v 1.3-5 (2008.02.15)
+
+qtscore "binomial" workout
+
+minor bug fix in check.marker() -- the procedure would fail to run 
+in presence of more than couples of "twin" (e.g. multiple plant clones).
+
+bug fix in formetascore() function: standard errors were reported with 
+sign of beta
+
+***** v 1.3-3d (2008.02.11)
+
+A fix in npsubtreated() function (in some situations all medicated 
+people's values were set to NA)
+
+***** v 1.3-3c (2008.02.03)
+
+npsubtreated() function, to be used in analysis of 
+traits affetcted by treatment (medication) added.
+
+formetascore() procedure extended with parameter "verbosity".
+
+***** v 1.3-3 (2008.01.12)
+
+autosomal() function added
+
+Y and mtDNA markers-specific analyses added in QC function check.marker()
+This also involves checks for people with XXY genotypes.
+
+Robust Genomic Control added to correct 2df test in qtscore 
+function -- yet experimental.
+
+formetascore() function introduced -- analysis oriented to 
+future meta-analysis.
+
+ztransform function created, rntransform function modified to take 
+similar syntax as ztransform.
+
+Bug in convert.snp.merlin (similar to the one in convert.snp.illumina) 
+fixed.
+
+***** v 1.3-2 (2007.12.18)
+
+Extensive cleanup, including fixes to mmscore and grammar; 
+examples introduced for polygenic, mmscore, grammar, and others.
+
+Bug in convert.snp.tped (similar to the one in convert.snp.illumina) 
+fixed.
+
+The number of people/genotypes (N) used in analysis of a particular SNP 
+added to the output of qtscore, mmscore, ccfast, egscore, and grammar.
+
+plot.scan.gwaa changed -- now it is possible to use ylim. 
+
+Bug fix in qtscore with binary traits without covariates -- there was 
+no test whether coding is 0/1 (if not, test would be wrong).
+
+Changes in C code of concerns functions convert.snp.mach and 
+convert.snp.ped. Speed of conversion from MACH format greatly 
+improved.
+
+***** v 1.3-1 (2007.11.05)
+
+The strand information as based on build 35, is available from Yurii 
+for Illumina 318K. 
+
+Bug fix in convert.snp.illumina (alleles would change to the other one 
+in large proportion of SNPs, e.g. A/G polymorphism, AA -> GG, GG -> AA).
+Though this does not affect results directly (e.g. P-values and the absolute 
+effect values are OK), this may couse confusion when you compare your 
+results to other people's results (the sign of the effect may be swapped), 
+also imputations would have gone wrong. 
+
+Small bug fixes with strand operations (SNP names were lost in sub-setting).
+
+New procedure rntransform(). This procedure performs 
+rank transformation to normality. The transformed variable 
+is perfectly normal, unless there are ties in the original 
+distribution.
+
+***** v 1.2-9 (2007.10.22)
+
+A bug fix in check.markers(ibs.exclude="lower") -- before the fix, the 
+samples with HIGHER call were excluded. Thanks to Tuuli Lappalainen!
+
+Bug fix in refresh.gwaa.data
+
+option "details" added to qtscore().
+When details=FALSE, SNP and ID names 
+are not reported, which saves some memory
+
+***** v 1.2-8 (2007.08.27)
+
+GenABEL tutorial updated and, internals joined with 
+tutorial, new introductory sections added.
+
+New association analysis procedure introduced. 
+egscore() computes association statistics adjusted 
+for eigenvector(s), following Price et al, Nat. Genet.,
+2006. 
+
+Improved and new functionality of check.marker(): 
+much faster X-errors check, identification of female 
+which are likely to be male. When "twin" DNAs are 
+identified, the one with lower call may be dropped, 
+or both (previously random).
+
+***** v 1.2-7 (2007.08.13)
+
+New list names added to output produced by qtscore(), 
+grammar(), ccfast() and mmscore(): chi2.1df and 
+chi2.2df. These correspond to Chi-square values produced. 
+The minimal P-values, as before, are resti=ricted to 1e-16
+
+Improvements in plot.scan.gwaa() and add.plot() -- 
+now 0-probabilities converted to 1.e-16 (previously 
+a warning message would be produced and the point would be 
+dropped); also option df="Pc1df" introduced. 
+
+***** v 1.2-6 (2007.08.08) 
+
+A major improvement in GenABEL ability to import and export data
+compatible in format to other packages and databases. 
+
+NOTE: to convert your R data from old to new format within R, use 
+refresh.gwaa.data() function. Old phenotype- and genotype- files will load 
+with load.gwaa.data with no problem.
+
+One of the main goals behind this effort was to make GW imputations 
+with MACH software (G. Abecasis) easy.
+
+(a) New format of GenABEL data (0.1) developed. Now the 
+    features stored by GenABEL include SNP coding (actual nucleotides) 
+    and strand.  
+
+(b) New and updated convert.snp.* functions, which convert genotypic 
+    data from external to GenABEL format
+
+  -- convert.snp.ped: large improvement in speed (now in C++), 
+		      flexible control. Pre-makeped, MERLIN 
+		      and MACH formats supported
+
+  -- convert.snp.tped: some bug fixes, switch to 0.1 data format
+
+  -- convert.snp.mach (NEW!): converts MACH files to GenABEL
+			format, allowing for filtering on 
+			quality
+
+  -- convert.snp.illumina (NEW!): converter for Affymetrix / Illumina 
+		       style of files
+
+(c) export.merlin() function to export data in MERLIN format. MACH 
+    can be directly applied on these files. Coupled with 
+    convert.snp.ped(format="mach") this allows easy data export, 
+    imputations, and re-import. 
+
+***** v 1.2-5 (2007.07.11)
+
+Some improvement of convert.snp.ped -- now is able to read
+alleles coded as characters
+
+***** v 1.2-4 (2007.07.10)
+
+Few small fixes done for compatibility with R 2.6.0-devel
+
+convert.snp.tped() procedure by Toby Johnson added. 
+This procedure facilitates fast and effective conversion 
+from PLINK TPED ("transposed pedigree") format to the 
+GenABEL format. See help(convert.snp.tped).
+
+Few other small improvements. This is beta release version 
+for procedures facilitating analyses using genomic 
+kinship (IBD) matrix, such as polygenic(), mmscore() and 
+grammar(). We tested these procedures with quantitative traits
+and they worked fine; for binary traits there may be few 
+bugs yet.
+
+***** v 1.2-2 (2007.06.07)
+
+Improvement in polygenic() to ensure convergence, two 
+optimisation methods are now allowed.
+
+"Formula" part in qtscore changed to more standard format 
+(now one can use any terms allowed in glm, no CRSNP term 
+needed).
+
+Bugs in grammar and mmscore fixed. Previous version tended 
+to produse some very wrong results. 
+
+Polygenic silightly modified (new output objects added).
+A fix in polygenic with covariates.
+
+Other bug fix in stratified analysis with X-chromosome.
+
+***** v 1.2-1 (2007.06.04)
+
+A set of new procedures to do analysis in samples of related 
+individuals. They also can be used for analysis of samples 
+with population staratification and cryptic relations.
+
+polygenic() provides means to estimate "heritability" and effects 
+of covariates, in data having some correlation, as described by 
+(genomic) kinship matrix.
+
+Mixed-model score test mmscore() added. This implements the test
+for association between the vector of phenotypes y and vector of genotypes 
+g by computing
+
+((y-E[y]) Inverse[V] (g-E[g])^2/((g-E[g]) Inverse[V] (g-E[g])
+
+where Inverse[V] is the inverse of variance-covariance matrix 
+and E[y] is expectation of the trait, as provided by polygenic().
+
+grammar() procedure implements fast variant of the above score test
+
+((y-E[y]) Inverse[V] (g-E[g])^2/((g-E[g]) (g-E[g])
+
+This statistics does not have chi-squared distribution, but becomes 
+distributed so after GC (thus Pc1df are fine P-values to use)
+
+NOTE: grammar is still experimental.
+
+An error in qtscore, which led to using always only 2 strata 
+(male/female) in analysis of X-chromosome fixed. 
+
+***** v 1.2-0 (2007.04.17)
+
+Large improvement in the speed of the qvaluebh95() procedure.
+The time used to grow quadratic with the number of P-values to 
+evaluate, now reduced to linear. 
+
+ibs() procedure "freq" option is updated to provide weighted 
+measure of genomic identity. 
+
+dprfast() facilitating fast D' computations added. The results 
+produced are not exacly the same with D's from LD/genetics.
+
+***** v 1.1-9 (2007.04.04)
+
+A procedure for fast r2 computations (r2fast()) added.
+It seems that this procedure results in r2s which are biased upward 
+at small values, compared to r2s from LD/genetics.
+
+A procedure to estimate Morton-Collins rho added (rhofast()) 
+
+***** v 1.1-8 (2007.03.12)
+
+empirical derivation of GW significance is now embedded into 
+qtscore/ccfast, emp.* are now serving as shortcuts to 
+call these functions with argument times=100
+
+qtscore: changes to treat binomial variables (residuals from glm)
+
+Added new data sets: ge03d2, ge03d2c
+
+Added demo ge03d2; this ones shows extensive QC + how to deal 
+with genetic stratification.
+
+***** v 1.1-7 (2007.03.05)
+
+In scan.haplo.2D procedure with simulate = TRUE change 0s -> 1/(N+1)
+
+add.plot.scan.gwaa() function changed to add.plot(), now delas with 
+"scan.gwaa" and "scan.gwaa.2D" objects
+
+as.data.frame.gwaa.data which takes out @phdata part is arranged
+
+Fixed bug which made qtscore, ccfast and emp.* use phenotypes from 
+the attached data frame, even when the data argument was supplied. 
+For qtscore and emp.qtscore Formula now can be formulated as character 
+and a formula. 
+
+hom() function developed (previously heteroz; now is implemented in C)
+
+perid.summary() designed to produce average heterozygosity and call rate
+per person; this implied changes in check.marker() and summary.check.marker()
+
+ibs() function developed, this one extends to check.marker()
+
+A family of descriptives.* functions added: .marker, .trait, .scan
+
+Much improved genetic data QC (check.marker); new function Xfix()
+
+***** v 1.1-6 (2007.02.12)
+
+Improved memory managmenet. In particular, @chromosome slot is now 
+stored as a factor. 
+
+***** v 1.1-4 (2006.12.21)
+
+Due to accumulated changes, version number updated.
+
+Multiple improvements and fixes + catable() function
+
+***** v 1.1.3 (2006.11.12)
+
+scan.glm.2D and scan.haplo.2D functions added
+
+run.haplo.score.slide renamed to scan.haplo for consistency
+
+heteroz() added
+
+scan.gwaa-class is modified: effects are also returned. 
+This led to modification of C code for fastcc, qtscore, R
+code for qtscore(), ccfast(), fcc(), emp.qtscore(), emp.ccfast(), 
+scan.glm()
+
+improved memory management in functions ccfats(), emp.ccfast(), 
+qtscore(), emp.qtscore(), summary()
+
+show.ncbi() added
+
+***** v 1.1.2
+
+scan.glm patched (it did not work with df=2 when a SNP had only 2 genotypes)
+
+minor fix in sub-setting of snp.data class
+
+ccfast, qtscore, scan.glm, emp.ccfast, emp.qtscore and plot.scan.gwaa are modified.
+Major change concerns ccfast and qtscore: now, 1-df and 2-df tests are 
+computed simultaneously within the C functions. 
+The class "scan.gwaa" now contains both 1- and 2-df P-values. 
+This also addresses the point on TODO:
+
+2006.08.17	implement qtscore function with 2df
+
+Small fix in qtscore and ccfast (to act on 1 d.f. when # genotypic classes is 2)
+
+The function scan.gwaa removed as redundant
+
+qtscore now allows for analysis using strata (Cochran-Mantel-Haenszel)
+
+Added average/median chi2 to the "scan.gwaa" class (to be used for genomic
+control)
+
+TODO fixed:
+2006.10.11	q-value returned by qvaluebh95() is wrong
+
+emp.qtscore and emp.qtfast optimised (runs 3-10 times faster) by
+removing unnecessary checks and calling C function directly 
+(instead of calling ccfast/qtscore)
+
+NAMESPACE introduced
+
+Update of documentation: now R CMD check passes all checks
+
+Formal class introduced for scan.gwaa-class
+
+demo(srdta): demo(srdtawin) is made by removing load-data from demo(srdta)
+because this may not work when there are no administrator's priviliges
+
+last modified 08.11.2006
+
+***** v 1.0.2
+
+Function scan.glm is introduced; this allows to scan for interactions in 
+an easy way. This is essentially a modified scan.gwaa. 
+
+New function to convert ped-files type of data to internal format, 
+convert.snp.ped, was arranged
+
+Function add.plot.scan.gwaa was added
+
+Library "methods" loaded on start-up
+
+last modified 01.11.2006
+
+
+
+***** v. 1.0.1
+
+is resolving the issue of 
+
+2006.07.20 	need fast exact test for HWE, along the lines of fastcc, 
+		as HWE.exact is too slow (Yurii)
+
+and
+
+2006.10.11	gwaa.data should be easily sub-settable -- now one 
+		needs to extract @gtdata and subset and @phdata and 
+		subset and then merge (also using base R things) (Yurii)
+
