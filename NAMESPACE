@@ -85,7 +85,8 @@ export(
 	summary.gwaa.data,
 	summary.snp.data,
 	Xfix,
-	ztransform
+	ztransform,
+	var.meta
        )
 
 exportClasses(
