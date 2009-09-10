@@ -78,9 +78,7 @@
 #define GENO_TYPES_NUM 3
 
 
-
-
-
+#include <cmath>
 
 		
 
@@ -491,7 +489,7 @@ if(alleles_snp[0]=='0' && alleles_snp[1]=='0')
 
 
 
-sort(alleles_snp.begin(), alleles_snp.end());
+std::sort(alleles_snp.begin(), alleles_snp.end());
 
 
 if(alleles_snp[0] == '0')
@@ -689,8 +687,8 @@ for(int i=0 ; i<GENO_TYPES_NUM ; i++)
 
 		static VARIABLE_TYPE SD_of_the_mean_snp1, SD_of_the_mean_snp2;
 		
-		SD_of_the_mean_snp1 = snp1->SD[i]/sqrt(snp1->COUNTS[i]);
-		SD_of_the_mean_snp2 = snp2->SD[i]/sqrt(snp2->COUNTS[i]);
+		SD_of_the_mean_snp1 = snp1->SD[i]/sqrt(double(snp1->COUNTS[i]));
+		SD_of_the_mean_snp2 = snp2->SD[i]/sqrt(double(snp2->COUNTS[i]));
 
 
 	
@@ -704,7 +702,7 @@ for(int i=0 ; i<GENO_TYPES_NUM ; i++)
 	
 		snp_meta->MEAN[i] = meta_mean_beta[0];
 		snp_meta->COUNTS[i] = snp1->COUNTS[i] + snp2->COUNTS[i];
-		snp_meta->SD[i] = meta_mean_se[0]*sqrt(snp_meta->COUNTS[i]);
+		snp_meta->SD[i] = meta_mean_se[0]*sqrt(double(snp_meta->COUNTS[i]));
 		}
 	else
 		{
