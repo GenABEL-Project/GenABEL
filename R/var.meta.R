@@ -19,8 +19,10 @@
 
 
 "var.meta" <-
-function(filenames_array, output_filename="output.variance.metaanalysis") {
+function(filenames_array, output_filename="output.variance.meta", exclude_snp_below_threshold=F, threshold=30, all_warnings=F) {
 
+
+		
 skip_first_lines_amount <- 0
 delim <-' '		
 
@@ -28,9 +30,14 @@ file_amount <- length(filenames_array)
 
 
 return_val <-  .C("var_meta_plink_C", filenames_array, as.integer(file_amount), output_filename, as.integer(skip_first_lines_amount), delim,
-									lambdas = double(file_amount+1))
-				
+									lambdas = double(file_amount+1),
+									lambdas_NA = integer(file_amount+1),
+									as.logical(exclude_snp_below_threshold),
+									as.integer(threshold),
+									as.logical(all_warnings))
+			
 
+return_val$lambdas[return_val$lambdas_NA==1] <- NA
 
 lambda_df <- data.frame(filename=filenames_array, lambda=return_val$lambdas[1:file_amount])
 

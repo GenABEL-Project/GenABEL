@@ -51,7 +51,6 @@
 
 
 
-#include "dometa.h"
 #include <map>
 #include <iostream>
 #include <iomanip>
@@ -60,6 +59,7 @@
 #include <sstream>
 #include <stdio.h>
 #include <Rinternals.h>
+#include <fstream>
 
 #include <vector>
 
@@ -81,7 +81,9 @@
 #include <cmath>
 
 		
+extern "C" {
 
+#include "dometa.h"
 
 const std::string chromosome_column_name = "CHR";
 const std::string snpname_column_name = "SNP";
@@ -101,6 +103,7 @@ const std::string sd_value_name = "SD";
 const VARIABLE_TYPE NA_value = -999.999; // which numeric value is ised as NA
 const int NA_value_int = -999; // which numeric value is ised as NA
 const unsigned precision_output=4;
+const double median_table_chi2_df2 = 1.386294;
 
 
 
@@ -144,22 +147,24 @@ struct snp_var_data
 
 typedef std::map<std::string, snp_var_data*> Snp_store_type; //use std::string as key because for some reason it doesn't want to work with const char*
 
-bool include_snp(Snp_store_type *, snp_var_data*); //include snp into common storage
+bool include_snp(Snp_store_type *, snp_var_data*, std::ofstream & warnings_file); //include snp into common storage
 snp_var_data* snp_var_meta(snp_var_data* , snp_var_data*); //metaanalysis of two snps
 bool is_na(const VARIABLE_TYPE val, const VARIABLE_TYPE na_reference=NA_value); //is numerical value recognized as NA 
 void save_snps_data_into_file(Snp_store_type *snps_data, const char *output_filename, char delim); //save all snps into flat file in plink like format
 void save_snps_tests_into_file(Snp_store_type *snps_data, const char *output_filename, char delim); //save all snps into flat file in plink like format
 std::string double_2_str(VARIABLE_TYPE val, const unsigned precision=precision_output); // convert double to string
-bool check(snp_var_data* snp1, snp_var_data* snp2);
+bool check(snp_var_data* snp1, snp_var_data* snp2, std::ofstream & warnings_file);
 
-bool unify_snp(snp_var_data* snp);
+bool unify_snp(snp_var_data* snp, std::ofstream & warnings_file);
 std::string get_uniq_symbols(std::string alleles_snp);
 
 double perform_bartlett_test_for_snp(snp_var_data * snp, bool all_genogroup_only);
 
-double my_median(std::vector<double> * vec);
+double my_median(std::vector<double> * vec, bool na_rm=true);
 
+bool snp_filter(snp_var_data* snp,  std::ofstream & warnings_file, bool exclude_whole_snp, unsigned threshold, bool do_warnings_output);
 
+bool check_files_format(const char** filenames, unsigned file_amount, unsigned skip_first_lines_amount, char delim);
 
 
 //Start of function body 
@@ -169,30 +174,57 @@ double my_median(std::vector<double> * vec);
 //Files must have columns CHR, SNP, VALUE, G11, G12, G22. And each snp has to have parameters
 //GENO, COUNTS, MEAN, SD (order isn't important). And don't argue with me!!!
 
-extern "C" {
 void var_meta_plink_C(const char** filenames, unsigned *file_amount_, const char **output_filename_, unsigned *skip_first_lines_amount_, char **delim_,
-											double* lambdas)
+											double* lambdas, unsigned* lambdas_NA,
+											bool* exclude_whole_snp_if_number_less_threshold_,
+											unsigned * threshold_,
+											bool *do_all_warnings_output_)
 {
+
+bool exclude_whole_snp_if_number_less_threshold = *exclude_whole_snp_if_number_less_threshold_;
+unsigned threshold = *threshold_;
+
+bool do_all_warnings_output = *do_all_warnings_output_;
+
+std::string output_filename = output_filename_[0];
+
+std::ofstream warnings_file;
+std::string warnings_filename = output_filename + ".warnings";
+warnings_file.open(warnings_filename.c_str());
+if(!warnings_file.is_open()){error("Can not open file %s\n", warnings_filename.c_str());}
+
+		
 unsigned file_amount = *file_amount_;
 unsigned skip_first_lines_amount = *skip_first_lines_amount_;
 char delim = *delim_[0];
 
-double lambda; //inflation factor
+double median; //inflation factor
+std::string lambda_str;
 
 
-std::string output_filename = output_filename_[0];
-
+Rprintf("\nChecking format of files...\n");
+if(!check_files_format(filenames, file_amount, skip_first_lines_amount, delim))
+	{
+	Rprintf("Stop. Wrong file format.\n");
+	for(unsigned i=0 ; i<=file_amount ; i++)
+		{
+		lambdas_NA[i]=1;
+		}
+	return;
+	}
+	
+Rprintf("\nFiles are checked and OK.\nStart reading...\n\n");
 
 		
 Snp_store_type snps_data; //all analysed data will be here
 
 
-Rprintf("Each file has to contain columns with names %s, %s, %s, %s, %s, %s\n", chromosome_column_name.c_str(),
-																																								snpname_column_name.c_str(),
-																																								value_column_name.c_str(),
-																																								g11_column_name.c_str(),
-																																								g12_column_name.c_str(),
-																																								g22_column_name.c_str());
+//Rprintf("Each file has to contain columns with names %s, %s, %s, %s, %s, %s\n", chromosome_column_name.c_str(),
+//																																								snpname_column_name.c_str(),
+//																																								value_column_name.c_str(),
+//																																								g11_column_name.c_str(),
+//																																								g12_column_name.c_str(),
+//																																								g22_column_name.c_str());
 
 
 
@@ -213,6 +245,10 @@ std::vector<double> bartlet_tests_vec;//, lambda_vec;
 for(unsigned file_num=0 ; file_num < file_amount ; file_num++)
 	{
 	Rprintf("\nProcessing file \"%s\"...\n", filenames[file_num]);
+	
+	warnings_file<<"Processing file \""<<filenames[file_num]<<"\"\n";
+	warnings_file<<"___________________________________________\n";
+	
 	file.open(filenames[file_num]);
 	if(!file.is_open()){error("Can not open file %s\n", filenames[file_num]);}
 
@@ -262,6 +298,8 @@ for(unsigned file_num=0 ; file_num < file_amount ; file_num++)
 	static bool GENO_bool, COUNTS_bool, MEAN_bool, SD_bool;
 	GENO_bool = COUNTS_bool = MEAN_bool = SD_bool = false;
 
+	static unsigned excluded_snp_num;
+	excluded_snp_num=0;
 
 	static unsigned snp_number;
 	snp_number=0;
@@ -288,7 +326,7 @@ for(unsigned file_num=0 ; file_num < file_amount ; file_num++)
 				
 			line_stream.str(str_from_stream);	
 			
-			for(unsigned col=0; !line_stream.eof() ; col++ )  //start spliting current line
+			for(int col=0; !line_stream.eof() ; col++ )  //start spliting current line
 				{
 				getline(line_stream, str_from_stream, delim);
 			  if(str_from_stream.size() == 0) {col--; continue;}
@@ -320,7 +358,8 @@ for(unsigned file_num=0 ; file_num < file_amount ; file_num++)
 				}
 			else if(snp->snpname != snpname_stream.str() && !(GENO_bool && COUNTS_bool && MEAN_bool && SD_bool))
 				{
-				Rprintf("Attention. Can not find complete information for SNP \"%s\". Line %i in file. SNP skiped\n", snp->snpname.c_str(), current_line_number);
+				//Rprintf("warning: Can not find complete information for SNP \"%s\". Line %i in file. SNP skiped\n", snp->snpname.c_str(), current_line_number);
+				warnings_file<<"warning: Can not find complete information for SNP \""<<snp->snpname<<"\". Line "<<current_line_number<<" in file. SNP skiped\n";
 				snp_number--;
 				//Start reading new snp
 				snp->reset();
@@ -350,20 +389,20 @@ for(unsigned file_num=0 ; file_num < file_amount ; file_num++)
 
 			if(GENO_bool && COUNTS_bool && MEAN_bool && SD_bool)
  				{
-				static bool if_snp_good;
-				if_snp_good = unify_snp(snp);
-				if(!if_snp_good) 
-					{
-					break; //Start reading new SNP
-					}
-			
-				if_snp_good = include_snp(&snps_data, snp); // put new snp into the storage. If this snp is there already tham metaanalyse it
+					
+				if(!snp_filter(snp, warnings_file, exclude_whole_snp_if_number_less_threshold, threshold, do_all_warnings_output)) {excluded_snp_num++; break;}
 				
-				if(if_snp_good)
+				if(!unify_snp(snp, warnings_file)) {excluded_snp_num++; break;} //Start reading new SNP
+				
+				if(include_snp(&snps_data, snp, warnings_file)) // put new snp into the storage. If this snp is there already tham metaanalyse it
 					{	
 					static double two_df_test;	
 					two_df_test = perform_bartlett_test_for_snp(snp, true);
 					if(!is_na(two_df_test)) {bartlet_tests_vec.push_back(two_df_test);}
+					}
+				else
+					{
+					excluded_snp_num++;
 					}
 				GENO_bool=false, COUNTS_bool=false, MEAN_bool=false, SD_bool=false;
 				break; //Start reading new SNP
@@ -375,7 +414,7 @@ for(unsigned file_num=0 ; file_num < file_amount ; file_num++)
 		if(snp_number % step == 0) 
 			{
 			Rprintf("%i SNPs done\n", snp_number);
-			if(step >= step*5) step *= 5;
+			if(snp_number >= step*5) step *= 5;
 			}
 
 
@@ -386,15 +425,20 @@ for(unsigned file_num=0 ; file_num < file_amount ; file_num++)
 	file.clear();
 	
 
-	lambda = my_median(&bartlet_tests_vec);
+	median = my_median(&bartlet_tests_vec, false);
 //	lambda_vec.push_back(lambda);
 
-	lambdas[file_num] = lambda;
+	lambdas[file_num] = (is_na(median)? NA_value : median/median_table_chi2_df2);
 
 	bartlet_tests_vec.clear();
 
-	Rprintf("All SNPs done. Total amount of SNPs is %i\n", snp_number);
-	Rprintf("Inflation factor for 2df bartlett tests for snps from \"%s\" is lambda=%2f \n", filenames[file_num], lambda);
+	Rprintf("All SNPs done. Total amount of SNPs is %i. Excluded %i.\n", snp_number, excluded_snp_num);
+
+	warnings_file<<"___________________________________________\n";
+	warnings_file<<"End of file \""<<filenames[file_num]<<"\"\n\n";
+	
+	lambda_str = is_na(lambdas[file_num])? "NA" : double_2_str(lambdas[file_num]);
+	Rprintf("Inflation factor for 2df bartlett tests for snps from \"%s\" is lambda=%s \n", filenames[file_num], lambda_str.c_str());
 
 	} // all files are read and snp pooled
 
@@ -407,6 +451,8 @@ Snp_store_type::iterator iter_map;
 
 bartlet_tests_vec.clear();
 
+
+
 for(Snp_store_type::const_iterator i=snps_data.begin() ; i!=snps_data.end() ; ++i)
 	{
 	i->second->Z = perform_bartlett_test_for_snp(i->second, false);
@@ -414,10 +460,26 @@ for(Snp_store_type::const_iterator i=snps_data.begin() ; i!=snps_data.end() ; ++
 	if(!is_na(i->second->Z_2df)) bartlet_tests_vec.push_back(i->second->Z_2df);
 	}
 
-lambda = my_median(&bartlet_tests_vec);
-lambdas[file_amount] = lambda;
-Rprintf("inflation factor for 2df bartlett tests for pooled snps is lambda=%2f \n", lambda);
+median = my_median(&bartlet_tests_vec, false);
 
+lambdas[file_amount] = (is_na(median)? NA_value : median/median_table_chi2_df2);
+
+
+
+
+lambda_str = (is_na(lambdas[file_amount])? "NA":double_2_str(lambdas[file_amount]));
+
+Rprintf("inflation factor for 2df bartlett tests for pooled snps is lambda=%s \n", lambda_str.c_str());
+
+
+//get NA positions
+//___________
+for(unsigned i=0 ; i<=file_amount ; i++)
+	{
+	if(is_na(lambdas[i])) {lambdas_NA[i]=1;}
+	else {lambdas_NA[i]=0;}
+	}
+//___________
 
 
 std::string output_means_filename = output_filename + ".means";
@@ -430,6 +492,8 @@ save_snps_data_into_file(&snps_data, output_means_filename.c_str(), delim);
 Rprintf("\nwriting variance homogeneity tests results into file %s\n", output_tests_filename.c_str());
 save_snps_tests_into_file(&snps_data, output_tests_filename.c_str(), delim);
 
+warnings_file.close();
+
 Rprintf("Done\n");
 
 }
@@ -439,7 +503,6 @@ Rprintf("Done\n");
 
 
 
-}
 
 
 
@@ -449,7 +512,7 @@ Rprintf("Done\n");
 
 //___________________________________________________________
 //Set genotypes in common view GA -> AG
-bool unify_snp(snp_var_data* snp)
+bool unify_snp(snp_var_data* snp, std::ofstream & warnings_file)
 {
 
 
@@ -463,26 +526,54 @@ for(unsigned i=0 ; i<alleles_snp.size() ; i++) if(alleles_snp[i] == '/') {allele
 
 if(alleles_snp.size() > 2 && alleles_snp.size() <=1)
 	{
-	Rprintf("SNP %s has more than 2 alleles (it has %s). SNP skiped.\n", snp->snpname.c_str(), alleles_snp.c_str());
+	//Rprintf("SNP %s has more than 2 alleles (it has %s). SNP skiped.\n", snp->snpname.c_str(), alleles_snp.c_str());
+	warnings_file<<"SNP "<<snp->snpname<<" has more than 2 alleles (it has "<<alleles_snp<<"). SNP skiped.\n";
 	return false;	
 	}
 
 if(alleles_snp.size() <=1)
 	{
-	Rprintf("SNP %s has less than 2 alleles (it has %s). SNP skiped.\n", snp->snpname.c_str(), alleles_snp.c_str());
+	//Rprintf("SNP %s has less than 2 alleles (it has %s). SNP skiped.\n", snp->snpname.c_str(), alleles_snp.c_str());
+	warnings_file<<"SNP "<<snp->snpname<<" has less than 2 alleles (it has "<<alleles_snp<<"). SNP skiped.\n";
 	return false;	
 	}
 
 
 if(alleles_snp[0]=='0' && alleles_snp[1]=='0')
 	{
-	Rprintf("SNP %s has undefind allels. SNP skiped..\n", snp->snpname.c_str());
+	//Rprintf("SNP %s has undefind allels. SNP skiped..\n", snp->snpname.c_str());
+	warnings_file<<"SNP "<<snp->snpname<<" has undefind allels. SNP skiped\n";
 	return false;
 	}
 
 
 
 
+//exclude those geno group which has only one id
+for(int i=0 ; i<GENO_TYPES_NUM ; i++)
+	{
+
+	if(is_na(snp->SD[i]) || is_na(snp->MEAN[i]) || is_na(snp->COUNTS[i]) || snp->COUNTS[i]<=1 )
+		{
+		snp->SD[i] = NA_value;
+		snp->MEAN[i] = NA_value;
+		snp->COUNTS[i] = 0;
+		continue;
+		}
+
+	static VARIABLE_TYPE var;
+	var = snp->SD[i]*snp->SD[i];	
+	if(var <= 1.E-32)
+		{
+		snp->SD[i] = NA_value;
+		snp->MEAN[i] = NA_value;
+		snp->COUNTS[i] = 0;
+		
+		//Rprintf("warning: genotypic group %s in snp %s has too small variance (variance=%f). This genotypic group is excluded from analysis.\n", 
+		warnings_file<<"warning: genotypic group "<<snp->GENO[i]<<" in snp "<<snp->snpname<<" has too small variance (variance="<<var<<"). This genotypic group is excluded from analysis.\n"; 
+		
+		}
+	}
 
 
 
@@ -546,7 +637,6 @@ for(int i=0 ; i<GENO_TYPES_NUM ; i++)
 		{snp_new.GENO[2] = geno[2]; snp_new.COUNTS[2]=snp->COUNTS[i]; snp_new.MEAN[2]=snp->MEAN[i]; snp_new.SD[2]=snp->SD[i];}
 	}
 
-
 geno_hemozyg_switched = "";
 geno[0] = "";
 geno[1] = "";
@@ -556,30 +646,6 @@ geno[2] = "";
 
 
 
-//exclude those geno group which has only one id
-for(int i=0 ; i<GENO_TYPES_NUM ; i++)
-	{
-	if(is_na(snp_new.SD[i]) || is_na(snp_new.MEAN[i]) || is_na(snp_new.COUNTS[i]) || snp_new.COUNTS[i]<=1 )
-		{
-		snp_new.SD[i] = NA_value;
-		snp_new.MEAN[i] = NA_value;
-		snp_new.COUNTS[i] = 0;
-		continue;
-		}
-
-	static VARIABLE_TYPE var;
-	var = snp_new.SD[i]*snp_new.SD[i];	
-	if(var <= 1.E-32)
-		{
-		snp_new.SD[i] = NA_value;
-		snp_new.MEAN[i] = NA_value;
-		snp_new.COUNTS[i] = 0;
-		
-		Rprintf("warning: genotypic group %s in snp %s has too small variance (variance=%f). This genotypic group is excluded from analysis.\n", 
-		snp_new.GENO[i].c_str(), snp->snpname.c_str(), var);
-		
-		}
-	}
 
 
 
@@ -606,7 +672,7 @@ return true;
 
 //___________________________________________________________
 //put new snp into the storage. If this snp is there already tham metaanalyse it
-bool include_snp(Snp_store_type * snps_storage, snp_var_data* snp)
+bool include_snp(Snp_store_type * snps_storage, snp_var_data* snp, std::ofstream & warnings_file )
 {
 
 
@@ -624,7 +690,7 @@ else
 	{
 	snp_var_data* snp_current = iter_map->second;
 	static bool is_snp_ok;
-	is_snp_ok = check(snp_current, snp);
+	is_snp_ok = check(snp_current, snp, warnings_file);
 	
 	if(!is_snp_ok) {return false;}
 	
@@ -652,10 +718,10 @@ snp_var_data* snp_meta = new snp_var_data;
 snp_meta->chromosome = snp1->chromosome;
 snp_meta->snpname = snp1->snpname;
 
-VARIABLE_TYPE meta_var_beta[GENO_TYPES_NUM], meta_var_se[GENO_TYPES_NUM];
+//VARIABLE_TYPE meta_var_beta[GENO_TYPES_NUM], meta_var_se[GENO_TYPES_NUM];
 VARIABLE_TYPE meta_mean_beta[GENO_TYPES_NUM], meta_mean_se[GENO_TYPES_NUM];
 	
-VARIABLE_TYPE var1, var2, sd_var1, sd_var2;
+//VARIABLE_TYPE var1, var2, sd_var1, sd_var2;
 
 static unsigned one = 1;
 
@@ -802,12 +868,37 @@ for(Snp_store_type::const_iterator i=snps_data->begin() ; i!=snps_data->end() ; 
 	//counts:
 	file << std::setw(4) << i->second->chromosome << delim
 		   << std::setw(pp_maxsnp) << i->second->snpname << delim 
-			 << std::setw(6) << counts_value_name << delim
-			 << std::setw(8) << (is_na(i->second->COUNTS[0])? "NA":double_2_str(i->second->COUNTS[0])) << delim
-			 << std::setw(8) << (is_na(i->second->COUNTS[1])? "NA":double_2_str(i->second->COUNTS[1])) << delim
-			 << std::setw(8) << (is_na(i->second->COUNTS[2])? "NA":double_2_str(i->second->COUNTS[2])) << "\n";
+			 << std::setw(6) << counts_value_name << delim;
 
-	
+		 if(is_na(i->second->COUNTS[0]))
+			 {
+			 file <<  std::setw(8) << "NA" << delim;
+			 }
+			else
+			 {
+			 file <<  std::setw(8) << std::setiosflags(std::ios_base::dec) << i->second->COUNTS[0] << delim;
+			 }
+
+		 if(is_na(i->second->COUNTS[1]))
+			 {
+			 file <<  std::setw(8) << "NA" << delim;
+			 }
+			else
+			 {
+			 file <<  std::setw(8) << std::setiosflags(std::ios_base::dec) << i->second->COUNTS[1] << delim;
+			 }
+
+		 if(is_na(i->second->COUNTS[2]))
+			 {
+			 file <<  std::setw(8) << "NA" << delim;
+			 }
+			else
+			 {
+			 file <<  std::setw(8) << std::setiosflags(std::ios_base::dec) << i->second->COUNTS[2] << '\n';
+			 }
+
+
+
 	//freq:
 	static VARIABLE_TYPE total_id_num;
  	total_id_num = i->second->COUNTS[0] + i->second->COUNTS[1] + i->second->COUNTS[2];	
@@ -852,7 +943,7 @@ void save_snps_tests_into_file(Snp_store_type *snps_data, const char *output_fil
 {
 //print header
 	
-const unsigned pp_maxsnp=10;
+//const unsigned pp_maxsnp=10;
 		
 std::ofstream file;
 	
@@ -868,7 +959,7 @@ if(!file.is_open()){error("Can not open file %s\n", output_filename);}
 
 file.precision(precision_output);
 
-file << snpname_column_name << delim << "Z" << delim << "Z_2df\n";
+file << chromosome_column_name << snpname_column_name << delim << "Z" << delim << "Z_2df\n";
 
 
 		
@@ -877,7 +968,8 @@ static Snp_store_type::iterator iter_map;
 for(Snp_store_type::const_iterator i=snps_data->begin() ; i!=snps_data->end() ; ++i)
 	{
 	//geno:
-	file << i->second->snpname << delim 
+	file << i->second->chromosome << delim
+			 << i->second->snpname << delim 
 			 << (is_na(i->second->Z)? "NA":double_2_str(i->second->Z)) << delim
 			 << (is_na(i->second->Z_2df)? "NA":double_2_str(i->second->Z_2df)) << "\n"; 
 	}
@@ -905,7 +997,7 @@ return stream.str();
 
 //___________________________________________________________
 //Check whether snps have same genotypes and in same columns. If one of snp has allele 0 but another have real than replace 0 by real one.
-bool check(snp_var_data* snp2, snp_var_data* snp1)
+bool check(snp_var_data* snp2, snp_var_data* snp1, std::ofstream & warnings_file)
 {
 //check snp name
 if(snp1->snpname != snp2->snpname) 
@@ -916,9 +1008,11 @@ if(snp1->snpname != snp2->snpname)
 //check chromosome name
 if(snp1->chromosome != snp2->chromosome)
 	{
-	Rprintf("warning: SNP %s has different chromosome number in different files. Previos value is %i, current one is %i. Value %i is used.\n",
-				 	snp2->snpname.c_str(), snp2->chromosome, snp1->chromosome, snp2->chromosome);
-	snp1->chromosome = snp2->chromosome;
+	//Rprintf("warning: SNP %s has different chromosome number in different files. Previos value is %i, current one is %i. Value %i is used.\n",
+	//			 	snp2->snpname.c_str(), snp2->chromosome, snp1->chromosome, snp2->chromosome);
+	
+	warnings_file<<"warning: SNP "<<snp2->snpname<<" has different chromosome number in different files. Previos value is "<<snp2->chromosome<<
+			", current one is "<<snp1->chromosome<<". Value "<<snp2->chromosome<<" is used.\n";
 	}
 
 
@@ -959,8 +1053,12 @@ if(snp1->GENO[1][0] == snp2->GENO[1][0]) //A1==A2?
 		else
 			{
 			//B1!=0 and B2!=0 therefore codings defer. Skip snp1
-			Rprintf("warning: snp %s has different genotypes in current and previous cohort. Current one is %s, previos - %s. The current one is skiped.\n", 
-							snp1->snpname.c_str(), snp1->GENO[1].c_str(), snp2->GENO[1].c_str());
+			//Rprintf("warning: snp %s has different genotypes in current and previous cohort. Current one is %s, previos - %s. The current one is skiped.\n", 
+			//				snp1->snpname.c_str(), snp1->GENO[1].c_str(), snp2->GENO[1].c_str());
+			
+			warnings_file<<"warning: snp "<<snp1->snpname<<
+					" has different genotypes in current and previous cohort. Current one is "<<snp1->GENO[1]<<", previous - "<<snp2->GENO[1]<<
+					". The current one is skiped.\n";
 			return false;
 			}
 		}
@@ -975,14 +1073,19 @@ else if(snp1->GENO[1][0] == snp2->GENO[1][2])
 			snp1->GENO[1][2] = snp2->GENO[1][0];
 			snp1->GENO[2][0] = snp2->GENO[1][0];
 			snp1->GENO[2][2] = snp2->GENO[1][0];
-			unify_snp(snp1);
+			unify_snp(snp1, warnings_file);
 			return true;
 			}
 		else //B1!=0!!!
 			{
 			//it could be snp1 has B/B, B/A, A/A and snp2 has A/A, A/0, 0/0. But snp1 has been sorted already => second allele of snp2 is C!=0
-			Rprintf("warning: snp %s has different genotypes in current and previous cohort. current is %s, previos is %s. The current one is skiped.\n", 
-							snp1->snpname.c_str(), snp1->GENO[1].c_str(), snp2->GENO[1].c_str());
+			//Rprintf("warning: snp %s has different genotypes in current and previous cohort. current is %s, previos is %s. The current one is skiped.\n", 
+			//				snp1->snpname.c_str(), snp1->GENO[1].c_str(), snp2->GENO[1].c_str());
+			
+			warnings_file<<"warning: snp "<<snp1->snpname<<
+					" has different genotypes in current and previous cohort. Current one is "<<snp1->GENO[1]<<", previous is "<<snp2->GENO[1]<<
+					". The current one is skiped.\n"; 
+					
 			return false;
 			}
 
@@ -994,14 +1097,19 @@ else if(snp1->GENO[1][2] == snp2->GENO[1][0])
 	snp2->GENO[1][2] = snp1->GENO[1][0];
 	snp2->GENO[2][0] = snp1->GENO[1][0];
 	snp2->GENO[2][2] = snp1->GENO[1][0];
-	unify_snp(snp2);
+	unify_snp(snp2, warnings_file);
 	
 	}
 else
 	{
 	//A1!=A2 and A1!=B2
-	Rprintf("warning: snp %s has different genotypes in current and previos cohort. current is %s, previos is %s. The current one is skiped.\n", 
-					snp1->snpname.c_str(), snp1->GENO[1].c_str(), snp2->GENO[1].c_str());
+	//Rprintf("warning: snp %s has different genotypes in current and previos cohort. current is %s, previos is %s. The current one is skiped.\n", 
+	//				snp1->snpname.c_str(), snp1->GENO[1].c_str(), snp2->GENO[1].c_str());
+	warnings_file<<"warning: snp "<<snp1->snpname
+							 <<" has different genotypes in current and previous cohort. Current one is "<<snp1->GENO[1]
+							 <<", previos is "<<snp2->GENO[1]
+							 <<". The current one is skiped.\n"; 
+	
 	return false;
 	}
 
@@ -1098,19 +1206,23 @@ return ((N - geno_group_num)*log(Sp_2) - sum_ni_1lnSi2)/(1 + (sum_1__n_1-1/(N-ge
 
 
 //___________________________________________________________
-double my_median(std::vector<double> * vec)
+double my_median(std::vector<double> * vec, bool na_rm)
 {
+
+
+
+		
 unsigned size = vec->size();
 
 
-if(size == 0) return -1;
+if(size == 0) return NA_value;
 if(size == 1) return (*vec)[0];
 
 std::sort(vec->begin(), vec->end());
 
-for(int i=0 ; i<size ; i++)
-	{
-	}
+//for(int i=0 ; i<size ; i++)
+//	{
+//	}
 
 
 static double median;
@@ -1126,3 +1238,115 @@ return median;
 
 
 //___________________________________________________________
+
+
+//___________________________________________________________
+bool snp_filter(snp_var_data* snp,  std::ofstream & warnings_file, bool exclude_whole_snp, unsigned threshold, bool do_warnings_output)
+{
+
+
+for(int i=0 ; i<GENO_TYPES_NUM ; i++)
+	{
+  if(snp->COUNTS[i]<=0) continue;
+	if(unsigned(snp->COUNTS[i]) < threshold)
+		if(exclude_whole_snp)
+			{
+			if(do_warnings_output)
+				{
+				warnings_file<<"warning: SNP \""<<snp->snpname<<"\" has been excluded because of number of ids in genotyoic group "<<snp->GENO[i]<<" less than "<<threshold<<'\n';
+				}
+			return false;
+			}
+		else
+			{
+			if(do_warnings_output)
+				{
+				warnings_file<<"warning: genotypic group "<<snp->GENO[i]<<" in SNP \""<<snp->snpname<<"\" has been excluded because of number of ids less than "<<threshold<<'\n';
+				}
+			snp->SD[i] = NA_value;
+			snp->MEAN[i] = NA_value;
+			snp->COUNTS[i] = 0;
+			}	
+	
+	}
+
+return true;
+
+}
+//___________________________________________________________
+
+
+
+
+
+
+
+
+//___________________________________________________________
+bool check_files_format(const char** filenames, unsigned file_amount, unsigned skip_first_lines_amount, char delim)
+{
+
+std::stringstream chromosome_stream, snpname_stream, g11_value_stream, g12_value_stream, g22_value_stream;
+std::ifstream file;
+std::string str_from_stream;
+
+std::stringstream num_to_string;
+
+for(unsigned file_num=0 ; file_num < file_amount ; file_num++)
+	{
+	Rprintf("\nChecking file \"%s\"...\n", filenames[file_num]);
+	
+	
+	file.open(filenames[file_num]);
+	if(!file.is_open()){Rprintf("Can not open file %s\n", filenames[file_num]); return false;}
+
+	//skip first line
+	for(unsigned i=0 ; i<skip_first_lines_amount ; i++) 
+		{
+		getline(file, str_from_stream);
+		if(file.eof()) {Rprintf("Tried to skip %i lines in file %s but there is %i at all ", skip_first_lines_amount, filenames[file_num], i);return false;}
+		}
+
+	//read header and determine position of our columns
+
+	int CHR_position=-1, VALUE_position=-1, SNP_position=-1, G11_position=-1, G12_position=-1, G22_position=-1; //0 means te first column
+
+	getline(file, str_from_stream);
+	std::stringstream line_stream(str_from_stream);
+
+	if(file.eof()) break;
+
+	for(unsigned col=0 ; !line_stream.eof() ; col++ )
+		{
+		getline(line_stream, str_from_stream, delim);
+		if(str_from_stream.size() == 0) {col--; continue;}
+	
+
+		if(str_from_stream == chromosome_column_name) {CHR_position=col;}
+		else if(str_from_stream == snpname_column_name) {SNP_position=col;}
+		else if(str_from_stream == value_column_name) {VALUE_position=col;}
+		else if(str_from_stream == g11_column_name) {G11_position=col;}
+		else if(str_from_stream == g12_column_name) {G12_position=col;}
+		else if(str_from_stream == g22_column_name) {G22_position=col;}
+		}
+
+	if(CHR_position==-1) {Rprintf("Can not find column \"%s\".\n", chromosome_column_name.c_str()); return false;}
+	if(SNP_position==-1) {Rprintf("Can not find column \"%s\".\n", snpname_column_name.c_str()); return false;}
+	if(VALUE_position==-1) {Rprintf("Can not find column \"%s\".\n", value_column_name.c_str()); return false;}
+	if(G11_position==-1) {Rprintf("Can not find column \"%s\".\n", g11_column_name.c_str()); return false;}
+	if(G12_position==-1) {Rprintf("Can not find column \"%s\".\n", g12_column_name.c_str()); return false;}
+	if(G22_position==-1) {Rprintf("Can not find column \"%s\".\n", g22_column_name.c_str()); return false;}
+
+
+	Rprintf("File \"%s\" is OK\n", filenames[file_num]);
+		
+	file.close();
+	file.clear();
+	} // all files are checked
+
+
+return true;
+}
+
+
+}
