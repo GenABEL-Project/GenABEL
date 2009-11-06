@@ -1,11 +1,14 @@
+***** v. 1.4-6 (2009.11.06)
+
+Default formetascore's argument transform set to "no"
+
 ***** v. 1.4-5 (2009.09.09)
 
 New function "var.meta" added. 
-Function is intended for pooling (metaanalysing) trait means for different genotypes separetly.
-Input files have to be like in example below (plink generate this kind of files).
-At the end you have one file in same format but with pooled MEANs and SDs
-
-
+Function is intended for pooling (meta-analysing) trait means for 
+different genotypes separately.Input files have to be like in example 
+below (plink generate this kind of files). At the end you have one file 
+in same format but with pooled MEANs and SDs
 
 ***** v. 1.4-4 (2009.09.02)
 
