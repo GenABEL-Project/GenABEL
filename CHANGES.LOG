@@ -1,3 +1,8 @@
+***** v. 1.4-7 (2009.11.18)
+
+Diagonal elements returned by ibs(...,w="freq") changed from (0.5+F) to 
+0.5*(1+F) (thanks to Chris Haley for pointing this problem out!) 
+
 ***** v. 1.4-6 (2009.11.06)
 
 Default formetascore's argument transform set to "no"
