@@ -1,4 +1,6 @@
-***** v. 1.4-7 (2009.11.18)
+***** v. 1.4-7 (2009.12.03)
+
+cleaned help for polygenic()
 
 Diagonal elements returned by ibs(...,w="freq") changed from (0.5+F) to 
 0.5*(1+F) (thanks to Chris Haley for pointing this problem out!) 
