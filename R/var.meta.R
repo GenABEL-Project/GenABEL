@@ -19,7 +19,7 @@
 
 
 "var.meta" <-
-function(filenames_array, output_filename="output.variance.meta", exclude_snp_below_threshold=F, threshold=30, all_warnings=F) {
+function(filenames_array, output_filename="output.variance.metaanalysis", exclude_snp_below_threshold=F, threshold=30, all_warnings=F) {
 
 
 		
