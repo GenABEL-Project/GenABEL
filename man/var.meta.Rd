@@ -6,11 +6,14 @@
  pool (metaanalyse) them. Input files are in format mentioned below (plink format).
 }
 \usage{
-var.meta(filenames_array ,output_filename="output.variance.metaanalysis")
+var.meta(filenames_array ,output_filename="output.variance.metaanalysis", exclude_snp_below_threshold=F, threshold=30, all_warnings=F)
 }
 \arguments{
   \item{filenames_array}{Set of files which you are going to pool}
   \item{output_filename}{Name of output file where pooled snps are stored. "output.variance.metaanalysis" by default}
+  \item{exclude_snp_below_threshold}{kind of "Minor Allele Frequency Filter". But absolute is number is used (threshold)}
+  \item{threshold}{If at least one genotypic group has number of id < threshold and previuos option is T than SNO is excluded}
+  \item{all_warnings}{T if we interested in which snps are excluded because of filter}
 }
 \details{
 	Function is intended for pooling (metaanalysing) trait means for different genotypes separetly. 
