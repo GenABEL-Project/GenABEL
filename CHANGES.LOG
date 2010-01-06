@@ -1,3 +1,7 @@
+***** v. 1.4-8 (2010.01.05)
+
+added export.impute() function
+
 ***** v. 1.4-7 (2009.12.03)
 
 cleaned help for polygenic()

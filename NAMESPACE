@@ -42,6 +42,7 @@ export(
 	emp.qtscore,
 	estlambda,
 	export.merlin,
+	export.impute,
 	formetascore,
 	GASurv,
 	grammar,

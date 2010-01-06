@@ -21,8 +21,8 @@ Imbedding GenABEL into R environment allows for easy data characterisation, expl
 \tabular{ll}{
 Package: \tab GenABEL\cr
 Type: \tab Package\cr
-Version: \tab 1.4-7\cr
-Date: \tab 2009-11-18\cr
+Version: \tab 1.4-8\cr
+Date: \tab 2010-01-05\cr
 License: \tab GPL (>= 2)\cr
 }
 
@@ -45,6 +45,12 @@ functions include:
 \code{\link{convert.snp.mach}} (Mach-format),
 \code{\link{convert.snp.tped}} (from PLINK TPED format),
 \code{\link{convert.snp.affymetrix}} (BRML-style files).
+
+For converting of GenABEL's data to other formats, see
+\code{\link{export.merlin}} (MERLIN and MACH formats), 
+\code{\link{export.impute}} (IMPUTE, SNPTEST and CHIAMO formats). 
+ 
+
 
 To load the data, see \code{\link{load.gwaa.data}}.
 
