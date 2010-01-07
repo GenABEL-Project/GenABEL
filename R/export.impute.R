@@ -1,7 +1,7 @@
 "export.impute" <- function(data,genofile="impute.gen",samplefile="impute.sample",
 		strandfile="impute.strand",cachesizeMb=128) 
 {
-	cat("beta-version of export.impute:\n\tstrand file not generated (what is format?)\n\tsample file contains IDs of individulas\n")
+#	cat("beta-version of export.impute:\n\tstrand file (what is format?)\n\tsample file contains IDs of individulas\n")
 	
 	if (!is(data,"gwaa.data")) 
 		stop("Data argumet should be of gwaa.data-class")
@@ -12,14 +12,15 @@
 		cachesizeMb <- 10
 	}
 	# write sample file
+	cat("writing sample file ...")
 	samples <- matrix(data@gtdata@idnames,ncol=1)
 	colnames(samples) <- "id"
 	write.table(samples,file=samplefile,col.names=TRUE,quote=F)
 	rm(samples)
 	gc()
-	
-	# write genotype file
-	cat("writing sample file ...")
+	cat("... done!\n")
+
+	# collect info
 	rsNames <- as.character(data@gtdata@snpnames)
 	rsPos <- as.integer(data@gtdata@map)
 	coding <- as.character(data@gtdata@coding)
@@ -27,8 +28,17 @@
 	allele2=alleleID.effective()[coding]
 	rm(coding)
 	gc()
+	
+	# write strand file
+	cat("writing strand file ...\n")
+	strand <- as.character(data@gtdata@strand)
+	if (length(unique(strand)) != 2) warning("More then two strand types in strand file")
+	tmp <- matrix(c(rsNamesm,rsPos,strand),ncol=3)
+	write(t(tmp),file=strandfile,ncolumns=3,append=FALSE)
+	rm(tmp,strand)
 	cat("... done!\n")
-	# write snp by snp, replace missing with HWE proportions
+	
+	# write genotype file
 	cat("writing genotypes ...\n")
 #	freqs <- summary(data@gtdata)[,"Q.2"]
 	noutsnps <- ceiling((cachesizeMb*1024*1024)/(3*8*data@gtdata@nids))
