@@ -15,7 +15,7 @@
 	cat("writing sample file ...")
 	samples <- matrix(data@gtdata@idnames,ncol=1)
 	colnames(samples) <- "id"
-	write.table(samples,file=samplefile,col.names=TRUE,quote=F)
+	write.table(samples,file=samplefile,col.names=TRUE,row.names=FALSE,quote=FALSE)
 	rm(samples)
 	gc()
 	cat("... done!\n")
