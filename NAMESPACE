@@ -87,7 +87,9 @@ export(
 	summary.snp.data,
 	Xfix,
 	ztransform,
-	var.meta
+	var.meta,
+	var.test.homogeneity,
+	var.test.homogeneity.bartlett
        )
 
 exportClasses(
