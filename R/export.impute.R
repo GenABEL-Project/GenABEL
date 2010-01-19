@@ -32,8 +32,8 @@
 	# write strand file
 	cat("writing strand file ...\n")
 	strand <- as.character(data@gtdata@strand)
-	if (length(unique(strand)) != 2) warning("More then two strand types in strand file")
-	tmp <- matrix(c(rsNamesm,rsPos,strand),ncol=3)
+	if (length(unique(strand)) > 2) warning("More then two strand types in strand file")
+	tmp <- matrix(c(rsNames,rsPos,strand),ncol=3)
 	write(t(tmp),file=strandfile,ncolumns=3,append=FALSE)
 	rm(tmp,strand)
 	cat("... done!\n")

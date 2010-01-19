@@ -58,6 +58,7 @@ export(
 	mlreg.p,
 	mmscore,
 	npsubtreated,
+	patch_strand,
 	perid.summary,
 	plot.check.marker,
 	plot.scan.gwaa,
