@@ -1,6 +1,6 @@
 #=====================================================================================
 #
-#       Filename:  var.test.R 
+#       Filename:  var.test.homogeneity.R
 #
 #    Description:  Analizis of homogeneity variance
 #
@@ -18,7 +18,7 @@
 
 
 "var.test.homogeneity" <-
-function(trait="", formula="", trait_df, gwa_data, dir, analysis_name_specific, how_many_sigma_drop=NULL, top_snp_num_figure=3) {
+function(trait="", formula="", trait_df, gwa_data, dir, analysis_name_specific, how_many_sigma_drop=NULL, top_snp_num_figure=3, analysis_type="AAvsABvsBB") {
 
 
 if(class(trait) == "formula")
@@ -64,6 +64,15 @@ if(is.null(how_many_sigma_drop))
 	{
 	print("Variable \"how_many_sigma_drop\" is set as NULL. It means your trait should be normally distributed without any outlyers.")
 	}
+
+
+
+if(analysis_type != "AAvsABvsBB" && analysis_type != "AAvsABandBB" && analysis_type != "ABvsAAandBB" && analysis_type != "BBvsAAandAB" )
+	{
+	message <- paste("var.test.homogeneity: analysis_type must be one of AAvsABvsBB, AAvsABandBB, ABvsAAandBB, BBvsAAandAB, (", analysis_type, ")", sep="")
+  stop(message)
+	}
+
 
 print(paste("All results will be saved into directory ", dir, ".", sep=""))
 print(paste("Name of analysis is ", analysis_name_specific, " (will be part of file name).", sep=""))
@@ -145,7 +154,7 @@ print(paste("We have", length(trait_df_nona$residuals), "ids"))
 
 
 
-var_homo_chi2_trait_residuals <- var.test.homogeneity.bartlett(data@phdata$residuals, data)
+var_homo_chi2_trait_residuals <- bartlett(data@phdata$residuals, data, analysis_type)
 
 
 
@@ -211,5 +220,5 @@ if(!is.null(top_snp_num_figure))
 
 
 
-
+return
 }

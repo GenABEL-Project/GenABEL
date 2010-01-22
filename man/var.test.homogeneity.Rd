@@ -2,10 +2,10 @@
 \alias{var.test.homogeneity}
 \title{function to perfome variance homogeneity test of different genotypic groups}
 \description{
-	
+function to perfome variance homogeneity test of different genotypic groups	
 }
 \usage{
-var.test.homogeneity(trait="", formula="", trait_df, gwa_data, dir, analysis_name_specific, how_many_sigma_drop=NULL, top_snp_num_figure=3)
+var.test.homogeneity(trait="", formula="", trait_df, gwa_data, dir, analysis_name_specific, how_many_sigma_drop=NULL, top_snp_num_figure=3, analysis_type = "AAvsABvsBB")
 }
 \arguments{
   \item{trait}{Name of trait you are analysing (data.frame trait_df has to contain a column with this name). If it absenses or equals to "" than the trait name must be specifed in "formula"}
@@ -16,6 +16,8 @@ var.test.homogeneity(trait="", formula="", trait_df, gwa_data, dir, analysis_nam
   \item{analysis_name_specific}{Any set of characters. It figures as a part of a file names in output.}
   \item{how_many_sigma_drop}{Cut off point to exclude outliers. Normally distributed trait is assumed.}
   \item{top_snp_num_figure}{For how many SNPs to make boxplot.}
+  \item{analysis_type}{Which test is performed. Possible values: "AAvsABvsBB" (testing all three genotipc groups),
+		 	"AAvsABandBB" (testing AA against AB and BB together), "ABvsAAandBB", "BBvsAAandAB".}
 }
 \details{
 var.test.homogeneity function perform analisis of variance homogeneity for easch SNP in data "gwa_data". The main result is pval of variance homogeneity test for each SNP.

@@ -48,14 +48,35 @@
 
 extern "C" {
 
-
+enum {AAvsABvsBB, AAvsABandBB, ABvsAAandBB, BBvsAAandAB};
 
 
 
 void bartlett_test_R(char *gtps, int * nids,  int *nsnps,
 			 						 double * trait, int * is_trait_na,
-									 double * chi2)
+									 double * chi2, char** analys_type_)
 {
+
+int analys_type = AAvsABvsBB;
+
+
+if(*analys_type_ == "AAvsABvsBB")
+	{
+	analys_type = AAvsABvsBB;
+	}
+if(*analys_type_ == "AAvsABandBB")
+	{
+	analys_type = AAvsABandBB;
+	}
+if(*analys_type_ == "ABvsAAandBB")
+	{
+	analys_type = ABvsAAandBB;
+	}
+if(*analys_type_ == "BBvsAAandAB")
+	{
+	analys_type = BBvsAAandAB;
+	}
+
 
 gtps_container gwa_data(gtps, *nids, *nsnps);
 
@@ -110,6 +131,32 @@ for(unsigned snp=0 ; snp < *nsnps ; snp++)
 			}
 		}
 
+	
+	
+//_________________________________________________
+//1df conversion:
+	//b.insert(b.end(), a.begin(), a.end());
+  //enum {AAvsABvsBB, AAvsABandBB, ABvsAAandBB, BBvsAAandAB};
+
+	if(analys_type == AAvsABandBB)
+		{
+		AB.insert(AB.end(), BB.begin(), BB.end());
+		BB.clear();
+		}
+	if(analys_type == ABvsAAandBB)
+		{
+		AA.insert(AA.end(), BB.begin(), BB.end());
+		BB.clear();
+		}
+	if(analys_type == BBvsAAandAB)
+		{
+		AB.insert(AB.end(), AA.begin(), AA.end());
+		AA.clear();
+		}
+
+
+//_________________________________________________
+
 	unsigned NA_size = NA.size();
 	unsigned AA_size = AA.size();
 	unsigned AB_size = AB.size();
@@ -119,6 +166,11 @@ for(unsigned snp=0 ; snp < *nsnps ; snp++)
 
 
 	std::list<my_small_vector> trait_groups;
+
+
+
+
+
 
 
 		if(AA_size > 1)
@@ -154,6 +206,11 @@ for(unsigned snp=0 ; snp < *nsnps ; snp++)
 				}
 			trait_groups.push_back(my_small_vector(bb, BB_size));
 			}
+
+
+
+
+
 
 
 

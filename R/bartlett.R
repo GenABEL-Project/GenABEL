@@ -1,23 +1,23 @@
 #=====================================================================================
 #
-#       Filename:  merge.snp.data.R
+#       Filename:  R/bartlett.R
 #
-#    Description:  Function for merging of two snp.data class objects
+#    Description:  Bartlett's test of variance homogeneity
 #
 #        Version:  1.0
-#        Created:  18-March-2008
+#        Created:  
 #       Revision:  none
 #       
 #
-#         Author:  Maksim V. Struchalin, Yurii S. Aulchenko
-#        Company:  ErasmusMC, Epidemiology & Biostatistics Department, The Netherlands.
-#          Email:  m.struchalin@erasmusmc.nl, i.aoultchenko@erasmusmc.nl
+#         Author:  Maksim V. Struchalin
+#        Company:  ErasmusMC, Epidemiology, The Netherlands.
+#          Email:  m.struchalin@erasmusmc.nl
 #
 #=====================================================================================
 
 
-"var.test.homogeneity.bartlett" <-
-function(trait, data) {#, trait.type = "gaussian") {
+"bartlett" <-
+function(trait, data, analysis_type) {#, trait.type = "gaussian") {
 
 
 #if(class(data) != "gwaa.data" && class(data) != "snp.data")
@@ -76,7 +76,7 @@ print("start calculating")
 
 retrun_val <- .C("bartlett_test_R", as.raw(data@gtdata@gtps), as.integer(data@gtdata@nids), as.integer(data@gtdata@nsnps),
 			 														as.double(trait), as.integer(is_trait_na),
-																	chi2 = double(data@gtdata@nsnps))
+																	chi2 = double(data@gtdata@nsnps), analysis_type)
 
 
 chi2 <- retrun_val$chi2
