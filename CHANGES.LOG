@@ -1,6 +1,7 @@
-***** v. 1.4-8 (2010.01.05)
+***** v. 1.4-8 (2010.01.20)
 
-added export.impute() function
+added export.impute(), patch_strand(), mach2databel(), impute2databel() 
+functions
 
 ***** v. 1.4-7 (2009.12.03)
 
