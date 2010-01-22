@@ -4,7 +4,7 @@
 
 #include <list>
 
-//extern "C" {
+extern "C" {
 
 		
 class my_small_vector
@@ -33,6 +33,6 @@ double get_mean(my_small_vector vec);
 double var(my_small_vector vec);
 
 
-//}
+}
 
 #endif
