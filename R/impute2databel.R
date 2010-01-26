@@ -28,11 +28,7 @@ impute2databel <- function(genofile,samplefile,outfile) # dosefile = TRUE
 	#               #skiprows,
 	#               transpose=TRUE,R_matrix=FALSE,type="FLOAT")
 	#   else 
-	tmpname <- paste("tmp",round(runif(1,min=10000,max=1000000)),sep="")
-	while (file.exists(tmpname)) 
-	{
-		tmpname <- paste("tmp",round(runif(1,min=10000,max=1000000)),sep="")
-	}
+	tmpname <- get_temporary_file_name()
 	tmp_fv <- text2filevector(infile=genofile,outfile=tmpname,
 			rownames=2,skipcols=5,
 			#skiprows,
@@ -40,7 +36,14 @@ impute2databel <- function(genofile,samplefile,outfile) # dosefile = TRUE
 	if ((dim(tmp_fv)[1] %% 3) != 0) 
 		stop("strange data in IMPUTE geno file: number of columns - 5 not dividable by 3")
 	
-	makedose <- function(prob) return(2*prob[c(F,F,T)]+prob[c(F,T,F)])
+	makedose <- function(prob) {
+		dose <- 2*prob[c(F,F,T)]+prob[c(F,T,F)]
+		bp <- prob[c(T,F,F)]
+		miss <- which(abs(bp)<1e-16 & abs(dose)<1e-16)
+		if (length(miss) > 0 ) dose[miss] <- NA
+		return(dose)
+	}
+	
 	pfun <- function(a) return(a)
 	
 	#dosefile <- make_empty_fvf(paste(outfile,".dose",sep=""), 
@@ -55,12 +58,14 @@ impute2databel <- function(genofile,samplefile,outfile) # dosefile = TRUE
 	
 	if (!missing(samplefile))
 	{
-		samnames <- scan(samplefile,what="character",skip=1)
+		temp <- scan(samplefile,what="character",nlines=1)
+		samnames <- scan(samplefile,what="character",skip=2)
+		samnames <- samnames[c(F,T,rep(F,(length(temp)-2)))]
 		rownames(dosefile) <- samnames
 	} else 
 		warning("sample file not specified, you will not be able to use ID names (only index)")
 	
-	rm(tmp_fv);gc();unlink(tmpname)
+	rm(tmp_fv);gc();unlink(paste(tmpname,"*",sep=""))
 	
 	return(dosefile)
 }

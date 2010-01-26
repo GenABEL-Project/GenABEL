@@ -26,29 +26,24 @@ mach2databel <- function(mldosefile,mlinfofile,outfile)
 		tmp <- scan(mlinfofile,what="character",skip=1)
 		tmp <- tmp[c(T,F,F,F,F,F,F)]
 		print(tmp[1:10])
-		tmpname <- paste("tmp",round(runif(1,min=10000,max=1000000)),sep="")
-		while (file.exists(tmpname)) 
-		{
-			tmpname <- paste("tmp",round(runif(1,min=10000,max=1000000)),sep="")
-		}
+		tmpname <- get_temporary_file_name()
 		write(tmp,file=tmpname)
 		rm(tmp);gc()
 	} else 
 		warning("mlinfo file not specified, you will not be able to use snp names (only index)")
 	
 	if (tmpname != "")
-		text2filevector(infile=mldosefile,outfile=outfile,
+		dfaobj <- text2filevector(infile=mldosefile,outfile=outfile,
 				colnames=tmpname,
 				rownames=1,skipcols=2,
 				#skiprows,
 				transpose=FALSE,R_matrix=FALSE,type="FLOAT")
 	else 
-		text2filevector(infile=mldosefile,outfile=outfile,
+		dfaobj <- text2filevector(infile=mldosefile,outfile=outfile,
 				rownames=1,skipcols=2,
 				#skiprows,
 				transpose=FALSE,R_matrix=FALSE,type="FLOAT")
 
-	dfaobj <- databel_base_R(outfile)
 	dnames <- get_dimnames(dfaobj)
 	subjs <- dnames[[1]]
 	print(subjs[1:10])
@@ -57,9 +52,9 @@ mach2databel <- function(mldosefile,mlinfofile,outfile)
 	print(dim(dfaobj))
 	print(length(subjs))
 	set_dimnames(dfaobj) <- list(subjs,dnames[[2]])
-	dfaobj <- databel_filtered_R(dfaobj)
+	print(get_dimnames(dfaobj)[[1]][1:5])
 	
-	if (tmpname != "") unlink(tmpname)
+	if (tmpname != "") unlink(paste(tmpname,"*",sep=""))
 	
 	return(dfaobj)
 }

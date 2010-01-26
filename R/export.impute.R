@@ -1,5 +1,6 @@
 "export.impute" <- function(data,genofile="impute.gen",samplefile="impute.sample",
-		strandfile="impute.strand",cachesizeMb=128) 
+		strandfile="impute.strand",
+		cachesizeMb=128) 
 {
 #	cat("beta-version of export.impute:\n\tstrand file (what is format?)\n\tsample file contains IDs of individulas\n")
 	
@@ -13,14 +14,32 @@
 	}
 	# write sample file
 	cat("writing sample file ...")
-	samples <- matrix(data@gtdata@idnames,ncol=1)
-	colnames(samples) <- "id"
-	write.table(samples,file=samplefile,col.names=TRUE,row.names=FALSE,quote=FALSE)
+	miss <- (1. - perid.summary(data)$CallPP)
+	gend <- data@gtdata@male
+	gend[gend==0] <- 2
+	samples <- data.frame(
+			id=data@gtdata@idnames,
+			Subject_id=data@gtdata@idnames,
+			Missing=miss,
+			Gender=gend,
+			stringsAsFactors=FALSE
+	)
+	samples <- merge(samples,data@phdata,by="id",all.x=T,all.y=F)
+	names(samples)[1] <- "Sample_id"
+	names(samples)[4] <- "Gender"
+# is this correct missing code???
+	samples[is.na(samples)] <- (-9)
+	write(names(samples),file=samplefile,
+			ncolumns=(5+dim(data@phdata)[2]-1),append=FALSE)
+	write(c(0,0,0,1,rep("P",dim(data@phdata)[2]-1)),file=samplefile,
+			ncolumns=(5+dim(data@phdata)[2]-1),append=TRUE)
+	write.table(samples,file=samplefile,
+			col.names=FALSE,row.names=FALSE,quote=FALSE,append=TRUE)
 	rm(samples)
 	gc()
 	cat("... done!\n")
-
-	# collect info
+	
+# collect info
 	rsNames <- as.character(data@gtdata@snpnames)
 	rsPos <- as.integer(data@gtdata@map)
 	coding <- as.character(data@gtdata@coding)
@@ -29,7 +48,7 @@
 	rm(coding)
 	gc()
 	
-	# write strand file
+# write strand file
 	cat("writing strand file ...\n")
 	strand <- as.character(data@gtdata@strand)
 	if (length(unique(strand)) > 2) warning("More then two strand types in strand file")
@@ -38,7 +57,7 @@
 	rm(tmp,strand)
 	cat("... done!\n")
 	
-	# write genotype file
+# write genotype file
 	cat("writing genotypes ...\n")
 #	freqs <- summary(data@gtdata)[,"Q.2"]
 	noutsnps <- ceiling((cachesizeMb*1024*1024)/(3*8*data@gtdata@nids))
