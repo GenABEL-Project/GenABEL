@@ -10,7 +10,7 @@ extract.annotation.impute <- function(genofile,infofile,chromosome=NA,
 )
 {
 	if (!file.exists(genofile)) stop(paste("genofile",genofile,"does not exist"))
-	if (!file.exists(infofile)) stop(paste("infofile",infofile,"does not exist"))
+	if (!file.exists(infofile)) warning(paste("infofile",infofile,"does not exist; skipping that info"))
 	
 	# rsname position Al1 Al2
 	if (skip_geno>0)
@@ -19,7 +19,9 @@ extract.annotation.impute <- function(genofile,infofile,chromosome=NA,
 		tmp <- extract_text_file_columns(genofile,order_geno_snp_a0_a1)
 	genoannot <- as.data.frame(tmp,stringsAsFactors=FALSE)
 	names(genoannot) <- c("name","A0","A1")
-	
+	if (!file.exists(infofile)) {
+		return(genoannot)
+	}
 	#1snp_id 2rs_id 3position 4exp_freq_a1 5info 6certainty 7type info_type1 concord_type1 r2_type1 info_type0 concord_type0 r2_type0
 	#rs_id position exp_freq_a1 info certainty type
 	if (skip_info>0)
