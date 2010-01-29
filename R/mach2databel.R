@@ -44,15 +44,15 @@ mach2databel <- function(mldosefile,mlinfofile,outfile)
 				#skiprows,
 				transpose=FALSE,R_matrix=FALSE,type="FLOAT")
 
-	dnames <- get_dimnames(dfaobj)
+	dnames <- dimnames(dfaobj)
 	subjs <- dnames[[1]]
-	print(subjs[1:10])
+	#print(subjs[1:10])
 	subjs <- sub("[0-9]*->","",subjs)
-	print(subjs[1:10])
-	print(dim(dfaobj))
-	print(length(subjs))
-	set_dimnames(dfaobj) <- list(subjs,dnames[[2]])
-	print(get_dimnames(dfaobj)[[1]][1:5])
+	#print(subjs[1:10])
+	#print(dim(dfaobj))
+	#print(length(subjs))
+	dimnames(dfaobj) <- list(subjs,dnames[[2]])
+	#print(dimnames(dfaobj)[[1]][1:5])
 	
 	if (tmpname != "") unlink(paste(tmpname,"*",sep=""))
 	

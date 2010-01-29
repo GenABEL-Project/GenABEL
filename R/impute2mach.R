@@ -3,7 +3,7 @@
 #' function to convert IMPUTE files to MAC format
 #' 
 
-impute2mach <- function(genofile,infofile,samplefile,machbasename, ... )
+impute2mach <- function(genofile,infofile,samplefile,machbasename, maketextdosefile = TRUE, ... )
 {
 	if (!require(DatABEL))
 		stop("this function requires DatABEL package to be installed")
@@ -21,13 +21,13 @@ impute2mach <- function(genofile,infofile,samplefile,machbasename, ... )
 	} else stop("machbasename must be character of length 1 or 3")
 	
 	# create temporary DA file
-	tmpname1 <- get_temporary_file_name()
-	tmpname2 <- get_temporary_file_name()	
-	dfo <- impute2databel(genofile=genofile,samplefile=samplefile,outfile=tmpname1)
-	# transpose file
-	# ... 
-	dfo <- as(dfo,"matrix")
-	
+	dfo <- impute2databel(genofile=genofile,samplefile=samplefile,outfile=genofile)
+	if (maketextdosefile) {
+		tmpname2 <- get_temporary_file_name()	
+		# transpose file
+		# ... 
+		dfo <- as(dfo,"matrix")
+	}
 	# get annotattion
 	annot <- extract.annotation.impute(genofile=genofile,infofile=infofile,chromosome=chromosome, ... )
 	
@@ -39,22 +39,23 @@ impute2mach <- function(genofile,infofile,samplefile,machbasename, ... )
 	legend_annot <- annot[,c("name","pos","A1","A0")]
 	write.table(legend_annot,file=machlegend,row.names=FALSE,col.names=TRUE,quote=F,sep="\t")
 	
-	# arrange MLDOSE file
-	ids <- dimnames(dfo)[[1]]
-	if (file.exists(machdose)) unlink(machdose)
-	outfile <- file(machdose,open="wt")
-	for (i in 1:dim(dfo)[1])
-	{
-		# when using transposed DA object, use as.vector(dfo[,i]) (COLUMN!!!)
-		outline <- c(ids[i],"MLDOSE",as(dfo[i,],"vector"))
-		#print(outline)
-		#print(i)
-		#print(class(outline))
-		write(x=outline,file=outfile,append=TRUE,ncolumns=length(outline),sep=" ")
-		if ((i %% 100)==0 || i==dim(dfo)[1]) print(i)
+	if (maketextdosefile) {
+		# arrange MLDOSE file
+		ids <- dimnames(dfo)[[1]]
+		if (file.exists(machdose)) unlink(machdose)
+		outfile <- file(machdose,open="wt")
+		for (i in 1:dim(dfo)[1])
+		{
+			# when using transposed DA object, use as.vector(dfo[,i]) (COLUMN!!!)
+			outline <- c(ids[i],"MLDOSE",as(dfo[i,],"vector"))
+			#print(outline)
+			#print(i)
+			#print(class(outline))
+			write(x=outline,file=outfile,append=TRUE,ncolumns=length(outline),sep=" ")
+			if ((i %% 100)==0 || i==dim(dfo)[1]) print(i)
+		}
+		close(outfile)
+		unlink(paste(tmpname2,"*",sep=""))
 	}
-	close(outfile)
 	
-	unlink(paste(tmpname1,"*",sep=""))
-	unlink(paste(tmpname2,"*",sep=""))
 }
