@@ -1,8 +1,8 @@
 get_slot <- function(data,slotname)
 {
-	if (class(data) == "gwaa.data") return(slot(data@gtdata,"slotname"))
-	else if (class(data) == "snp.data") return(slot(data,"slotname"))
-	else stop("data should be of class 'snp.data' or 'gwaa.data'")
+    if (class(data) == "gwaa.data") return(slot(data@gtdata,slotname))
+    else if (class(data) == "snp.data") return(slot(data,slotname))
+    else stop("data should be of class 'snp.data' or 'gwaa.data'")
 }
 
 nsnps <- function(data) {return(get_slot(data,"nsnps"))}
