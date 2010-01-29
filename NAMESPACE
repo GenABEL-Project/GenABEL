@@ -71,6 +71,7 @@ export(
 	nids,
 	patch_strand,
 	perid.summary,
+	phdata,
 	plot.check.marker,
 	plot.scan.gwaa,
 	plot.scan.gwaa.2D,

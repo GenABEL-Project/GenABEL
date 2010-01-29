@@ -57,5 +57,6 @@ impute2mach <- function(genofile,infofile,samplefile,machbasename, maketextdosef
 		close(outfile)
 		unlink(paste(tmpname2,"*",sep=""))
 	}
-	
+	disconnect(dfo)
+	rm(dfo);gc()
 }
