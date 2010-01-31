@@ -29,7 +29,7 @@ extract.annotation.mach <- function(infofile,legendfile,chromosome=NA)
 	rownames(mrg) <- mrg$name
 	mrg <- mrg[as.character(infoannot$name),]
 	class(mrg$pos) <- class(mrg$Freq1) <- class(mrg$Rsq) <- class(mrg$Quality) <- "numeric"
-	
+	if (!missing(chromosome)) mrg$chr <- chromosome
 	return(mrg)
 	
 }
