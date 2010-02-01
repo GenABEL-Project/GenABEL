@@ -25,7 +25,7 @@ mach2databel <- function(mldosefile,mlinfofile,outfile)
 	{
 		tmp <- scan(mlinfofile,what="character",skip=1)
 		tmp <- tmp[c(T,F,F,F,F,F,F)]
-		print(tmp[1:10])
+		#print(tmp[1:10])
 		tmpname <- get_temporary_file_name()
 		write(tmp,file=tmpname)
 		rm(tmp);gc()
@@ -56,5 +56,7 @@ mach2databel <- function(mldosefile,mlinfofile,outfile)
 	
 	if (tmpname != "") unlink(paste(tmpname,"*",sep=""))
 	
+	disconnect(dfaobj)
+	connect(dfaobj)
 	return(dfaobj)
 }

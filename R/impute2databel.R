@@ -67,5 +67,7 @@ impute2databel <- function(genofile,samplefile,outfile) # dosefile = TRUE
 	
 	rm(tmp_fv);gc();unlink(paste(tmpname,"*",sep=""))
 	
+	disconnect(dosefile)
+	connect(dosefile)
 	return(dosefile)
 }

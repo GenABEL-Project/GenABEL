@@ -51,6 +51,7 @@ export(
 	formetascore,
 	GASurv,
 	grammar,
+	gtdata,
 	HWE.show,
 	hom,
 	hom.old,

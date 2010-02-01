@@ -60,6 +60,7 @@
 #include <stdio.h>
 #include <Rinternals.h>
 #include <fstream>
+#include <algorithm>
 
 #include <vector>
 

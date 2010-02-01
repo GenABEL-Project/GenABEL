@@ -18,3 +18,9 @@ phdata <- function(data) {
 	if (class(data) == "gwaa.data") return(data@phdata)
 	else stop("data should be of class 'gwaa.data'")
 }
+
+gtdata <- function(data) {
+	if (class(data) == "gwaa.data") return(data@gtdata)
+	else if (class(data) == "snp.data") return(data)
+	else stop("data should be of class 'snp.data' or 'gwaa.data'")
+}
