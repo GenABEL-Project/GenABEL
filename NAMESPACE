@@ -103,10 +103,10 @@ export(
 	summary.gwaa.data,
 	summary.snp.data,
 	Xfix,
-	ztransform #,
-	#var.meta,
-	#var.test.homogeneity
-	#var.test.homogeneity.bartlett
+	ztransform,
+	var.meta,
+	var.test.homogeneity
+	var.test.homogeneity.bartlett
        )
 
 exportClasses(
