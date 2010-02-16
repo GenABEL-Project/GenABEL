@@ -1,7 +1,16 @@
-#' extracts MACH annotation
+#' extracts SNP annotation from MACH/HapMap legend files
 #' 
-#' extracts SNP annotation information from MACH files
+#' This function extracts SNP annotation from MACH info and HapMap legend files. 
 #' 
+#' @param infofile MACH (ml)info-file name
+#' @param legendfile HapMap legend file name
+#' @param chromosome chromosome
+#' 
+#' @return data frame containing annotaton
+#' 
+#' @author Yurii Aulchenko
+#' 
+#' @keywords IO manip
 #' 
 
 extract.annotation.mach <- function(infofile,legendfile,chromosome=NA)

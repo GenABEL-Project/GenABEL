@@ -1,6 +1,24 @@
 #' converts IMPUTE to MACH files
 #'
-#' function to convert IMPUTE files to MAC format
+#' function to convert IMPUTE files to MACH format
+#' 
+#' @param genofile IMPUTE genotype file name
+#' @param infofile IMPUTE info file name
+#' @param samplefile IMPUTE sample file name
+#' @param machbasename base name for MACH-formatted outputs
+#' @param maketextdosefile whether text dosefile is to 
+#' be generated (if not, only filevector (*.fvi / *.fvd) files, usable 
+#' with ProbABEL, will be generated)
+#' @param ... arguments passed to \link{extract.annotation.impute}
+#' (DO CHECK documentation, otherwise your annotation may be 
+#' skrewed up!)
+#' 
+#' @author Yurii Aulchenko
+#' 
+#' @keywords IO manip
+#' 
+#' @return nothing returned except files generated on the disk
+#' 
 #' 
 
 impute2mach <- function(genofile,infofile,samplefile,machbasename, maketextdosefile = TRUE    , ... )

@@ -43,9 +43,10 @@ to import strand info)
 	\code{\link{export.merlin}}.
 }
 \examples{
-#
-# load(srdta)
-# export.impute(srdta[1:50,1:3])
-#
+\dontrun{
+load(srdta)
+export.impute(srdta[1:50,1:3])
+}
 }
 \keyword{IO}% at least one, from doc/KEYWORDS
+\keyword{manip}% at least one, from doc/KEYWORDS

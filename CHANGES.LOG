@@ -1,3 +1,9 @@
+***** v. 1.4-9 (2010.02.06)
+
+added arrange_probabel_phe(), also shortcuts to 
+slots of gwaa.data-class: chromosome, coding, 
+gtdata, idnames, map, nids, nsnps, phdata, snpnames, strand
+
 ***** v. 1.4-8 (2010.01.24)
 
 added export.impute(), patch_strand(), mach2databel(), impute2databel(),

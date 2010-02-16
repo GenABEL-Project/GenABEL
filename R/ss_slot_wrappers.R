@@ -14,11 +14,6 @@ chromosome <- function(data) {return(as.character(get_slot(data,"chromosome")))}
 strand <- function(data) {return(as.character(get_slot(data,"strand")))}
 coding <- function(data) {return(as.character(get_slot(data,"coding")))}
 
-phdata <- function(data) {
-	if (class(data) == "gwaa.data") return(data@phdata)
-	else stop("data should be of class 'gwaa.data'")
-}
-
 gtdata <- function(data) {
 	if (class(data) == "gwaa.data") return(data@gtdata)
 	else if (class(data) == "snp.data") return(data)

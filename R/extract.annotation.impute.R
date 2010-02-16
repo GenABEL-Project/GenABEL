@@ -1,7 +1,34 @@
-#' extracts IMPUTE annotation
+#' extracts SNP annotation from IMPUTE files
 #' 
-#' extracts SNP annotation information from IMPUTE files
+#' This function extracts SNP annotation information from IMPUTE files. 
+#' The major problem at the moment that info-file format of IMPUTE is 
+#' a little bit unstable (reported information and column order 
+#' varies between impute v1, v2, and beta-version). Therefore take 
+#' special care to read specification of 'order_info_snp_pos_freq1_info_qual_type'
 #' 
+#' 
+#' @param genofile IMPUTE genotype file name
+#' @param infofile IMPUTE info-file name
+#' @param chromosome chromosome
+#' @param order_geno_snp_a0_a1 which columns to extract from geno-file, 
+#' and what is the order for snp name, a0, and a0? (default is OK)
+#' @param skip_geno how many lines of geno-file are to 
+#' be skept? (default is OK)
+#' @param order_info_snp_pos_freq1_info_qual_type 
+#' which columns to extract from info-file, 
+#' and what is the order for SNP name, position, frequency of allele 1, 
+#' info (Rsq), and quality (average max post prob)? Dafult works for 
+#' IMPUTE v2.0, but has to be changed for other versions. Always check!
+#' @param skip_info how many lines of info-file are to be skept 
+#' before information starts? IMPUTE v2.0 has a header line, therefore 
+#' skip_info=1 works fine; this may be different for other versions 
+#' of IMPUTE
+#' 
+#' @return data frame containing annotaton
+#' 
+#' @author Yurii Aulchenko
+#' 
+#' @keywords IO manip
 #' 
 
 extract.annotation.impute <- function(genofile,infofile,chromosome=NA,

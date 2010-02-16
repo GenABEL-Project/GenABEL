@@ -1,13 +1,20 @@
 #'
-#' converts mach-imputed files to DatABEL (filevector) format
+#' converts MACH-imputed files to DatABEL (filevector) format
 #' 
-#' this function converts mach-imputed files to DatABEL (filevector) format
+#' This function converts mach-imputed files to \code{DatABEL} (filevector) format.
+#' After conversion, two files (outfile.fvi and outfile.fvd), corresponding 
+#' to single filevector object, will appear on the disk; databel_filtered_R 
+#' object connected to these files will be returned to R
 #' 
 #' @param mldosefile MACH mldose file name
 #' @param mlinfofile MACH mlinfo file name
 #' @param outfile output file name
 #' 
-#' @value databel_filtered_R-class object
+#' @return databel_filtered_R-class object
+#' 
+#' @author Yurii Aulchenko
+#' 
+#' @keywords IO manip
 #' 
 #' 
 

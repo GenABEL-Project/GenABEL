@@ -1,8 +1,8 @@
 useDynLib(GenABEL)
 
-import(methods)
-import(genetics)
-importClasses(genetics)
+#import(methods)
+#import(genetics)
+#importClasses(genetics)
 
 export(
 	add.plot,

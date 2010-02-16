@@ -2,10 +2,13 @@
 #' converts IMPUTE-imputed files to DatABEL (filevector) format
 #' 
 #' this function converts IMPUTE-imputed files to DatABEL (filevector) format
-#' computing dosages
+#' containing estimated dosages. 
+#' After conversion, two files (outfile.fvi and outfile.fvd), corresponding 
+#' to single filevector object, will appear on the disk; databel_filtered_R 
+#' object connected to these files will be returned to R.
 #' 
-#' @param genofile MACH mldose file name
-#' @param samplefile MACH mlinfo file name
+#' @param genofile IMPUTE genotype file name
+#' @param samplefile IMPUTE sample file name
 #' @param outfile output file name
 #' 
 #' @return databel_filtered_R-class object
