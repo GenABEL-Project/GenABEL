@@ -106,7 +106,7 @@ export(
 	ztransform,
 	var.meta,
 	var.test.homogeneity
-	var.test.homogeneity.bartlett
+	#var.test.homogeneity.bartlett
        )
 
 exportClasses(
