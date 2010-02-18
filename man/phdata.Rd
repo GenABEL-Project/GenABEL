@@ -5,6 +5,7 @@ gtdata(data)
 chromosome(data)
 coding(data)
 idnames(data)
+male(data)
 map(data)
 nids(data)
 nsnps(data)
@@ -17,20 +18,29 @@ phdata: phenotypic data
 
 gtdata: genotypic data
 
+chromosome: SNP chromosome
+
+coding: SNP coding
+
+map: SNP map position
+
+strand: SNP strand
+
+male: subject's sex (who is male?)
+
 idnames: subject IDs
 
 snpnames: marker IDs
 
 nids: number of subjects
 
-nsnps: number of markers
-
-...}
+nsnps: number of markers}
 \alias{gtdata}
 \alias{chromosome}
 \alias{coding}
 \alias{gtdata}
 \alias{idnames}
+\alias{male}
 \alias{map}
 \alias{nids}
 \alias{nsnps}

@@ -13,6 +13,8 @@ map <- function(data) {return(get_slot(data,"map"))}
 chromosome <- function(data) {return(as.character(get_slot(data,"chromosome")))}
 strand <- function(data) {return(as.character(get_slot(data,"strand")))}
 coding <- function(data) {return(as.character(get_slot(data,"coding")))}
+male <- function(data) {return(as.character(get_slot(data,"male")))}
+
 
 gtdata <- function(data) {
 	if (class(data) == "gwaa.data") return(data@gtdata)

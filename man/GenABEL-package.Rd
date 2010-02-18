@@ -93,7 +93,6 @@ For fast analysis function, see
 \code{\link{qtscore}},
 \code{\link{mmscore}},
 \code{\link{egscore}},
-\code{\link{mlreg}},
 \code{\link{ibs}},
 \code{\link{r2fast}},
 \code{\link{dprfast}},

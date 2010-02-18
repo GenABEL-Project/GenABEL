@@ -1,3 +1,11 @@
+***** v. 1.5-0 (2010.02.18)
+
+added shortcut to @male slot (function male())
+
+update of ABEL-tutorial (also few details on NCBI2R added)
+
+general clean-up, submission to CRAN
+
 ***** v. 1.4-9 (2010.02.06)
 
 added arrange_probabel_phe(), also shortcuts to 
