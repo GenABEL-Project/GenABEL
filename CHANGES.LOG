@@ -1,10 +1,14 @@
 ***** v. 1.5-0 (2010.02.18)
 
-added shortcut to @male slot (function male())
-
 update of ABEL-tutorial (also few details on NCBI2R added)
 
 general clean-up, submission to CRAN
+
+extended add.phdata()
+
+added del.phdata(), shortcut to @male slot (function male())
+
+added checks for F in sex checks, ...$otherSexErr lists individuals with 0.2 > F > 0.8
 
 ***** v. 1.4-9 (2010.02.06)
 
