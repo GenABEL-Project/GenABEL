@@ -28,9 +28,9 @@ impute2mach <- function(genofile,infofile,samplefile,machbasename, maketextdosef
     
     if (!is.character(machbasename)) stop("machbasename must be character")
     if (length(machbasename) == 1) {
-        machdose <- paste(machbasename,".dose",sep="")
-        machinfo <- paste(machbasename,".info",sep="")
-        machlegend <- paste(machbasename,".legend",sep="")
+        machdose <- paste(machbasename,".machdose",sep="")
+        machinfo <- paste(machbasename,".machinfo",sep="")
+        machlegend <- paste(machbasename,".machlegend",sep="")
     } else if (length(machbasename) == 3) {
         if (length(unique(machbasename)) != 3) stop("names must be unique")
         machdose <- machbasename[1]
@@ -64,7 +64,7 @@ impute2mach <- function(genofile,infofile,samplefile,machbasename, maketextdosef
     
     if (maketextdosefile) {
         # arrange MLDOSE file
-        ids <- dimnames(dfo)[[1]]
+        ids <- get_dimnames(dfo)[[1]]
         if (file.exists(machdose)) unlink(machdose)
         outfile <- file(machdose,open="wt")
         for (i in 1:dim(dfo)[1])

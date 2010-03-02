@@ -52,19 +52,28 @@ impute2databel <- function(genofile,samplefile,outfile) # dosefile = TRUE
 	#dosefile <- make_empty_fvf(paste(outfile,".dose",sep=""), 
 	#		nvariables = dim(tmp_fv)[2], nobservations = round(dim(tmp_fv)[1]/3),type = "FLOAT")
 	
+	saved_names <- get_dimnames(tmp_fv)
+	
+	tmplst <- list(as.character(c(1:dim(tmp_fv)[1])),as.character(c(1:dim(tmp_fv)[2])))
+	dimnames(tmp_fv) <- tmplst
+	
 	dosefile <- apply2dfo(dfodata=tmp_fv, anFUN = "makedose", 
 			MAR = 2, procFUN = "pfun",prob=SNP,
 			outclass="databel_filtered_R",
 			outfile=paste(outfile,".dose",sep=""),
 			type="FLOAT",transpose=FALSE)
 	
+	dimnames(dosefile)[[2]] <- saved_names[[2]]
 	
 	if (!missing(samplefile))
 	{
 		temp <- scan(samplefile,what="character",nlines=1)
 		samnames <- scan(samplefile,what="character",skip=2)
 		samnames <- samnames[c(F,T,rep(F,(length(temp)-2)))]
-		rownames(dosefile) <- samnames
+		if (length(samnames) == dim(dosefile)[1]) 
+			rownames(dosefile) <- samnames
+		else
+			warning("number of IDs specified in sample file does not match to geno-dimension; dropping ID names")
 	} else 
 		warning("sample file not specified, you will not be able to use ID names (only index)")
 	

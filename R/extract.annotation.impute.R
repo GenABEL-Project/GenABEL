@@ -36,6 +36,9 @@ extract.annotation.impute <- function(genofile,infofile,chromosome=NA,
 		order_info_snp_pos_freq1_info_qual_type=c(2:7),skip_info=1
 )
 {
+	if (!require(DatABEL))
+		stop("this function requires DatABEL package to be installed")
+	
 	if (!file.exists(genofile)) stop(paste("genofile",genofile,"does not exist"))
 	if (!file.exists(infofile)) warning(paste("infofile",infofile,"does not exist; skipping that info"))
 	

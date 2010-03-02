@@ -51,7 +51,7 @@ mach2databel <- function(mldosefile,mlinfofile,outfile)
 				#skiprows,
 				transpose=FALSE,R_matrix=FALSE,type="FLOAT")
 
-	dnames <- dimnames(dfaobj)
+	dnames <- get_dimnames(dfaobj)
 	subjs <- dnames[[1]]
 	#print(subjs[1:10])
 	subjs <- sub("[0-9]*->","",subjs)
