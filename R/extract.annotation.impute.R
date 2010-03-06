@@ -23,6 +23,8 @@
 #' before information starts? IMPUTE v2.0 has a header line, therefore 
 #' skip_info=1 works fine; this may be different for other versions 
 #' of IMPUTE
+#' @param allow_duplicated_names if duplicated SNP names are allowed
+#' (same order in geno and info- files is assumed then)
 #' 
 #' @return data frame containing annotaton
 #' 
@@ -33,7 +35,8 @@
 
 extract.annotation.impute <- function(genofile,infofile,chromosome=NA,
 		order_geno_snp_a0_a1=c(2,4:5),skip_geno=0,
-		order_info_snp_pos_freq1_info_qual_type=c(2:7),skip_info=1
+		order_info_snp_pos_freq1_info_qual_type=c(2:7),skip_info=1,
+		allow_duplicated_names=FALSE
 )
 {
 	if (!require(DatABEL))
@@ -68,9 +71,15 @@ extract.annotation.impute <- function(genofile,infofile,chromosome=NA,
 		warning("not all snps are in info-file")
 		warning(paste("missing snps:",genoannot$name[which(!(genoannot$name %in% infoannot$name))]))
 	}
-	mrg <- merge(genoannot,infoannot,by="name",all.x=TRUE,all.y=F)
-	rownames(mrg) <- mrg$name
-	mrg <- mrg[as.character(genoannot$name),]
+	if (allow_duplicated_names) {
+		if (dim(genoannot)[1] != dim(infoannot)[1]) 
+			stop("number of SNPs in geno- and info- files different")
+		mrg <- cbind(genoannot,infoannot[,c(2:dim(infoannot)[2])])
+	} else {
+		mrg <- merge(genoannot,infoannot,by="name",all.x=TRUE,all.y=F)
+		rownames(mrg) <- mrg$name
+		mrg <- mrg[as.character(genoannot$name),]
+	}
 	class(mrg$pos) <- class(mrg$Freq1) <- class(mrg$Rsq) <- class(mrg$Quality) <- "numeric"
 	if (!missing(chromosome)) mrg$chr <- chromosome
 	return(mrg)
