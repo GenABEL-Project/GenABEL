@@ -39,15 +39,19 @@ impute2mach <- function(genofile,infofile,samplefile,machbasename, maketextdosef
     } else stop("machbasename must be character of length 1 or 3")
     
     # create temporary DA file
+	
+	#print("before impute2databel");
     dfo <- impute2databel(genofile=genofile,samplefile=samplefile,outfile=genofile)
-    if (maketextdosefile) {
+	#print("after impute2databel");
+	
+	if (maketextdosefile) {
         tmpname2 <- get_temporary_file_name()    
         # transpose file
         # ... 
         dfo <- as(dfo,"matrix")
     }
     # get annotattion
-    #print("AAA")
+    #print("calling extract.annotation.impute")
     annot <- extract.annotation.impute(genofile=genofile,infofile=infofile, ... )
     #print(annot[1:5,])
     

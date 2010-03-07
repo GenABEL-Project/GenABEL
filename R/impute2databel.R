@@ -52,18 +52,29 @@ impute2databel <- function(genofile,samplefile,outfile) # dosefile = TRUE
 	#dosefile <- make_empty_fvf(paste(outfile,".dose",sep=""), 
 	#		nvariables = dim(tmp_fv)[2], nobservations = round(dim(tmp_fv)[1]/3),type = "FLOAT")
 	
+	#print(dimnames(tmp_fv)[[2]])
+	#print(dim(tmp_fv))
+	#print(class(tmp_fv))
 	saved_names <- get_dimnames(tmp_fv)
+	#print(class(tmp_fv))
 	
-	tmplst <- list(as.character(c(1:dim(tmp_fv)[1])),as.character(c(1:dim(tmp_fv)[2])))
+	tmplst <- list( as.character(1:dim(tmp_fv)[1]) , as.character(1:dim(tmp_fv)[2]) )
+	#print(class(tmp_fv))
+	#print(dimnames(tmp_fv)[[2]])
 	dimnames(tmp_fv) <- tmplst
+	#print(class(tmp_fv))
+	#print(dimnames(tmp_fv)[[2]])
 	
+	#print("before apply2dfo")
+	#print("calling apply2dfo")
 	dosefile <- apply2dfo(dfodata=tmp_fv, anFUN = "makedose", 
 			MAR = 2, procFUN = "pfun",prob=SNP,
 			outclass="databel_filtered_R",
 			outfile=paste(outfile,".dose",sep=""),
 			type="FLOAT",transpose=FALSE)
-	
+	#print("after apply2dfo")
 	dimnames(dosefile)[[2]] <- saved_names[[2]]
+	#print("dimnames [[2]]")
 	
 	if (!missing(samplefile))
 	{
