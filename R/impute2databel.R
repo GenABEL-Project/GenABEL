@@ -10,13 +10,15 @@
 #' @param genofile IMPUTE genotype file name
 #' @param samplefile IMPUTE sample file name
 #' @param outfile output file name
+#' @param makeprob wheather probability-files are also to be arranged
+#' @param old.var for developers' use
 #' 
 #' @return databel_filtered_R-class object
 #' 
 #' 
 
 
-impute2databel <- function(genofile,samplefile,outfile) # dosefile = TRUE 
+impute2databel <- function(genofile,samplefile,outfile,makeprob=TRUE,old=FALSE) 
 {
 	if (!require(DatABEL))
 		stop("this function requires DatABEL package to be installed")
@@ -67,13 +69,22 @@ impute2databel <- function(genofile,samplefile,outfile) # dosefile = TRUE
 	
 	#print("before apply2dfo")
 	#print("calling apply2dfo")
-	dosefile <- apply2dfo(dfodata=tmp_fv, anFUN = "makedose", 
-			MAR = 2, procFUN = "pfun",prob=SNP,
-			outclass="databel_filtered_R",
-			outfile=paste(outfile,".dose",sep=""),
-			type="FLOAT",transpose=FALSE)
+	if (old) {
+		dosefile <- apply2dfo(dfodata=tmp_fv, anFUN = "makedose", 
+				MAR = 2, procFUN = "pfun",prob=SNP,
+				outclass="databel_filtered_R",
+				outfile=paste(outfile,".dose",sep=""),
+				type="FLOAT",transpose=FALSE)
+	} else {
+		res <- .Call("databel_impute_prob_2_databel_mach_dose",
+				tmp_fv@data, paste(outfile,".dose",sep=""), as.integer(64))
+		dosefile <- databel_filtered_R(paste(outfile,".dose",sep=""),64)
+		if (makeprob)
+			res <- .Call("databel_impute_prob_2_databel_mach_prob",
+					tmp_fv@data, paste(outfile,".prob",sep=""), as.integer(64))
+	}
 	#print("after apply2dfo")
-	dimnames(dosefile)[[2]] <- saved_names[[2]]
+	set_dimnames(dosefile) <- list(dimnames(dosefile)[[1]],saved_names[[2]])
 	#print("dimnames [[2]]")
 	
 	if (!missing(samplefile))
