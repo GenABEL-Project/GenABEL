@@ -37,7 +37,8 @@ test.impute2databel <- function()
     }
     
     
-    tmp0 <- read.table("tmpTEST10x15.geno",head=F)
+    tmp0 <- read.table("tmpTEST10x15.geno",head=F,strings=F)
+    snps <- tmp0[,2]
     tmp0 <- tmp0[,c(6:dim(tmp0)[2])]
     dose <- apply(tmp0,FUN="makedose",MAR=1)
     prb <- makeprob(tmp0[1,])
@@ -57,31 +58,43 @@ test.impute2databel <- function()
     tmp1_m
     
     
-    tmp0[1:5,1:6]
+    print(tmp0[1:5,1:6])
     tmp2 <- impute2databel(geno="tmpTEST10x15.geno",
             sample="impute.sample5",
             out="tmpTEST10x15_F.geno",
             makeprob=TRUE,
             old=FALSE)
-    tmp2
+    print(tmp2)
     tmp2_m <- as(tmp2,"matrix")
     
     
     tmp3 <- databel_filtered_R("tmpTEST10x15_F.geno.prob")
     tmp3_m <- as(tmp3,"matrix")
-    prb
-    tmp3_m
     
     table(abs(dose-tmp1_m)<1e-6)
     table(abs(dose-tmp2_m)<1e-6)
     table(abs(prb-tmp3_m)<1e-6)
     table(abs(tmp1_m-tmp2_m)<1e-8)
-    identical(tmp1_m,tmp2_m)
+    checkIdentical(tmp1_m,tmp2_m)
+    
+    smpl <- read.table("impute.sample5",head=F,skip=2,strings=F)[,1] 
     
     checkEqualsNumeric(dose,tmp1_m,tolerance=4*sqrt(.Machine$double.eps))
     checkEqualsNumeric(dose,tmp2_m,tolerance=4*sqrt(.Machine$double.eps))
     checkEqualsNumeric(prb,tmp3_m,tolerance=4*sqrt(.Machine$double.eps))
     checkIdentical(tmp1_m,tmp2_m)
+    checkIdentical(rownames(tmp1),smpl)
+    checkIdentical(rownames(tmp2),smpl)
+    checkIdentical(rownames(tmp3),smpl)
+    checkIdentical(dimnames(tmp1),dimnames(tmp1_m))
+    checkIdentical(dimnames(tmp2),dimnames(tmp2_m))
+    checkIdentical(dimnames(tmp3),dimnames(tmp3_m))
+    checkIdentical(get_dimnames(tmp1),list(smpl,snps))
+    checkIdentical(get_dimnames(tmp2),list(smpl,snps))
+    snps2 <- rep(0,2*length(snps))
+    snps2[c(T,F)] <- paste(snps,"_11",sep="")
+    snps2[c(F,T)] <- paste(snps,"_12",sep="")
+    checkIdentical(get_dimnames(tmp3),list(smpl,snps2))
     
     unlink("tmp*.fv?")    
     
