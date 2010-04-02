@@ -11,7 +11,7 @@
 #' @param samplefile IMPUTE sample file name
 #' @param outfile output file name
 #' @param makeprob wheather probability-files are also to be arranged
-#' @param old.var for developers' use
+#' @param old for developers' use
 #' 
 #' @return databel_filtered_R-class object
 #' 
@@ -118,7 +118,7 @@ impute2databel <- function(genofile,samplefile,outfile,makeprob=TRUE,old=FALSE)
 		if (makeprob) if (length(samnames) == dim(probfile)[1] && 2*length(varnames)==dim(probfile)[2]) {
 				dpnames <- rep(0,length(varnames)*2)
 				dpnames[c(T,F)] <- paste(varnames,"_11",sep="")
-				dpnames[c(F,T)] <- paste(varnames,"_12",sep="")
+				dpnames[c(F,T)] <- paste(varnames,"_01",sep="")
 				set_dimnames(probfile) <- list(samnames,dpnames) #get_dimnames(probfile)[[2]])
 			} else {
 				warning("number of IDs/SNPs specified in sample file does not match to geno-dimension; dropping IDs/SNPs names")

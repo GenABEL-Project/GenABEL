@@ -1,4 +1,4 @@
-RUNIT TEST PROTOCOL -- Sun Mar 21 19:49:11 2010 
+RUNIT TEST PROTOCOL -- Fri Apr  2 20:00:05 2010 
 *********************************************** 
 Number of test functions: 1 
 Number of errors: 0 
@@ -19,4 +19,4 @@ Involved directory:
 /Users/yuriiaulchenko/eclipse_workspace/GenABEL/tests/../inst/unitTests 
 --------------------------- 
 Test file: /Users/yuriiaulchenko/eclipse_workspace/GenABEL/tests/../inst/unitTests/runit.impute2mach.R 
-test.impute2databel: (14 checks) ... OK (0.52 seconds)
+test.impute2databel: (14 checks) ... OK (0.45 seconds)

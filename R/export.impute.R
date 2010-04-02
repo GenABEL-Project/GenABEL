@@ -18,13 +18,16 @@
 	gend <- data@gtdata@male
 	gend[gend==0] <- 2
 	samples <- data.frame(
-			id=data@gtdata@idnames,
-			Subject_id=data@gtdata@idnames,
+			id=idnames(data),
+			Subject_id=idnames(data),
 			Missing=miss,
 			Gender=gend,
 			stringsAsFactors=FALSE
 	)
+	ord <- samples$id
 	samples <- merge(samples,data@phdata,by="id",all.x=T,all.y=F)
+	rownames(samples) <- samples$id
+	samples <- samples[ord,]
 	names(samples)[1] <- "Sample_id"
 	names(samples)[4] <- "Gender"
 # is this correct missing code???
