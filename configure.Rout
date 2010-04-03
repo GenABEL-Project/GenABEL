@@ -1,0 +1,23 @@
+
+R version 2.12.0 Under development (unstable) (2010-04-02 r51566)
+Copyright (C) 2010 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> source("generate_documentation.R")
+Error in library(roxygen) : there is no package called 'roxygen'
+Calls: source -> eval.with.vis -> eval.with.vis -> library
+Execution halted
