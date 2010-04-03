@@ -18,8 +18,8 @@ make_random_matrix <- function(range_dim1 = c(200,1000), range_dim2 = c(200,1000
 
 checkNumEq <- function(testmatr,test_fv,tolmult=5)
 {
-	checkEqualsNumeric(testmatr,as(test_fv,"matrix"),tolerance=tolmult*sqrt(.Machine$double.eps))
 	checkIdentical(dim(testmatr),dim(test_fv))
+	checkEqualsNumeric(testmatr,as(test_fv,"matrix"),tolerance=tolmult*sqrt(.Machine$double.eps))
 	dmn <- dimnames(test_fv)
 	if (is.null(dmn)) dmn <- get_dimnames(test_fv)
 	checkIdentical(dimnames(testmatr),dmn)

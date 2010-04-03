@@ -3,7 +3,8 @@
 \title{extracts SNP annotation from IMPUTE files...}
 \usage{extract.annotation.impute(genofile, infofile, chromosome=NA,
     order_geno_snp_a0_a1=c(2, 4:5), skip_geno=0,
-    order_info_snp_pos_freq1_info_qual_type=c(2:7), skip_info=1)}
+    order_info_snp_pos_freq1_info_qual_type=c(2:7), skip_info=1,
+    allow_duplicated_names=FALSE)}
 \description{extracts SNP annotation from IMPUTE files}
 \details{This function extracts SNP annotation information from IMPUTE files. 
 The major problem at the moment that info-file format of IMPUTE is 
@@ -28,4 +29,6 @@ IMPUTE v2.0, but has to be changed for other versions. Always check!}
 \item{skip_info}{how many lines of info-file are to be skept 
 before information starts? IMPUTE v2.0 has a header line, therefore 
 skip_info=1 works fine; this may be different for other versions 
-of IMPUTE}}
+of IMPUTE}
+\item{allow_duplicated_names}{if duplicated SNP names are allowed
+(same order in geno and info- files is assumed then)}}

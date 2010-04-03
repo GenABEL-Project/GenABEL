@@ -1,0 +1,3 @@
+rm -f configure.Rout
+rm -rf .RData R/.RData
+rm -f src/*.o
