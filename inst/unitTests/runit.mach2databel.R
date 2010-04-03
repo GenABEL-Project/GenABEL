@@ -12,7 +12,8 @@ if(FALSE) {
 
 ### ---- common functions and data -----
 
-source("../inst/unitTests/shared_functions.R")
+#source("../inst/unitTests/shared_functions.R")
+source(paste(path,"/shared_functions.R",sep=""))
 
 ### --- Test functions ---
 

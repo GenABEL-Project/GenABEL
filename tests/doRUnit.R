@@ -17,7 +17,7 @@ if(require("RUnit", quietly=TRUE)) {
 		## PKG.Rcheck/tests/../PKG/unitTests
 		path <- system.file(package=pkg, "unitTests")
 		## do not run RUnit tests on R CMD CHECK
-		q()
+		#q()
 	}
 	cat("\nRunning unit tests\n")
 	
