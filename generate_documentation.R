@@ -13,8 +13,10 @@ roxy_files <- c(
 
 library(roxygen)
 setwd("R")
-system("rm -r GenABEL")
+unlink("GenABEL",recursive=TRUE)
 package.skeleton("GenABEL",code_files=roxy_files)
 roxygenize("GenABEL",roxygen.dir="GenABEL",copy=F,unlink=F)
-system("cp GenABEL/man/*Rd ../man/.")
-system("rm -r GenABEL")
+lstf <- paste("GenABEL/man/",list.files("GenABEL/man/"),sep="")
+lstf
+file.copy(lstf,"../man/",overwrite=TRUE)
+unlink("GenABEL",recursive=TRUE)
