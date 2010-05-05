@@ -18,7 +18,10 @@ data_prefix = "big_data/KOM"
 
 test.impute2xxx_large <- function()
 {
-
+	
+	unlink("*.fv?")
+	unlink("tmp*")
+	
 	geno <- paste(data_prefix,".geno",sep="")
 	info <- paste(data_prefix,".info",sep="")
 	samp <- paste(data_prefix,".sample",sep="")
@@ -34,5 +37,15 @@ test.impute2xxx_large <- function()
 			out=out,
 			makeprob=TRUE,
 			old=FALSE)
+	checkIdentical("databel",class(fvdose)[1])
+	fvprob <- databel(paste(out,".prob",sep=""))
+	checkIdentical("databel",class(fvprob)[1])
+	checkIdentical(get_dimnames(fvdose)[[1]],get_dimnames(fvprob)[[1]])
+	checkIdentical(dim(fvdose)[1],dim(fvprob)[1])
+	prD2 <- (dim(fvprob)[2])/2
+	checkEqualsNumeric(prD2,dim(fvdose)[2])
+	
+	unlink("*.fv?")
+	unlink("tmp*")
 	
 }
