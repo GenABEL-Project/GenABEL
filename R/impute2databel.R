@@ -106,7 +106,7 @@ impute2databel <- function(genofile,samplefile,outfile,makeprob=TRUE,old=FALSE)
 #			#print(get_dimnames(probfile))
 #		}
 	}
-	#print("after apply2dfo")
+	#!print("after iterator")
 	set_dimnames(dosefile) <- list(get_dimnames(dosefile)[[1]],varnames)
 	#print("dimnames dose:")
 	#print(get_dimnames(dosefile))
@@ -118,10 +118,11 @@ impute2databel <- function(genofile,samplefile,outfile,makeprob=TRUE,old=FALSE)
 		samnames <- scan(samplefile,what="character",skip=2)
 		samnames <- samnames[c(F,T,rep(F,(length(temp)-2)))]
 		if (length(samnames) == dim(dosefile)[1]) { 
-			#print("for dose-file:")
+			#!print("before dose-file")
 			#print(samnames)
 			#print(varnames)
 			set_dimnames(dosefile) <- list(samnames,varnames)
+			#!print("after dose-file")
 			#print(get_dimnames(dosefile))
 		} else {
 			warning("number of IDs specified in sample file does not match to geno-dimension; dropping ID names")
@@ -130,10 +131,11 @@ impute2databel <- function(genofile,samplefile,outfile,makeprob=TRUE,old=FALSE)
 				dpnames <- rep(0,length(varnames)*2)
 				dpnames[c(T,F)] <- paste(varnames,"_11",sep="")
 				dpnames[c(F,T)] <- paste(varnames,"_01",sep="")
-				#print("for prob-file:")
+				#!print("before prob-file")
 				#print(samnames)
 				#print(dpnames)
 				set_dimnames(probfile) <- list(samnames,dpnames) #get_dimnames(probfile)[[2]])
+				#!print("after prob-file")
 				#print(get_dimnames(probfile))
 			} else {
 				warning("number of IDs/SNPs specified in sample file does not match to geno-dimension; dropping IDs/SNPs names")
@@ -146,12 +148,13 @@ impute2databel <- function(genofile,samplefile,outfile,makeprob=TRUE,old=FALSE)
 	
 	#disconnect(dosefile)
 	#connect(dosefile)
-	#print("at exit dosefile:")
+	#!print("at exit dosefile:")
 	#print(get_dimnames(dosefile))
 	if (makeprob) {
 		#print("at exit probfile:")
 		#print(get_dimnames(probfile))
 		disconnect(probfile)
 	}
+	#!print("at return")
 	return(dosefile)
 }
