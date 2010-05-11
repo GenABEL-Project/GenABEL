@@ -20,8 +20,8 @@ source(paste(path,"/shared_functions.R",sep=""))
 test.mach2databel <- function()
 {
     
-    library("RUnit")
-    library("GenABEL")
+#    library("RUnit")
+#    library("GenABEL")
 
     unlink("test*.fv?")
 
