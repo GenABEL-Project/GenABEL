@@ -102,7 +102,7 @@ test.impute2databel <- function()
     snps2[c(F,T)] <- paste(snps,"_01",sep="")
     checkIdentical(get_dimnames(tmp3),list(smpl,snps2))
 
-	rm(tmp1,tmp2,tmp3);gc()
+	rm(list=ls());gc()
 
 	unlink("tmp*.fv?")    
     
