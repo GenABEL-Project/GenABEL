@@ -1,3 +1,6 @@
+
+added methods "dim" and "dimnames" to snp.data-class
+
 ***** v. 1.5-6 (2010.05.28)
 
 fixes in filevector
