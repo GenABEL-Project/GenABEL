@@ -1,3 +1,3 @@
 .onLoad <- function(lib, pkg) {
-	cat("GenABEL v. 1.5-6 (May 28, 2010) loaded\n")
+	cat("GenABEL v. 1.5-7 (June 7, 2010) loaded\n")
 }
