@@ -8,7 +8,8 @@ roxy_files <- c(
 		"impute2databel.R",
 		"impute2mach.R",
 		"mach2databel.R",
-		"phdata.R"
+		"phdata.R",
+		"polygenic.R"
 )
 
 library(roxygen)
