@@ -298,9 +298,11 @@
 				betaFGLS <- as.vector(ginv(t(desmat) %*% iSigma %*% desmat) %*% 
 								(t(desmat) %*% iSigma %*% y))
 				#print(c("betaFGLS = ",betaFGLS))
-				LHest <- LHest[abs(betaFGLS)>maxdiffgls]
-				betaFGLS <- betaFGLS[abs(betaFGLS)>maxdiffgls]
-				difFGLS <- abs((betaFGLS-LHest)/betaFGLS)
+				#cnd <- (abs(betaFGLS)>maxdiffgls)
+				#cnd[1] <- TRUE
+				#LHest <- LHest[cnd]
+				#betaFGLS <- betaFGLS[cnd]
+				difFGLS <- abs(betaFGLS-LHest)
 				if (!quiet) {
 					cat("difFGLS:\n")
 					print(difFGLS)
