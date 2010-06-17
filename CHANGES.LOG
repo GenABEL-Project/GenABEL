@@ -1,6 +1,7 @@
-***** v. 1.5-9 (2010.06.16)
+***** v. 1.5-9 (2010.06.17)
 
-small fix in polygenic -- convergence checks with intercept-only model
+small changes in polygenic -- convergence checks with intercept-only model; treatment 
+for h2-boundary-stick situations (at small N)
 
 ***** v. 1.5-8 (2010.06.10)
 
