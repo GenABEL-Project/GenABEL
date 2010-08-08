@@ -6,7 +6,7 @@ Date: 2010-08-07
 Author: Yurii Aulchenko, Maksim Struchalin
 Maintainer: Yurii Aulchenko <i.aoultchenko@erasmusmc.nl>
 Depends: R (>= 2.10.0), methods, MASS
-Suggests: qvalue, genetics, haplo.stats, DatABEL (>= 0.1-6)
+Suggests: qvalue, genetics, haplo.stats, DatABEL (>= 0.9-0)
 Description: a package for genome-wide association analysis between 
              quantitative or binary traits and single-nucleiotide
              polymorphisms (SNPs). 
