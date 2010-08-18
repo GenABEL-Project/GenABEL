@@ -1,7 +1,9 @@
 roxy_files <- c(
 		"add.phdata.R",
+		"annotation",
 		"arrange_probabel_phe.R",
 		"del.phdata.R",
+		"export.plink.R",
 		"extract.annotation.impute.R",
 		"extract.annotation.mach.R",
 		"GenABEL-package.R",
@@ -9,7 +11,8 @@ roxy_files <- c(
 		"impute2mach.R",
 		"mach2databel.R",
 		"phdata.R",
-		"polygenic.R"
+		"polygenic.R",
+		"summary.scan.gwaa.R"
 )
 
 library(roxygen)
