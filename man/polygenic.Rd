@@ -126,9 +126,9 @@ between estimates obtained and that from FGLS)}
 \item{...}{Optional arguments to be passed to \code{\link{nlm}} or (\code{\link{optim}}) 
 minimisation function}}
 \examples{# note that procedure runs on CLEAN data
-data(ge03d2ex)
-gkin <- ibs(ge03d2ex,w="freq")
-h2ht <- polygenic(height ~ sex + age,kin=gkin,ge03d2ex)
+data(ge03d2ex.clean)
+gkin <- ibs(ge03d2ex.clean,w="freq")
+h2ht <- polygenic(height ~ sex + age,kin=gkin,ge03d2ex.clean)
 # estimate of heritability
 h2ht$esth2
 # other parameters
@@ -139,6 +139,6 @@ h2ht$h2an$minimum
 -h2ht$h2an$minimum
 
 #for binary trait (experimental)
-h2dm <- polygenic(dm2 ~ sex + age,kin=gkin,ge03d2ex,trait="binomial")
+h2dm <- polygenic(dm2 ~ sex + age,kin=gkin,ge03d2ex.clean,trait="binomial")
 # estimated parameters
 h2dm$h2an}

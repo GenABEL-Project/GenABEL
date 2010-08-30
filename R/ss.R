@@ -284,15 +284,27 @@ setMethod(
 		signature = "scan.gwaa",
 		definition = function(object)
 		{
-			if (!is.null(lambda)) {cat("Lambda:\n");print(lambda(object))}
-			res <- results(object)
-			cat("Results table contains",dim(res)[1],"rows and",dim(res)[2],"columns\n")
-			if (dim(res)[1]>10) {
-				res <- res[1:10,]
-				cat("Output for 10 first rows is:\n")
+			cat("***** 'scan.gwaa' object *****\n")
+			if (!is.null(object@call)) {cat("*** Produced with:\n");print(getcall(object));}
+			if (!is.null(object@family)) cat("*** Test used:",getfamily(object),"\n");
+			if (!is.null(object@idnames)) cat("*** no. IDs used:",length(object@idnames),"(",
+						idnames(object)[1:min(3,length(object@idnames))],", ... )\n")
+			if (!is.null(object@lambda)) {
+				cat("*** Lambda:",lambda(object)$est,"\n");
+				#	cat("*** Lambda:\n");
+				#	print(lambda(object));
 			}
-			print(res)
-			cat("Use 'results(object) to  complete results table\n")
+			cat("*** Results table contains",object@dimresults[1],"rows and",object@dimresults[2],"columns\n")
+			if (object@dimresults[1]>10) {
+				res <- object@results[1:10,]
+				cat("*** Output for 10 first rows is:\n")
+				print(res)
+				cat("   ...\n")
+			} else {
+				res <- results(object)
+				print(res)
+			}
+			cat("___ Use 'results(object)' to get complete results table ___\n")
 		}
 );
 
@@ -311,7 +323,7 @@ setMethod(
 		signature = "scan.gwaa",
 		definition = function(x)
 		{
-			return(dim(results(x)))
+			return(x@dimresults)
 		}
 );
 

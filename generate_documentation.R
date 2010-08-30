@@ -1,6 +1,6 @@
 roxy_files <- c(
 		"add.phdata.R",
-		"annotation",
+		#"annotation",
 		"arrange_probabel_phe.R",
 		"del.phdata.R",
 		"export.plink.R",
@@ -10,7 +10,7 @@ roxy_files <- c(
 		"impute2databel.R",
 		"impute2mach.R",
 		"mach2databel.R",
-		"phdata.R",
+		#"phdata.R",
 		"polygenic.R",
 		"summary.scan.gwaa.R"
 )

@@ -54,6 +54,7 @@ function(formula,data,snpsubset,idsubset,kinship.matrix,naxes=3,strata,
 	tmp <- dim(kinship.matrix)
 	if (tmp[1] == tmp[2]) {
 		tmp <- t(kinship.matrix)
+		diag(kinship.matrix) <- attr(kinship.matrix,"Var")
 		kinship.matrix[upper.tri(kinship.matrix)] <- tmp[upper.tri(tmp)]
 		ev <- eigen(kinship.matrix,symmetric=TRUE)$vectors
 		rownames(ev) <- rownames(kinship.matrix)
