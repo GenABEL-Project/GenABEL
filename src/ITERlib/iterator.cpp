@@ -2,7 +2,7 @@
 #include "Rstaff.h"
 #include "iterator_functions.h"
 #include "iterator.h"
-
+#include "gwaa_cpp.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -14,7 +14,8 @@ extern "C" {
 			{ "prod", &prodWrapper },
 			{ "sumpower", &sumpowerWrapper },
 			{ "qtscore_glob", &qtscore_globWrapper },
-			{ "fgls", &fglsWrapper }
+			{ "fgls", &fglsWrapper },
+			{ "snp_summary_exhwe", &snp_summary_exhweWrapper}
 	};
 
 	bool getDataReal(double *inData, unsigned int inDataRowLength, double *outData, unsigned int datasize,
