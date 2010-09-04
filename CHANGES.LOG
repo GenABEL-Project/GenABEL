@@ -1,3 +1,10 @@
+***** v. 1.6-5 (2010.09.04)
+
+moved summary.snp.data to 'iterator' framework, changes in gwaa.data@gtdata@gtps 
+definition, now 'ANY' allowing for use of different types of data with 
+interator. Interestingly, for 'old' data type computations bacame faster!
+
+
 ***** v. 1.6-4 (2010.08.30)
 
 new official release tested by ESP29-2010 participants

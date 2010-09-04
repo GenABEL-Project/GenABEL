@@ -87,13 +87,13 @@ extern "C" {
 			int    *Nstra = INTEGER(argList[3]);
 			int    *stra  = INTEGER(argList[4]);
 			// Calling the qtscore_glob function
-			qtscore_glob(indata, pheno, Type, Nids, Nstra, stra, outdata);
+			qtscoreProcessor(indata, pheno, Type, Nids, Nstra, stra, outdata);
 		}
 		outdataNcol = 10;
 		outdataNrow = 1;
 	}
 
-	void qtscore_glob(double *gt, double *pheno, int *Type, int *Nids, int *Nstra, int *stra, double *chi2)
+	void qtscoreProcessor(double *gt, double *pheno, int *Type, int *Nids, int *Nstra, int *stra, double *chi2)
 	{
 		int nsnps = 1;;
 		int nstra = (*Nstra);

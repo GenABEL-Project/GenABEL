@@ -14,7 +14,6 @@ extern "C" {
 			{ "prod", &prodWrapper },
 			{ "sumpower", &sumpowerWrapper },
 			{ "qtscore_glob", &qtscore_globWrapper },
-			{ "fgls", &fglsWrapper },
 			{ "snp_summary_exhwe", &snp_summary_exhweWrapper}
 	};
 
@@ -137,7 +136,7 @@ extern "C" {
 	}
 
 
-	SEXP iterator(SEXP data, SEXP nrids, SEXP nrobs, SEXP method, SEXP outputtype,
+	SEXP iteratorGA(SEXP primedata, SEXP nrids, SEXP nrobs, SEXP method, SEXP outputtype,
 			SEXP margin, SEXP nrstep, SEXP nrarg, ...) {
 
 		// Check and get the data supplied
@@ -154,8 +153,27 @@ extern "C" {
 			return R_NilValue;
 		}
 
-		//cout << "TYPEOF(data) = " << TYPEOF(data) << endl;
-		if (TYPEOF(data) == EXTPTRSXP) {
+		//Rprintf("TYPEOF(data)=%d\n",TYPEOF(primedata));
+		SEXP Rclass = GET_CLASS(primedata);
+		string klass;
+		if (Rclass != R_NilValue)
+			klass = CHAR(STRING_ELT(Rclass,0));
+		else
+			klass = "matrix";
+		//Rprintf("GET_CLASS(data)=%s\n",klass.c_str());
+
+		SEXP data;
+
+		if (klass == "databel") {
+			SEXP dataslot;
+			PROTECT(dataslot = allocVector(STRSXP, (R_len_t) 1));
+			SET_STRING_ELT(dataslot, 0, mkChar("data"));
+			data = R_do_slot(primedata, dataslot);
+			UNPROTECT(1);
+			if (TYPEOF(data) != EXTPTRSXP) {
+				error_R("Class of data is 'databel', but slot 'data' does not contain EXTPTRSXP\n");
+				return R_NilValue;
+			}
 			intype = 0;
 			pDataNew = getAbstractMatrixFromSEXP(data);
 			if (pDataNew == NULL) {
@@ -164,15 +182,25 @@ extern "C" {
 			}
 			nids = pDataNew->getNumVariables();
 			nobs = pDataNew->getNumObservations();
-		} else if (TYPEOF(data) == RAWSXP) {
+		} else if (klass == "snp.mx") {
+			data = primedata;
+			if (TYPEOF(data) != RAWSXP) {
+				error_R("Class of data is 'snp.mx', but does not contain RAWSXP\n");
+				return R_NilValue;
+			}
 			intype = 1;
 			pDataOld = (char const *) RAW(data);
 			//			nids = INTEGER(nrids)[0];
 			//			nobs = INTEGER(nrobs)[0];
 			nobs = INTEGER(nrids)[0];
 			nids = INTEGER(nrobs)[0];
-		} else if (TYPEOF(data) == REALSXP) {
+		} else if (klass == "matrix") {
 			// DEALING WITH REGULAR MATRICES HERE
+			data = primedata;
+			if (TYPEOF(data) != REALSXP) {
+				error_R("Class of data is 'matrix', but does not contain REALSXP\n");
+				return R_NilValue;
+			}
 			intype = 2;
 			pDataReal = (double *) REAL(data);
 			nobs = INTEGER(nrids)[0];
@@ -296,6 +324,7 @@ extern "C" {
 			return R_NilValue;
 		}
 		double * out_data = new (std::nothrow) double [nrow_new * ncol_multi];
+		//Rprintf("ncol_multi,nrow_new=%d,%d\n",ncol_multi,nrow_new);
 		if (out_data == NULL) {
 			error_R("can not allocate RAM for out_data\n");
 			delete [] argList;

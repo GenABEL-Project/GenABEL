@@ -181,6 +181,9 @@ void sset(char *indata, int *Nsnps, int *Nids, int *outlist, int *Noutlist, char
 */
 }
 
+
+// TO BE REMOVED LATER ON
+
 void snp_summary(char *indata, int *Nids, int *Nsnps, double *out) {
 	int i,j,m,idx;
 	int nids = (*Nids);
@@ -233,6 +236,76 @@ void snp_summary(char *indata, int *Nids, int *Nsnps, double *out) {
 }
 
 
+void snp_summary_exhwe(char *indata, unsigned int *Nids, unsigned int *Nsnps, double *out) {
+	unsigned int i,j,m,idx;
+	unsigned int nids = (*Nids);
+	unsigned int nsnps = (*Nsnps);
+	unsigned int gt[nids];
+	char str;
+	unsigned int count[3];
+	unsigned int nbytes;
+	if ((nids % 4) == 0) nbytes = nids/4; else nbytes = ceil(1.*nids/4.);
+	double meaids,p,pmax,qmax,maf,fmax,loglik0,loglik1,chi2lrt;
+	for (m=0;m<nsnps;m++) {
+		idx = 0;
+		for (i=0;i<nbytes;i++) {
+			str = indata[m*nbytes + i];
+			for (j=0;j<4;j++) {
+				gt[idx] = str & msk[j];
+				gt[idx++] >>= ofs[j];
+				if (idx>=nids) {idx=0;break;}
+			}
+		}
+		count[0]=count[1]=count[2]=0.;
+		p = 0.;
+		for (i=0;i<nids;i++)
+			if (gt[i]) {
+				count[gt[i]-1]++;
+				p+=(gt[i]-1);
+			}
+		meaids = 1.*(count[0]+count[1]+count[2]);
+		out[m]   = meaids;
+		out[(nsnps)*1+m] = meaids/nids;
+		if (meaids>0)
+			out[(nsnps)*2+m] = p/(2.*meaids);
+		else
+			out[(nsnps)*2+m] = 0.0;
+		out[(nsnps)*3+m] = count[0];
+		out[(nsnps)*4+m] = count[1];
+		out[(nsnps)*5+m] = count[2];
+		if (meaids>0) {
+			out[(nsnps)*6+m] = SNPHWE(count[1],count[0],count[2]);
+			pmax = out[(nsnps)*2+m];
+			qmax = 1.-pmax;
+			maf = qmax; if (pmax<qmax) maf = pmax;
+			if (maf>1.e-16) {
+				fmax = (4.*count[0]*count[2] - 1.*count[1]*count[1])/((2.*count[0]+1.*count[1])*(2.*count[2]+1.*count[1]));
+				loglik0 = 0.;
+				if (count[0]) loglik0 += 2.*count[0]*log(qmax);
+				if (count[1]) loglik0 += 1.*count[1]*log(2.*qmax*pmax);
+				if (count[2]) loglik0 += 2.*count[2]*log(pmax);
+				loglik1 = 0.;
+				if (count[0]) loglik1 += 1.*count[0]*log(qmax*qmax+qmax*pmax*fmax);
+				if (count[1]) loglik1 += 1.*count[1]*log(2.*qmax*pmax*(1.-fmax));
+				if (count[2]) loglik1 += 1.*count[2]*log(pmax*pmax+qmax*pmax*fmax);
+				chi2lrt = 2*(loglik1-loglik0);
+				out[(nsnps)*7+m] = fmax;
+				out[(nsnps)*8+m] = chi2lrt;
+			} else {
+				out[(nsnps)*7+m] = 0.;//maf;
+				out[(nsnps)*8+m] = 0.;
+			}
+		} else {
+			out[(nsnps)*6+m] = 1.0;
+		}
+	}
+}
+
+
+
+
+
+// END TO BE REMOVED
 
 void redundant(char *indata, int *Nids, int *Nsnps, double *Minc, int *outlist) {
 	int i,j,k,t,t1;
