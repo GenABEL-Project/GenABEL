@@ -80,7 +80,6 @@ export(
 	rhofast,
 	rntransform,
 	qtscore,
-	qtscoreNew,
 	qvaluebh95,
 	save.gwaa.data,
 	scan.glm,
