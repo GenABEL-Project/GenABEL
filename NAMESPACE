@@ -98,7 +98,8 @@ export(
 	summary.snp.data_old,
 	#summary.scan.gwaa,
 	Xfix,
-	ztransform #,
+	ztransform,
+	chi2_CG
 	#var.meta,
 	#var.test.homogeneity
 	#var.test.homogeneity.bartlett
