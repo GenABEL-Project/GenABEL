@@ -1,10 +1,16 @@
-***** v. 1.6-5 (2010.09.04)
+***** v. 1.6-5 (2010.10.08)
+
+Fan/Maksim's procedure for cocohet (CCH) procedure added, renamed by Yurii
+
+Bug fix in export.plink() thanks to Nadya Belonogova
+
+Made sure that SE reported does not carry the sign of beta (always 'abs')
 
 added mechanism to check for updates at load time
 
 moved summary.snp.data to 'iterator' framework, changes in gwaa.data@gtdata@gtps 
 definition, now 'ANY' allowing for use of different types of data with 
-interator. Interestingly, for 'old' data type computations bacame faster!
+interator. Interestingly, for 'old' data type computations became faster!
 
 
 ***** v. 1.6-4 (2010.08.30)

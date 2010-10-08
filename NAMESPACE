@@ -26,6 +26,7 @@ export(
 	ccfast,
 	check.marker,
 	check.trait,
+	cocohet,
 	convert.snp.affymetrix,
 	convert.snp.illumina,
 	convert.snp.mach,
@@ -98,8 +99,7 @@ export(
 	summary.snp.data_old,
 	#summary.scan.gwaa,
 	Xfix,
-	ztransform,
-	chi2_CG
+	ztransform
 	#var.meta,
 	#var.test.homogeneity
 	#var.test.homogeneity.bartlett

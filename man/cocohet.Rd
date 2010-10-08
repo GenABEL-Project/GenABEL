@@ -1,12 +1,12 @@
 
-\name{chi2_CG}
-\alias{chi2_CG}
+\name{cocohet}
+\alias{cocohet}
 \title{Detecting rare recessive and compound heterozygote alleles in genome wide association.}
 \description{
 Detecting rare recessive and compound heterozygote alleles in genome wide association.	
 }
 \usage{
-chi2_CG(data, trait, window, return_all_result=TRUE, manhettan_filename="manhettan_plot.jpeg", test="CHI2", min_expected_cut_off=-1)
+cocohet(data, trait, window, return_all_result=TRUE, manhettan_filename="manhettan_plot.jpeg", test="CHI2", min_expected_cut_off=-1)
 }
 \arguments{
   \item{data}{Genotype data for analysis. Object of class \code{\link{snp.data}}}
@@ -46,7 +46,7 @@ the input parameter test is performed.
 \examples{
 
 data(srdta)
-chis2_nocorrection <- chi2_CG(data=srdta@gtdata, trait=srdta@phdata$bt, window=3, test="CHI2")		
+chis2_nocorrection <- cocohet(data=srdta@gtdata, trait=srdta@phdata$bt, window=3, test="CHI2")		
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

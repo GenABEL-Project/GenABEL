@@ -28,7 +28,7 @@
 			class(object@gtps) != "databel") 
 		stop(paste("object@gtps's class not recognised ('",
 						class(object@gtps),"')",sep=""))
-	if (class(object@gtps) != "databel") if (!require(DatABEL)) 
+	if (class(object@gtps) == "databel") if (!require(DatABEL)) 
 			stop ("this function requires DatABEL package to be installed");
 	
 	gtNrow <- dim(object)[1]

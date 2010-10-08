@@ -16,7 +16,7 @@
 #=====================================================================================
 
 
-"chi2_CG" <- function(data, trait, window, return_all_result=TRUE, manhettan_filename="manhettan_plot.jpeg", test="CHI2", min_expected_cut_off=-1)
+"cocohet" <- function(data, trait, window, return_all_result=TRUE, manhettan_filename="manhettan_plot.jpeg", test="CHI2", min_expected_cut_off=-1)
 {
 #Correction is performed in case expected value one of the margin in contigency table less 5. Available values for chi2_correction:
 # "CHI2"

@@ -150,8 +150,8 @@
 #' # estimated parameters
 #' h2dm$h2an
 #' 
-#' @keywords 
-#' htest
+#' @keywords htest
+#' 
 #' 
 "polygenic" <-
 		function(formula,kinship.matrix,data,fixh2,starth2=0.3,trait.type="gaussian",
@@ -180,7 +180,6 @@
 	
 	if (!missing(data)) attach(data,pos=2,warn.conflicts=FALSE)
 	if (is(formula,"formula")) {
-		print("b")
 		clafo <- "formula"
 		mf <- model.frame(formula,data,na.action=na.omit,drop.unused.levels=TRUE)
 		y <- model.response(mf)
@@ -256,7 +255,9 @@
 			lower <- c(iniest-inierr*optimbou,1.e-4)
 			upper <- c(iniest+inierr*optimbou,1)
 			cntrl <- list(); if (!quiet) cntrl <- list(trace=6,REPORT=1)
-			h2an <- optim(fn=polylik,par=c(iniest,tvar),method="L-BFGS-B",lower=lower,upper=upper,y=y,desmat=desmat,relmat=relmat,ervec=eigres$vec,fixh2=(fixh2),trait.type=trait.type,control=cntrl,scaleh2=1,...)
+			h2an <- optim(fn=polylik,par=c(iniest,tvar),method="L-BFGS-B",lower=lower,upper=upper,
+					y=y,desmat=desmat,relmat=relmat,ervec=eigres$vec,fixh2=(fixh2),trait.type=trait.type,
+					control=cntrl,scaleh2=1,...)
 		}
 	} else {
 		
@@ -396,7 +397,8 @@
 	colnames(out$InvSigma) <- phids
 	pgres <- as.vector((1.-h2) * tvar * (out$InvSigma %*% out$residualY))
 	out$measuredIDs <- mids
-	names(out$measuredIDs) <- phids
+# need to fix -- now only measured names, while length is >
+#	names(out$measuredIDs) <- phids
 	out$pgresidualY <- rep(NA,length(mids))
 	out$pgresidualY[mids] <- pgres
 	names(out$pgresidualY) <- phids

@@ -45,7 +45,8 @@ function(data,pedfile="merlin.ped",datafile="merlin.dat",
 		dump.piece(data=data,from=1,to=steps[2],traits=traits,
 				pedfile=pedfile,append=F,format=format)
 		for (jjj in c(2:(length(steps)-1))) {
-			dump.piece(data=data,from=(steps[jjj]+1),to=(steps[jjj+1]),traits=traits,pedfile=pedfile,append=T)
+			dump.piece(data=data,from=(steps[jjj]+1),to=(steps[jjj+1]),traits=traits,
+					pedfile=pedfile,append=T,format=format)
 		}
 	} else {
 		dump.piece(data=data,from=1,to=data@gtdata@nids,traits=traits,

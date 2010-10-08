@@ -296,12 +296,12 @@
 	#class(out) <- "scan.gwaa"
 	if (is.null(Pc1df)) {
 		results <- data.frame(N=chi2[(6*lenn+1):(lenn*7)],
-				effB = effB, se_effB = effB/sqrt(chi2.1df), chi2.1df = chi2.1df, P1df = P1df, 
+				effB = effB, se_effB = abs(effB)/sqrt(chi2.1df), chi2.1df = chi2.1df, P1df = P1df, 
 				effAB=effAB, effBB=effBB, chi2.2df = chi2.2df, P2df = P2df,
 				stringsAsFactors = FALSE)
 	} else {
 		results <- data.frame(N=chi2[(6*lenn+1):(lenn*7)],
-				effB = effB, se_effB = effB/sqrt(chi2.1df), chi2.1df = chi2.1df, P1df = P1df, 
+				effB = effB, se_effB = abs(effB)/sqrt(chi2.1df), chi2.1df = chi2.1df, P1df = P1df, 
 				Pc1df = Pc1df, 
 				effAB=effAB, effBB=effBB, chi2.2df = chi2.2df, P2df = P2df,
 				stringsAsFactors = FALSE)
