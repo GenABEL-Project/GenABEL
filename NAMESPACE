@@ -34,6 +34,7 @@ export(
 	convert.snp.tped,
 	convert.snp.text,
 	crnames,
+	chi2_CG,
 	del.phdata,
 	descriptives.marker,
 	descriptives.scan,

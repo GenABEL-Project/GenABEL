@@ -1,6 +1,7 @@
 
 \name{cocohet}
 \alias{cocohet}
+\alias{chi2_CG}
 \title{Detecting rare recessive and compound heterozygote alleles in genome wide association.}
 \description{
 Detecting rare recessive and compound heterozygote alleles in genome wide association.	

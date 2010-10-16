@@ -1,4 +1,8 @@
-***** v. 1.6-5 (2010.10.14)
+***** v. 1.6-5 (2010.10.16)
+
+adding a wrapper chi2_CG -> cocohet
+
+fixed 'demo(ge03d2)'
 
 'stepids' argument added to export.merlin
 

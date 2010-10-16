@@ -1,5 +1,6 @@
 \name{summary.snp.data}
 \alias{summary.snp.data}
+\alias{summary.snp.data_old}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{function to summary GWAA data}
 \description{
