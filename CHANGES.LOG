@@ -1,4 +1,12 @@
-***** v. 1.6-5 (2010.10.16)
+***** v. 1.6-5 (2010.12.07)
+
+patched Roxygen documentation for qtscore
+
+use of 'setTxtProgressBar' in qtscore with times > 1 to indicate progress
+
+polygenic() added default option patchBasedOnFGLS, if no convergence based 
+on difFGLS criterion, fixed effect betas are patched to FGLS betas before 
+starting re-iteration 
 
 adding a wrapper chi2_CG -> cocohet
 

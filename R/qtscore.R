@@ -22,17 +22,29 @@
 #' y ~ a + b means that outcome (y) depends on two covariates, a and b. 
 #' If no covariates used in analysis, skip the right-hand side of the 
 #' equation.
-#' @param data 
-#' @param snpsubset
-#' @param idsubset
-#' @param strata
-#' @param trait.type
-#' @param times 
-#' @param quiet 
-#' @param bcast
-#' @param clambda
-#' @param propPs
-#' @param details
+#' @param data An object of \code{\link{gwaa.data-class}}
+#' @param snpsubset ndex, character or logical vector with subset of SNPs to run analysis on. 
+#' If missing, all SNPs from \code{data} are used for analysis.
+#' @param idsubset ndex, character or logical vector with subset of IDs to run analysis on. 
+#' If missing, all people from \code{data/cc} are used for analysis.
+#' @param strata Stratification variable. If provieded, scores are computed within strata and 
+#' then added up.
+#' @param trait.type "gaussian" or "binomial" or "guess" (later option guesses trait type)
+#' @param times If more then one, the number of replicas to be used in derivation of 
+#' empirical genome-wide significance. See \code{\link{emp.qtscore}}, which
+#' calls qtscore with times>1 for details
+#' @param quiet do not print warning messages
+#' @param bcast If the argument times > 1, progress is reported once in bcast replicas
+#' @param clambda If inflation facot Lambda is estimated as lower then one, this parameter 
+#' controls if the original P1df (clambda=TRUE) to be reported in Pc1df, 
+#' or the original 1df statistics is to be multiplied onto this "deflation" 
+#' factor (clambda=FALSE). If a numeric value is provided, it is used as a correction factor.
+#' @param propPs proportion of non-corrected P-values used to estimate the inflation factor Lambda,
+#' passed directly to the \code{\link{estlambda}}
+#' @param details when FALSE, SNP and ID names are not reported in the returned object
+#' (saves some memory). This is experimental and will be not mantained anymore 
+#' as soon as we achieve better memory efficiency for storage of SNP and ID names
+#' (currently default R character data type used)
 #' 
 #' @return Object of class \code{\link{scan.gwaa-class}}
 #' 
@@ -159,6 +171,7 @@
 	if (trait.type=="binomial") bin<-1 else bin<-0
 	lenn <- data@gtdata@nsnps;
 	###out <- list()
+	if (times>1) {pb <- txtProgressBar(style = 3)}
 	for (j in c(1:(times+1*(times>1)))) {
 		if (j>1) resid <- sample(resid,replace=FALSE)
 		chi2 <- .C("qtscore_glob",as.raw(data@gtdata@gtps),as.double(resid),as.integer(bin),as.integer(data@gtdata@nids),as.integer(data@gtdata@nsnps), as.integer(nstra), as.integer(strata), chi2 = double(10*data@gtdata@nsnps), PACKAGE="GenABEL")$chi2
@@ -255,14 +268,17 @@
 			pr.2df <- pr.2df + 1*(chi2.2df < max(chi2[(lenn+1):(2*lenn)]))
 			pr.c1df <- pr.c1df + 1*(chi2.c1df < th1)
 			pr.c2df <- pr.c2df + 1*(chi2.c2df < th1)
+#			if (!quiet && ((j-1)/bcast == round((j-1)/bcast))) {
+			##				cat("\b\b\b\b\b\b",round((100*(j-1)/times),digits=2),"%",sep="")
+#				cat(" ",round((100*(j-1)/times),digits=2),"%",sep="")
+#				flush.console()
+#			}
 			if (!quiet && ((j-1)/bcast == round((j-1)/bcast))) {
-#				cat("\b\b\b\b\b\b",round((100*(j-1)/times),digits=2),"%",sep="")
-				cat(" ",round((100*(j-1)/times),digits=2),"%",sep="")
-				flush.console()
+				setTxtProgressBar(pb, (j-1)/times)
 			}
 		}
 	}
-	if (times > bcast) cat("\n")
+	if (times > bcast) {setTxtProgressBar(pb, 1.0);cat("\n")}
 	
 	if (times>1) {
 		P1df <- pr.1df/times
