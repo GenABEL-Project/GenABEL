@@ -129,10 +129,27 @@ which_snp_intersect_in_y <- which_snp_intersect_in_y[which_snp_intersect_in_y > 
 
 
 chromosome_logic_vec <- c(as.character(x@chromosome[which_snp_intersect_in_x])) == c(as.character(y@chromosome[which_snp_intersect_in_y]))
-chromosome_logic_vec <- factor(chromosome_logic_vec)
-if(length(levels(chromosome_logic_vec)) > 1) stop("For intersected SNPs several values in chromosome vector for x is not concur with values in y. Check your data sets.\n") 
+chromosome_logic_vec_factor <- factor(chromosome_logic_vec)
+if(length(levels(chromosome_logic_vec_factor)) > 1)
+	{
+	position_of_error_snps_in_x <- which_snp_intersect_in_x[!chromosome_logic_vec]
+	position_of_error_snps_in_y <- which_snp_intersect_in_y[!chromosome_logic_vec]
+	
+	error_output <- data.frame(snp_positon_in_x=position_of_error_snps_in_x, 
+														 snp_positon_in_y=position_of_error_snps_in_y, 
+														 snpname_in_x=x@snpnames[position_of_error_snps_in_x],
+														 snpname_in_y=y@snpnames[position_of_error_snps_in_y],
+														 chromosome_in_x=as.character(x@chromosome)[position_of_error_snps_in_x],
+														 chromosome_in_y=as.character(y@chromosome)[position_of_error_snps_in_y],
+														 codding_in_x=as.character(x@coding[position_of_error_snps_in_x]),
+														 codding_in_y=as.character(y@coding[position_of_error_snps_in_y]))
+	write.table(error_output, file="merge_snp_data_chromosome_error.txt", row.names=F, quote=F)	
+	non_overlaped_chr_num <- table(chromosome_logic_vec)[1]
+	stop(paste("There is difference found in chromosome names for ", non_overlaped_chr_num," intersected SNPs. It is expected that all snps have exactly the same names of chromosome. Capital/lower-case letters are considered as different. The file merge_snp_data_chromosome_error.txt contains information about the SNPs having wrong chromosome number. The column snp_positon_in_x and snp_positon_in_y contains order position in x (first) and y (second) input data set. Check column chromosome_in_x and chromosome_in_y and replace the chromosome names in input data set.\n"), sep="") 
+#	stop("For intersected SNPs several values in chromosome vector for x is not concur with values in y. Check your data sets.\n") 
+	}
 
-if(length(levels(chromosome_logic_vec)) == 0)
+if(length(levels(chromosome_logic_vec_factor)) == 0)
 	{
 	cat("There are not intersected SNPs\n")
 	}
