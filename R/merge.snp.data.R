@@ -17,7 +17,7 @@
 
 
 "merge.snp.data" <-
-function(x, y, ..., error_amount=1e+06, replacena=TRUE, forcestranduse=FALSE, sort = TRUE) {
+function(x, y, ..., error_amount=1e+06, replacena=TRUE, forcestranduse=FALSE, sort = TRUE, intersected_snps_only=F) {
 
 
 
@@ -128,6 +128,15 @@ which_snp_intersect_in_y <- match(x@snpnames, y@snpnames, nomatch = -1)
 which_snp_intersect_in_y <- which_snp_intersect_in_y[which_snp_intersect_in_y > 0]
 
 
+if(intersected_snps_only) 
+	{
+	x_new <- x[,which_snp_intersect_in_x]
+	y_new <- y[,which_snp_intersect_in_y]
+	results <- merge.snp.data(x=x_new, y=y_new, error_amount, replacena, forcestranduse, sort, intersected_snps_only)
+	return(results)	
+	}
+
+
 chromosome_logic_vec <- c(as.character(x@chromosome[which_snp_intersect_in_x])) == c(as.character(y@chromosome[which_snp_intersect_in_y]))
 chromosome_logic_vec_factor <- factor(chromosome_logic_vec)
 if(length(levels(chromosome_logic_vec_factor)) > 1)
@@ -152,6 +161,7 @@ if(length(levels(chromosome_logic_vec_factor)) > 1)
 if(length(levels(chromosome_logic_vec_factor)) == 0)
 	{
 	cat("There are not intersected SNPs\n")
+	if(intersected_snps_only) return(list(data=NULL, id=NULL, snp=NULL))
 	}
 
 num_snps_intersected <- length(which_snp_intersect_in_x)
