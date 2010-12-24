@@ -1,4 +1,8 @@
-***** v. 1.6-5 (2010.12.07)
+***** v. 1.6-5 (2010.12.24)
+
+Disabled check on intermediateXF in check.marker by setting intermediateXF=c(.5,.5) 
+by default. This should be better dealt with (see tracker '[#1210] intermediate 
+inbreeding checks with check.marker' ) 
 
 patched Roxygen documentation for qtscore
 
