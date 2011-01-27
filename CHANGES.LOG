@@ -1,5 +1,12 @@
 ***** v. 1.6-5 (2010.12.24)
 
+added extra checks for impute2databel to ensure that 
+sample file header is not used
+
+change in merge.snp.data by Maksim Struchalin, adding option 
+"intersected_snps_only" (if TRUE, then only interesected SNPs 
+will be in output)
+
 Disabled check on intermediateXF in check.marker by setting intermediateXF=c(.5,.5) 
 by default. This should be better dealt with (see tracker '[#1210] intermediate 
 inbreeding checks with check.marker' ) 
