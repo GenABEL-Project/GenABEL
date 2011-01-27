@@ -17,7 +17,7 @@
 
 
 "merge.snp.data" <-
-function(x, y, ..., error_amount=1e+06, replacena=TRUE, forcestranduse=FALSE, sort = TRUE, intersected_snps_only=F) {
+function(x, y, ..., error_amount=1e+06, replacena=TRUE, forcestranduse=FALSE, sort = TRUE, intersected_snps_only=FALSE) {
 
 
 

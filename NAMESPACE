@@ -149,9 +149,9 @@ S3method(plot,check.marker)
 S3method(plot,scan.gwaa)
 S3method(plot,scan.gwaa.2D)
 
-S4method('[',snp.data)
-S4method('[',gwaa.data)
-S4method('[',snp.mx)
+#S4method('[',snp.data)
+#S4method('[',gwaa.data)
+#S4method('[',snp.mx)
 
 S3method(as.character,gwaa.data)
 S3method(as.character,snp.data)

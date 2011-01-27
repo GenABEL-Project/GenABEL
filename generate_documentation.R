@@ -12,8 +12,9 @@ roxy_files <- c(
 		"mach2databel.R",
 		#"phdata.R",
 		"polygenic.R",
-		"qtscore.R",
-		"summary.scan.gwaa.R"
+		"qtscore.R"
+		#,
+		#"summary.scan.gwaa.R"
 )
 
 library(roxygen)
