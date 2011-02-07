@@ -1,4 +1,4 @@
-
+#include <cstdarg>
 #include "Rstaff.h"
 #include "iterator_functions.h"
 #include "iterator.h"

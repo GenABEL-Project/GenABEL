@@ -1,4 +1,7 @@
-***** v. 1.6-5 (2010.12.24)
+***** v. 1.6-5 (2011.02.07)
+
+Added '#include <cstdarg>' to iterator.cpp to solve 
+'[#1273] GenABEL 1.6-5 does not compile'
 
 commented S4methods... in NAMESPACE to meet the 
 request from the R-team; patched documentation for 
