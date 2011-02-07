@@ -1,3 +1,4 @@
+#include <new>
 #include "Rstaff.h"
 #include "iterator_functions.h"
 
@@ -103,9 +104,20 @@ extern "C" {
 		int i, j, cstr, igt, i1=1;
 		int nbytes;
 		int dgt;
-		double Ttotg, mx, bb, totg[nstra], x2[nstra], sumx[nstra];
-		double Tsg0, Tsg1, Tsg2, sg0[nstra], sg1[nstra], sg2[nstra], xg0[nstra], xg1[nstra], xg2[nstra];
+		double Ttotg, mx, bb;
+		double Tsg0, Tsg1, Tsg2;
 		double u, v, u0, u1, u2, m0, m1, m2, v00, v02, v11, v12, v22, det;
+
+		double * totg = new (std::nothrow) double [nstra];if (totg == NULL) {Rprintf("cannot allocate RAM");return;}
+		double * x2 = new (std::nothrow) double [nstra];if (x2 == NULL) {Rprintf("cannot allocate RAM");return;}
+		double * sumx = new (std::nothrow) double [nstra];if (sumx == NULL) {Rprintf("cannot allocate RAM");return;}
+		double * sg0 = new (std::nothrow) double [nstra];if (sg0 == NULL) {Rprintf("cannot allocate RAM");return;}
+		double * sg1 = new (std::nothrow) double [nstra];if (sg1 == NULL) {Rprintf("cannot allocate RAM");return;}
+		double * sg2 = new (std::nothrow) double [nstra];if (sg2 == NULL) {Rprintf("cannot allocate RAM");return;}
+		double * xg0 = new (std::nothrow) double [nstra];if (xg0 == NULL) {Rprintf("cannot allocate RAM");return;}
+		double * xg1 = new (std::nothrow) double [nstra];if (xg1 == NULL) {Rprintf("cannot allocate RAM");return;}
+		double * xg2 = new (std::nothrow) double [nstra];if (xg2 == NULL) {Rprintf("cannot allocate RAM");return;}
+
 		mx = -999.99;
 		if ((nids % 4) == 0) nbytes = nids/4; else nbytes = ceil(1.*nids/4.);
 	//	char chgt[nbytes];
@@ -253,6 +265,17 @@ extern "C" {
 						chi2[igt+2*nsnps] = 1.;
 	//			}
 			}
+
+		delete [] totg;
+		delete [] x2;
+		delete [] sumx;
+		delete [] sg0;
+		delete [] sg1;
+		delete [] sg2;
+		delete [] xg0;
+		delete [] xg1;
+		delete [] xg2;
+
 	}
 
 #ifdef __cplusplus

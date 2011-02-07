@@ -1,3 +1,4 @@
+#include <new>
 #include "gwaa_cpp.h"
 
 
@@ -58,7 +59,7 @@ extern "C" {
 		for (curr_hets = mid; curr_hets > 1; curr_hets -= 2)
 		{
 			het_probs[curr_hets - 2] = het_probs[curr_hets] * curr_hets * (curr_hets - 1.0)
-                            		   / (4.0 * (curr_homr + 1.0) * (curr_homc + 1.0));
+                            				   / (4.0 * (curr_homr + 1.0) * (curr_homc + 1.0));
 			sum += het_probs[curr_hets - 2];
 
 			/* 2 fewer heterozygotes for next iteration -> add one rare, one common homozygote */
@@ -120,7 +121,12 @@ extern "C" {
 	{
 		//Rprintf("indataHeight=%d\n",indataHeight);
 		//Rprintf("indataWidth=%d\n",indataWidth);
-		unsigned int gt[indataHeight];
+		//unsigned int gt[indataHeight];
+		unsigned int * gt = new (std::nothrow) unsigned int [indataHeight];
+		if (gt == NULL) {
+			Rprintf("cannot get RAM for gt\n");
+			return;
+		}
 		if (indata) {
 			unsigned int i;
 			for(i=0;i<indataHeight*indataWidth;i++) {
@@ -130,21 +136,22 @@ extern "C" {
 			}
 			//Rprintf("\n");
 
-				unsigned int nids = indataHeight*indataWidth;
+			unsigned int nids = indataHeight*indataWidth;
 
-				//Rprintf("nids=%d\n",nids);
-				snp_summary_exhwe_Processor(gt, nids, outdata);
-				//for (int i=0;i<9;i++) Rprintf(" %f",outdata[i]); Rprintf("\n");
+			//Rprintf("nids=%d\n",nids);
+			snp_summary_exhwe_Processor(gt, nids, outdata);
+			//for (int i=0;i<9;i++) Rprintf(" %f",outdata[i]); Rprintf("\n");
 		} else {
 			outdataNcol = 9;
 			outdataNrow = 1;
 		}
+		delete [] gt;
 	}
 
 	void snp_summary_exhwe_Processor(unsigned int *gt, unsigned int nids, double *out) {
-		unsigned int i,j,idx;
+		unsigned int i; //,j,idx;
 		//unsigned int nids = (*Nids);
-		char str;
+		//char str;
 		unsigned int count[3];
 		double meaids,p,pmax,qmax,maf,fmax,loglik0,loglik1,chi2lrt;
 		count[0]=count[1]=count[2]=0;
