@@ -74,6 +74,7 @@ export(
 	plot.scan.gwaa,
 	plot.scan.gwaa.2D,
 	polygenic,
+	polygenic_hglm,
 	r2fast,
 	r2fast.old,
 	redundant,

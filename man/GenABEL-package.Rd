@@ -58,7 +58,7 @@ functions include:
 For converting of GenABEL's data to other formats, see
 \code{\link{export.merlin}} (MERLIN and MACH formats), 
 \code{\link{export.impute}} (IMPUTE, SNPTEST and CHIAMO formats),
-\code{\link{export.plink}} (PLINK forat, also exports phenotypic data). 
+\code{\link{export.plink}} (PLINK format, also exports phenotypic data). 
 
 To load the data, see \code{\link{load.gwaa.data}}.
 
@@ -133,7 +133,8 @@ For graphical facilities, see
 \code{\link{plot.check.marker}}.}
 \alias{GenABEL-package}
 \alias{GenABEL}
-\author{Yurii Aulchenko}
+\author{Yurii Aulchenko et al. 
+(see help pages for specific functions)}
 \references{If you use GenABEL package in your analysis, please cite the following work:
 
 Aulchenko Y.S., Ripke S., Isaacs A., van Duijn C.M. GenABEL: an R package 
