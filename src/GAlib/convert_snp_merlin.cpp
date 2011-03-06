@@ -41,7 +41,9 @@ string replace_mach(string in);
 **/
 
 extern "C" {
-  void convert_snp_merlin (char** pedfilename, char** mapfilename, char** outfilename, int* Strandid, int* bcast, char **allele_codes, int* Ncodes, int *Fmt, int *Tra) {
+  void convert_snp_merlin (char** pedfilename, char** mapfilename, char** outfilename,
+		  int* Strandid, int* bcast, char **allele_codes, int* Ncodes,
+		  int *Fmt, int *Tra, int *MapHasHeaderLine) {
 
     int verbose = *bcast ? 1 : 0;
 
@@ -49,6 +51,7 @@ extern "C" {
     int strandid = *Strandid;
     int format = *Fmt;
     int traits = *Tra;
+    int mapHasHeaderLine = *MapHasHeaderLine;
 
     long int linecount=0;
     string data;
@@ -83,7 +86,8 @@ extern "C" {
     }    
 
     int mapline=0;
-    getline(mapfile,data);
+// read and ignore header line
+    if (mapHasHeaderLine) getline(mapfile,data);
     if (strandid==3) {
     while (getline(mapfile,data)) {
       istringstream datas (data);
