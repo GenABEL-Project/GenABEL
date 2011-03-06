@@ -1,6 +1,6 @@
 "convert.snp.ped" <- 
 		function(pedfile,mapfile,outfile,format="premakeped",traits=1,
-				strand="u",bcast=10000000,wslash=FALSE,mapHasHeaderLine=FALSE) 
+				strand="u",bcast=10000000,wslash=FALSE,mapHasHeaderLine=TRUE) 
 {
 	
 	alcodes <- alleleID.codes()

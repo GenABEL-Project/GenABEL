@@ -14,7 +14,7 @@
 #' @param family a description of the error distribution and link function to be 
 #' used in the mean part of the model (see \code{\link{family}} for details of 
 #' family functions)
-#' @param ... other parameters passed to \code{\link{hglm}} call
+#' @param ... other parameters passed to 'hglm' call
 #' 
 #' @author Xia Shen, Yurii Aulchenko
 #' 

@@ -22,7 +22,7 @@ outcome and covariates}
 \item{family}{a description of the error distribution and link function to be 
 used in the mean part of the model (see \code{\link{family}} for details of 
 family functions)}
-\item{...}{other parameters passed to \code{\link{hglm}} call}}
+\item{...}{other parameters passed to 'hglm' call}}
 \examples{data(ge03d2ex.clean)
 df <- ge03d2ex.clean[,autosomal(ge03d2ex.clean)]
 gkin <- ibs(df,w="freq")

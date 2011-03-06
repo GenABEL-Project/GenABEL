@@ -116,7 +116,7 @@ convert.snp.ped(pedfile, mapfile, outfile, format = "premakeped", traits = 1,
 }
 \examples{
 #
-# convert.snp.ped(ped="pedin.18",map="map.18",out="genos.raw")
+# convert.snp.ped(ped="pedin.18",mapfile="map.18",out="genos.raw")
 #
 }
 \keyword{IO}
