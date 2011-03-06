@@ -1,4 +1,10 @@
-*** v. 1.6-6 (2011.02.25)
+*** v. 1.6-6 (2011.03.06)
+
+Changes convert.snp.mach documentation to reflect the fact that 
+the map-file should have header; changes to convert.snp.illumina 
+documentation to reflect the nature of the data better; added 
+option 'mapHasHeaderLine' to convert.snp.ped and updated documentation
+(resolving feature request #1317).  
 
 With suggestion and guidance from Xia Shen, added procedure 'polygenic_hglm'.
 At the moment very experimental, and needs to pass checks before can be released. 
