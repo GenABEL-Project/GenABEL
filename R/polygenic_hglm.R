@@ -75,8 +75,6 @@
 	relmat <- relmat*2.0
 	s <- svd(relmat)
 	L <- s$u %*% diag(sqrt(s$d))
-	cnv <- 1e-6
-	mxit <- 40
 	res_hglm <- hglm(y = y, X = desmat, Z = L, family = family, conv = conv, maxit = maxit, ... )
 	#sum_res_hglm <- summary(res_hglm)
 	
