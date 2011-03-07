@@ -2,6 +2,8 @@
 #' 
 #' Estimation of polygenic model using hierarchical
 #' GLM (hglm package)
+#' Tell when REML is used, what otherwise; 
+#' what it is doing, how to do tests, add more examples, references, etc.
 #' 
 #' @param formula Formula describing fixed effects to be used in analysis, e.g. 
 #' y ~ a + b means that outcome (y) depends on two covariates, a and b. 
@@ -14,6 +16,8 @@
 #' @param family a description of the error distribution and link function to be 
 #' used in the mean part of the model (see \code{\link{family}} for details of 
 #' family functions)
+#' @param conv 'conv' parameter of 'hglm' (stricter then default)
+#' @param maxit 'maxit' parameter of 'hglm' (stricter then default)
 #' @param ... other parameters passed to 'hglm' call
 #' 
 #' @author Xia Shen, Yurii Aulchenko
@@ -22,9 +26,9 @@
 #' need to put reference here
 #' 
 #' @seealso 
+#' \code{\link{polygenic}},
 #' \code{\link{mmscore}},
 #' \code{\link{grammar}}
-#' \code{\link{polygenic}}
 #' 
 #' @examples 
 #' data(ge03d2ex.clean)
@@ -46,7 +50,7 @@
 #' 
 #' @keywords htest
 #' 
-"polygenic_hglm" <- function(formula,kinship.matrix,data,family=gaussian(), ... )
+"polygenic_hglm" <- function(formula,kinship.matrix,data,family=gaussian(), conv=1e-8, maxit=100, ... )
 {
 	if (!require(hglm))
 		stop("this function requires 'hglm' package to be installed")
@@ -71,7 +75,9 @@
 	relmat <- relmat*2.0
 	s <- svd(relmat)
 	L <- s$u %*% diag(sqrt(s$d))
-	res_hglm <- hglm(y = y, X = desmat, Z = L, family = family, ... )
+	cnv <- 1e-6
+	mxit <- 40
+	res_hglm <- hglm(y = y, X = desmat, Z = L, family = family, conv = conv, maxit = maxit, ... )
 	#sum_res_hglm <- summary(res_hglm)
 	
 	out <- list()
