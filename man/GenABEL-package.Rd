@@ -105,6 +105,7 @@ For specific tools facilitating analysis of the data with stratification
 \code{\link{ibs}} (computations of IBS / genomic IBD),
 \code{\link{egscore}} (stratification adjustment following Price et al.),
 \code{\link{polygenic}} (heritability analysis),
+\code{\link{polygenic_hglm}} (another function for heritability analysis),
 \code{\link{mmscore}} (score test of Chen and Abecasis),
 \code{\link{grammar}} (grammar test of Aulchenko et al.).
 
