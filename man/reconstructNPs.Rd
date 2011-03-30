@@ -34,7 +34,7 @@ nids <- 8
 sex <- c(1,0,0,1,0,0,0,0)
 names(sex) <- paste("g",c(7:14),sep="")
 gt <- matrix(ncol=nloci,nrow=nids)
-rownames(gt) <- c(7:14)
+rownames(gt) <- paste("g",c(7:14),sep="")
 gt["g7",] <- rbinom(nloci,2,q)
 gt["g8",] <- rbinom(nloci,2,q)
 gt["g11",] <- rbinom(nloci,2,q)

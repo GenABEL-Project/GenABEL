@@ -95,9 +95,9 @@ For fast analysis function, see
 \code{\link{mmscore}},
 \code{\link{egscore}},
 \code{\link{ibs}},
-\code{\link{r2fast}},
-\code{\link{dprfast}},
-\code{\link{rhofast}}
+\code{\link{r2fast}} (estimate linkage disequilibrium using R2),
+\code{\link{dprfast}} (estimate linkage disequilibrium using D'),
+\code{\link{rhofast}}  (estimate linkage disequilibrium using 'rho')
 
 For specific tools facilitating analysis of the data with stratification
 (population stratification or (possibly unknown) pedigree structure), see
@@ -113,6 +113,10 @@ For functions facilitating construction of tables for your manuscript, see
 \code{\link{descriptives.marker}},
 \code{\link{descriptives.trait}},
 \code{\link{descriptives.scan}}.
+
+For functions recunstructing relationships from genomic data, 
+see 
+\code{\link{findRelatives}}, \code{\link{reconstructNPs}}. 
 
 For meta-analysis and related, see help on
 \code{\link{formetascore}}.
