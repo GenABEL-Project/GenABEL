@@ -82,6 +82,7 @@ export(
 	polygenic_hglm,
 	r2fast,
 	r2fast.old,
+	reconstructNPs,
 	redundant,
 	refresh.gwaa.data,
 	reg.gwaa,

@@ -18,6 +18,7 @@ roxy_files <- c(
 		#"phdata.R",
 		"polygenic.R",
 		"polygenic_hglm.R",
+		"reconstructNPs.R",
 		"qtscore.R"
 		#,
 		#"summary.scan.gwaa.R"
