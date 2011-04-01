@@ -81,16 +81,3 @@ descriptives.trait <- function (data, subset, file, by.var = NULL, digits = 3)
     }
     out
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
