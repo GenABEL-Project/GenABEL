@@ -1,4 +1,9 @@
-*** v. 1.6-6 (2011.03.31)
+*** v. 1.6-6 (2011.04.18)
+
+Added Xia Shen's procedure 'polygenic_hglm'. Features: quick 
+convergence, standard errors for fixed effects.
+
+Updated check.marker, added warning if no. Y-markers is < 10 
 
 Applied the patch of Nicola Pirastu 
 http://lists.r-forge.r-project.org/pipermail/genabel-devel/2011-March/000182.html
@@ -22,9 +27,6 @@ the map-file should have header; changes to convert.snp.illumina
 documentation to reflect the nature of the data better; added 
 option 'mapHasHeaderLine' to convert.snp.ped and updated documentation
 (resolving feature request #1317).  
-
-With suggestion and guidance from Xia Shen, added procedure 'polygenic_hglm'.
-At the moment experimental. 
 
 ***** v. 1.6-5 (2011.02.07)
 
