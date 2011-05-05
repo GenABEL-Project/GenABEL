@@ -1,8 +1,8 @@
 Package: GenABEL
 Type: Package
 Title: genome-wide SNP association analysis
-Version: 1.6-6
-Date: 2011-03-31
+Version: 1.6-7
+Date: 2011-05-05
 Author: Yurii Aulchenko et al.
 Maintainer: Yurii Aulchenko <i.aoultchenko@erasmusmc.nl>
 Depends: R (>= 2.10.0), methods, MASS
