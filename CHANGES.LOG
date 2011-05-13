@@ -1,4 +1,6 @@
-*** v. 1.6-7 (2011.05.05)
+*** v. 1.6-7 (2011.05.13)
+
+Fixing bug [1388], added regression test
 
 upgrade version number
 
