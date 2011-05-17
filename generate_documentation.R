@@ -13,6 +13,8 @@ roxy_files <- c(
 		"getLogLikelihoodGivenRelation.R",
 		"impute2databel.R",
 		"impute2mach.R",
+		#"LiLogCC.R",
+		#"LiLog.R",
 		"mach2databel.R",
 		"makeTransitionMatrix.R",
 		#"phdata.R",
