@@ -4,7 +4,8 @@
 \usage{polygenic(formula, kinship.matrix, data, fixh2, starth2=0.3,
     trait.type="gaussian", opt.method="nlm", scaleh2=1, quiet=FALSE,
     steptol=1e-08, gradtol=1e-08, optimbou=8, fglschecks=TRUE,
-    maxnfgls=8, maxdiffgls=1e-04, patchBasedOnFGLS=TRUE, ...)}
+    maxnfgls=8, maxdiffgls=1e-04, patchBasedOnFGLS=TRUE,
+    llfun="polylik_eigen", ...)}
 \description{Estimation of polygenic model}
 \details{This function maximises the likelihood of the data under polygenic 
 model with covariates an reports twice negative maximum likelihood estimates 
@@ -81,7 +82,7 @@ trait loci association analysis. Genetics. 2007 177(1):577-85.
 
 Amin N, van Duijn CM, Aulchenko YS. A genomic background based method for 
 association analysis in related individuals. PLoS ONE. 2007 Dec 5;2(12):e1274.}
-\author{Yurii Aulchenko}
+\author{Yurii Aulchenko, Gulnara Svischeva}
 \note{Presence of twins may complicate your analysis. Check kinship matrix for 
 singularities, or rather use \code{\link{check.marker}} for identification 
 of twin samples. Take special care in interpretation.
@@ -130,6 +131,8 @@ between estimates obtained and that from FGLS)}
 \item{maxdiffgls}{max difference allowed in fgls checks}
 \item{patchBasedOnFGLS}{if FGLS checks not passed, 'patch' fixed 
 effect estimates based on FGLS expectation}
+\item{llfun}{function to compute likelihood (default 'polylik_eigen', also 
+avalable -- but not recommeneded -- 'polylik')}
 \item{...}{Optional arguments to be passed to \code{\link{nlm}} or (\code{\link{optim}}) 
 minimisation function}}
 \examples{# note that procedure runs on CLEAN data
