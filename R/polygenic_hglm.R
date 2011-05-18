@@ -98,26 +98,39 @@
 #' 
 #' @keywords htest
 #' 
-"polygenic_hglm" <- function(formula, kinship.matrix, data, family = gaussian(), conv = 1e-6, maxit = 100, ...)
+"polygenic_hglm" <- function(formula, kinship.matrix, data = NULL, 
+		family = gaussian(), conv = 1e-6, maxit = 100, ...)
 {
 	if (!require(hglm))
 		stop("this function requires 'hglm' package to be installed")
-	if (!missing(data)) if (is(data,"gwaa.data")) 
+	if (!is.null(data)) {
+		if (is(data,"gwaa.data")) 
 		{
-#			checkphengen(data)
+			checkphengen(data)
 			data <- phdata(data)
 		}
-	if (!missing(data)) 
 		if (!is(data,"data.frame")) 
 			stop("data should be of gwaa.data or data.frame class")
-	allids <- data$id
+	}
 	
 	relmat <- kinship.matrix
 	relmat[upper.tri(relmat)] <- t(relmat)[upper.tri(relmat)]
 	mf <- model.frame(formula,data,na.action=na.omit,drop.unused.levels=TRUE)
 	y <- model.response(mf)
 	desmat <- model.matrix(formula,mf)
-	phids <- rownames(data)[rownames(data) %in% rownames(mf)]
+	
+	if (is.null(data)) {
+		if (!is.null(rownames(kinship.matrix))) {
+			allids <- rownames(kinship.matrix)
+		} else {
+			allids <- as.character(c(1:length(y)))
+			warning("no ID names identified, using integers")
+		}
+	} else {
+		allids <- data$id
+	}
+	
+	phids <- allids[allids %in% rownames(mf)]
 	mids <- (allids %in% phids)
 	relmat <- relmat[mids,mids]
 	relmat <- relmat*2.0

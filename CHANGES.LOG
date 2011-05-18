@@ -1,10 +1,23 @@
+*** v. 1.6-8 (2011.05.18)
+
+Updated 'polygenic' with use of 'polylik_eigen' developed by 
+Gulnara Svischeva. Now 'polygenic' works MUCH faster. The 
+main advantage of Gulnara's method is that time to compute 
+the likelihood function is approximately linear with number 
+of subjects. In that, relative speed-up grows with sample 
+size growth, e.g. for 100 IDs, it is x15, x40 for 200, 
+x60 for 400, and xX for 800 individuals (using two fixed effect 
+covariates, see runit.polylik.R). Also added RUnit test to check 
+consistency of results based on old 'polylik' and new 
+'polylik_eigen'.
+
+Upgrade version number 
+
 *** v. 1.6-7 (2011.05.17)
 
 Submitted 1.6-7, based on r727, to CRAN
 
 Deleting some pdf from 'doc' and compressing 'data'
-
-Submitted 1.6-7, based on r718, to CRAN
 
 Fixed 'technical' bug [1398] (related to changes in R 2.14):
 https://r-forge.r-project.org/tracker/index.php?func=detail&aid=1398&group_id=505&atid=2058

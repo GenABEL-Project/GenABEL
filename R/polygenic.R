@@ -1,4 +1,4 @@
-#' Estimation of polygenic model 
+#' Estimation of polygenic model
 #' 
 #' This function maximises the likelihood of the data under polygenic 
 #' model with covariates an reports twice negative maximum likelihood estimates 
@@ -81,6 +81,8 @@
 #' @param maxdiffgls max difference allowed in fgls checks 
 #' @param patchBasedOnFGLS if FGLS checks not passed, 'patch' fixed 
 #' effect estimates based on FGLS expectation
+#' @param llfun function to compute likelihood (default 'polylik_eigen', also 
+#' avalable -- but not recommeneded -- 'polylik')
 #' @param ... Optional arguments to be passed to \code{\link{nlm}} or (\code{\link{optim}}) 
 #' minimisation function
 #' 
@@ -119,7 +121,7 @@
 #' Amin N, van Duijn CM, Aulchenko YS. A genomic background based method for 
 #' association analysis in related individuals. PLoS ONE. 2007 Dec 5;2(12):e1274.
 #' 
-#' @author Yurii Aulchenko
+#' @author Yurii Aulchenko, Gulnara Svischeva
 #' 
 #' @note 
 #' Presence of twins may complicate your analysis. Check kinship matrix for 
@@ -164,7 +166,8 @@
 		function(formula,kinship.matrix,data,fixh2,starth2=0.3,trait.type="gaussian",
 				opt.method="nlm",scaleh2=1,quiet=FALSE,
 				steptol=1e-8, gradtol = 1e-8, optimbou = 8, 
-				fglschecks=TRUE,maxnfgls=8,maxdiffgls=1e-4, patchBasedOnFGLS = TRUE, ...) {
+				fglschecks=TRUE,maxnfgls=8,maxdiffgls=1e-4, patchBasedOnFGLS = TRUE, 
+				llfun = "polylik_eigen", ...) {
 	if (!missing(data)) if (is(data,"gwaa.data")) 
 		{
 			checkphengen(data)
@@ -184,6 +187,9 @@
 		out <- paste("opt.method argument should be one of",optargs,"\n")
 		stop(out)
 	}
+	if (llfun == "polylik_eigen") llFUN <- polylik_eigen
+	else if (llfun == "polylik") llFUN <- polylik
+	else stop("llfun should be 'polylik' or 'polylik_eigen'")
 	
 	if (!missing(data)) attach(data,pos=2,warn.conflicts=FALSE)
 	if (is(formula,"formula")) {
@@ -237,7 +243,14 @@
 	tmp <- t(relmat)
 	relmat[upper.tri(relmat)] <- tmp[upper.tri(tmp)]
 	rm(tmp);gc()
-	eigres <- eigen(ginv(relmat),symm=TRUE)
+	if (llfun=="polylik") eigres <- eigen(ginv(relmat),symm=TRUE)
+	else if (llfun=="polylik_eigen") {
+		eigres <- eigen(relmat,symm=TRUE)
+		if (any(eigres$values<0)) {
+			#eigres$values <- abs(eigres$values)
+			warning("some eigenvalues <=0, taking ABS for det; try option llfun='polylik'",immediate.=TRUE)
+		}
+	} else stop("cannot be here...")
 	if (!quiet) {
 		cat("LM estimates of fixed parameters:\n")
 		print(iniest);
@@ -249,21 +262,21 @@
 	convFGLS <- NULL;
 	
 	if (!missing(fixh2)) {
-		startlik <- polylik(c(iniest,tvar),y=y,desmat=desmat,relmat=relmat,
-				ervec=eigres$vec,fixh2=(fixh2/scaleh2),trait.type=trait.type,
+		startlik <- llFUN(c(iniest,tvar),y=y,desmat=desmat,relmat=relmat,
+				eigenRes=eigres,fixh2=(fixh2/scaleh2),trait.type=trait.type,
 				scaleh2=scaleh2)
 		if (opt.method=="nlm") {
 			prnlev <- 0; if (!quiet) prnlev <- 2;
-			h2an <- nlm(polylik,p=c(iniest,tvar),y=y,desmat=desmat,relmat=relmat,ervec=eigres$vec,
+			h2an <- nlm(llFUN,p=c(iniest,tvar),y=y,desmat=desmat,relmat=relmat,eigenRes=eigres,
 					fixh2=(fixh2/scaleh2),trait.type=trait.type,startlik=startlik,scaleh2=scaleh2,
 					print.level=prnlev,steptol=steptol,gradtol=gradtol,...)
-#		h2an <- nlm(polylik,p=c(iniest,tvar),y=y,desmat=desmat,relmat=relmat,ervec=eigres$vec,fixh2=(fixh2/scaleh2),trait.type=trait.type,startlik=startlik,scaleh2=scaleh2,...)
+#		h2an <- nlm(llFUN,p=c(iniest,tvar),y=y,desmat=desmat,relmat=relmat,eigenRes=eigres,fixh2=(fixh2/scaleh2),trait.type=trait.type,startlik=startlik,scaleh2=scaleh2,...)
 		} else {
 			lower <- c(iniest-inierr*optimbou,1.e-4)
 			upper <- c(iniest+inierr*optimbou,1)
 			cntrl <- list(); if (!quiet) cntrl <- list(trace=6,REPORT=1)
-			h2an <- optim(fn=polylik,par=c(iniest,tvar),method="L-BFGS-B",lower=lower,upper=upper,
-					y=y,desmat=desmat,relmat=relmat,ervec=eigres$vec,fixh2=(fixh2),trait.type=trait.type,
+			h2an <- optim(fn=llFUN,par=c(iniest,tvar),method="L-BFGS-B",lower=lower,upper=upper,
+					y=y,desmat=desmat,relmat=relmat,eigenRes=eigres,fixh2=(fixh2),trait.type=trait.type,
 					control=cntrl,scaleh2=1,...)
 		}
 	} else {
@@ -280,15 +293,15 @@
 				if (opt.method=="nlm") parsave <- c(iniest,starth2/scaleh2,tvar)
 				else parsave <- c(iniest,starth2,tvar)
 			}
-			startlik<-polylik(parsave,y=y,desmat=desmat,relmat=relmat,ervec=eigres$vec,
+			startlik<-llFUN(parsave,y=y,desmat=desmat,relmat=relmat,eigenRes=eigres,
 					trait.type=trait.type,scaleh2=scaleh2)
 			if (opt.method=="nlm") {
 				#print(parsave)
 				prnlev <- 0; if (!quiet) prnlev <- 2;
-				h2an <- nlm(polylik,p=parsave,y=y,desmat=desmat,relmat=relmat,ervec=eigres$vec,
+				h2an <- nlm(llFUN,p=parsave,y=y,desmat=desmat,relmat=relmat,eigenRes=eigres,
 						trait.type=trait.type,startlik=startlik,scaleh2=scaleh2,
 						print.level=prnlev,steptol=steptol,gradtol=gradtol,...)
-#		h2an <- nlm(polylik,p=c(iniest,(starth2/scaleh2),tvar),y=y,desmat=desmat,relmat=relmat,ervec=eigres$vec,trait.type=trait.type,startlik=startlik,scaleh2=scaleh2,...)
+#		h2an <- nlm(llFUN,p=c(iniest,(starth2/scaleh2),tvar),y=y,desmat=desmat,relmat=relmat,eigenRes=eigres,trait.type=trait.type,startlik=startlik,scaleh2=scaleh2,...)
 				parsave <- h2an$estimate
 			} else {
 				#print(parsave)
@@ -298,7 +311,9 @@
 				#print(lower)
 				#print(upper)
 				cntrl <- list(); if (!quiet) cntrl <- list(trace=6,REPORT=1)
-				h2an <- optim(fn=polylik,par=parsave,method="L-BFGS-B",lower=lower,upper=upper,y=y,desmat=desmat,relmat=relmat,ervec=eigres$vec,trait.type=trait.type,control=cntrl,scaleh2=1,...)
+				h2an <- optim(fn=llFUN,par=parsave,method="L-BFGS-B",lower=lower,upper=upper,
+						y=y,desmat=desmat,relmat=relmat,eigenRes=eigres,trait.type=trait.type,
+						control=cntrl,scaleh2=1,...)
 				parsave <- h2an$par
 			}
 			#print(parsave)
