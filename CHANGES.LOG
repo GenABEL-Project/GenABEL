@@ -1,5 +1,9 @@
 *** v. 1.6-7 (2011.05.17)
 
+Submitted 1.6-7, based on r724, to CRAN
+
+Deleting some pdf from 'doc' and compressing 'data'
+
 Submitted 1.6-7, based on r718, to CRAN
 
 Fixed 'technical' bug [1398] (related to changes in R 2.14):
