@@ -170,10 +170,15 @@ extern "C" {
 	      }
 	    }
 
-	if (ca1 > ca2) sprintf(tmp_chcoding,"%c%c",allele1,allele2);
-	else sprintf(tmp_chcoding,"%c%c",allele2,allele1);
+	if (!allele1 && !allele2) tmp_coding="12"; // all genotypes missing
+	else if (!allele1 && allele2) sprintf(tmp_chcoding,"%c%c",allele2,allele2); // only one allele present
+	else if (allele1 && !allele2) sprintf(tmp_chcoding,"%c%c",allele1,allele1); // only one allele present
+	else if (allele1 && allele2) {
+		if (ca1 > ca2) sprintf(tmp_chcoding,"%c%c",allele1,allele2);
+		else sprintf(tmp_chcoding,"%c%c",allele2,allele1);
+	}
+	Rprintf("%s\n",tmp_chcoding);
 	tmp_coding.assign(tmp_chcoding);
-	if (!allele1 || !allele2) tmp_coding="12";
 	int ccd = -1;
 	for (int i = 0; i < ncodes; i++) {
 		if (codeset[i].compare(tmp_coding)==0) {

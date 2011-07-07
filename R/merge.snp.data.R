@@ -197,6 +197,11 @@ names(alleleID_reverse_raw) <- NULL #17 18 07 09 08 0a 03 05 04 06 10 0f 11 12 0
 #-------------------------------------------------------------------
 
 
+# deal with monomorphics
+#cdng_x <- coding(x)
+#cdng_y <- coding(y)
+#mono_x <- alleleID.ismono(cdng_x)
+#mono_y <- alleleID.ismono(cdng_y)
 
 
 return_val <-  .C("fast_merge_C_",

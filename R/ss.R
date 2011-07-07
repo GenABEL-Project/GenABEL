@@ -1,4 +1,3 @@
-#
 #defining snp.mx -- internal class
 #
 #setClass("genotype",contains="data.frame",package="GenABEL")
@@ -15,7 +14,6 @@ setMethod("[","snp.mx",
 			x <- x@.Data[k, j , drop = FALSE]
 			if (missing(i)) i=c(1:(nrow(x)*4));
 			if (is.logical(i)) i=which(i)
-			x <- sset(as.raw(x),length(j),nrow(x)*4,i)
 			dim(x) <- c(ceiling(length(i)/4),length(j))
 			if (is.matrix(x)) 
 				x <- new("snp.mx",x) 
@@ -687,6 +685,38 @@ setMethod(
 			return(paste(tmp[,1],tmp[,2],sep=""))
 		}
 );
+
+# AAAA
+setGeneric(
+		name = "coding<-",
+		def = function(x,value) {standardGeneric("coding<-");}
+);
+setMethod(
+		f = "coding<-",
+		signature = "snp.data",
+		definition = function(x,value) 
+		{
+			rawVal <- as.raw(alleleID.char2raw()[value])
+			x@coding <- new("snp.coding",rawVal)
+			names(x@coding) <- x@snpnames
+			if (any(is.na(coding(x)))) {
+				cat("wrong coding value, should be one of ")
+				cat(names(alleleID.char2raw()),"\n")
+				stop()
+			}
+			return(x)
+		}
+);
+setMethod(
+		f = "coding<-",
+		signature = "gwaa.data",
+		definition = function(x,value) 
+		{
+			coding(x@gtdata) <- value
+			return(x)
+		}
+);
+
 
 
 setGeneric(

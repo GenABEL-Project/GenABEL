@@ -5,17 +5,24 @@ alleleID.alleles <- function() {
 	alleles <- c("A","T","G","C","-")
 	idx <- 3
 	for (i in alleles) {
-	for (j in alleles) {
-		if (i==j) next;
-		a[[idx]] <- c(i,j)
-		idx <- idx + 1
-	}
+		for (j in alleles) {
+			if (i==j) next;
+			a[[idx]] <- c(i,j)
+			idx <- idx + 1
+		}
 	}
 	a[[idx]] <- c("2","1")
 	idx <- idx + 1
 	a[[idx]] <- c("B","A")
+	idx <- idx + 1
+	allalleles <- c("1","2","B","A","T","G","C","-")
+	for (jj in allalleles) {
+		a[[idx]] <- c(jj,jj)
+		idx <- idx + 1
+	}
 	a
 }
+
 alleleID.codes <- function() {
 	a <- alleleID.alleles()
 	out <- c("OPPA")

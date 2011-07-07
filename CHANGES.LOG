@@ -1,4 +1,8 @@
-*** v. 1.6-8 (2011.05.18)
+*** v. 1.6-8 (2011.07.06)
+
+Added coding<- method to gwaa.data and snp.data classes
+
+Added monomorphic classes to 'snp.data' and convert.snp.*
 
 Updated 'polygenic' with use of 'polylik_eigen' developed by 
 Gulnara Svischeva. Now 'polygenic' works MUCH faster. The 

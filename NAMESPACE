@@ -130,6 +130,7 @@ exportMethods(
 	"annotation",
 	"chromosome",
 	"coding",
+	"coding<-",
 	"effallele",
 	"getcall",
 	"getfamily",
