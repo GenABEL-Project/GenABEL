@@ -1,8 +1,14 @@
-*** v. 1.6-8 (2011.07.06)
+*** v. 1.6-8 (2011.07.15)
+
+Updated the merge.snp.data procedure to allow meaningful 
+merging of mono- and poly- codings. Take care -- this is 
+new and not tested much yet! You best check few results 
+manually after the merge!
 
 Added coding<- method to gwaa.data and snp.data classes
 
-Added monomorphic classes to 'snp.data' and convert.snp.*
+Added I/D encoding and monomorphic classes (AA, TT, GG, CC, 
+--, II, DD, ...) to 'snp.data' and convert.snp.*
 
 Updated 'polygenic' with use of 'polylik_eigen' developed by 
 Gulnara Svischeva. Now 'polygenic' works MUCH faster. The 

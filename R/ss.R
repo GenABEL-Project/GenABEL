@@ -699,8 +699,8 @@ setMethod(
 		definition = function(x,value) 
 		{
 			rawVal <- as.raw(alleleID.char2raw()[value])
+			names(rawVal) <- x@snpnames
 			x@coding <- new("snp.coding",rawVal)
-			names(x@coding) <- x@snpnames
 			if (any(is.na(coding(x)))) {
 				cat("wrong coding value, should be one of ")
 				cat(names(alleleID.char2raw()),"\n")

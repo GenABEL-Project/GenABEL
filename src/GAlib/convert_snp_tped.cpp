@@ -164,7 +164,7 @@ void convert_snp_tped (char** tpedfilename, char** tfamfilename, char** outfilen
 				if (ca1 > ca2) sprintf(tmp_chcoding,"%c%c",allele1,allele2);
 				else sprintf(tmp_chcoding,"%c%c",allele2,allele1);
 			}
-			Rprintf("%s\n",tmp_chcoding);
+			//Rprintf("%s\n",tmp_chcoding);
 			tmp_coding.assign(tmp_chcoding);
 			//	if (!allele1 || !allele2) tmp_coding="12";
 			int ccd = -1;
