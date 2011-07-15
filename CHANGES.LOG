@@ -1,5 +1,12 @@
 *** v. 1.6-8 (2011.07.15)
 
+Speeding up 'polygenic' by avoiding multiple inverses of 
+the matrix.
+
+Fixed bug in 'polygenic' causing the offset in 
+names(...$residualY) and names(...$pgresidualY) in 
+case of missing observations.  
+
 Updated the merge.snp.data procedure to allow meaningful 
 merging of mono- and poly- codings. Take care -- this is 
 new and not tested much yet! You best check few results 

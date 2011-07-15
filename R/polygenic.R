@@ -204,7 +204,8 @@
 		sglm <- summary(rglm)
 		iniest <- sglm$coef[,1]
 		inierr <- sglm$coef[,2]
-		phids <- rownames(data)[rownames(data) %in% rownames(mf)]
+		allids <- rownames(data)
+		phids <- allids[rownames(data) %in% rownames(mf)]
 		#print("bb")
 		#print(phids)
 		relmat <- kinship.matrix[phids,phids]*2.0
@@ -220,7 +221,8 @@
 		y <- formula
 		if (length(y) != dim(kinship.matrix)[1]) stop("dimension of outcome and kinship.matrix do not match")
 		mids <- (!is.na(y))
-		phids <- data$id[mids]
+		allids <- data$id
+		phids <- allids[mids]
 		y <- y[mids]
 		relmat <- kinship.matrix[mids,mids]*2.0
 		sdy <- sd(y)
@@ -322,7 +324,13 @@
 			if (fglschecks && missing(fixh2)) {
 				npar <- length(parsave)
 				h2 <- parsave[npar-1]*scaleh2
-				iSigma <- ginv(h2*relmat + (1-h2)*diag(x=1,ncol=length(y),nrow=length(y)))
+# 
+#				iSigma <- ginv(h2*relmat + (1-h2)*diag(x=1,ncol=length(y),nrow=length(y)))
+# start new
+				if (llfun=="polylik") eigres <- eigen(relmat,symm=TRUE) # ensure eigres contain eigen of RelMat (not Inv(RelMat))
+				es <- (eigres$value*h2+1.-h2)*parsave[npar]*sdy*sdy
+				iSigma <- (eigres$vec) %*% diag(1./es,ncol=length(es)) %*% t(eigres$vec)
+# END new
 				LHest <- parsave[1:(npar-2)]
 				betaFGLS <- as.vector(ginv(t(desmat) %*% iSigma %*% desmat) %*% 
 								(t(desmat) %*% iSigma %*% y))
@@ -414,30 +422,65 @@
 	}
 	out$esth2 <- h2
 	tvar <- h2an$estimate[npar]
-	ervec <- eigres$vec
-	sigma <- h2*tvar*relmat + (1-h2)*tvar*diag(x=1,ncol=length(y),nrow=length(y))
+# old variant
+#        time0 <- proc.time()
+#	ervec <- eigres$vec
+#	sigma <- h2*tvar*relmat + (1-h2)*tvar*diag(x=1,ncol=length(y),nrow=length(y))
 #	es <- 1./diag(t(ervec) %*% (sigma) %*% ervec)
 #	ginvsig <- ervec %*% diag(es,ncol=length(y)) %*% t(ervec)
-	out$InvSigma <- ginv(sigma) #ginvsig
+#	out$InvSigma <- ginv(sigma) #ginvsig
+#	print(proc.time()-time0)
+# end old variant
+# old variant'
+#	time0 <- proc.time()
+#	ervec <- eigres$vec
+#	sigma <- h2*tvar*relmat + (1-h2)*tvar*diag(x=1,ncol=length(y),nrow=length(y))
+#	es <- 1./diag(t(ervec) %*% (sigma) %*% ervec)
+#	ginvsig <- ervec %*% diag(es,ncol=length(y)) %*% t(ervec)
+#	out$InvSigma <- ginv(sigma) #ginvsig
+#	print(proc.time()-time0)
+# end old variant'
+# new implementation of InvSigma
+	if (fglschecks && missing(fixh2)) { 
+		ginvsig <- iSigma # already computed it in FGLS checks
+	} else {
+		if (llfun=="polylik") eigres <- eigen(relmat,symm=TRUE) # ensure eigres contain eigen of RelMat (not Inv(RelMat))
+		es <- tvar*(eigres$value*h2+1.-h2)
+		#print(es[1:5])
+		#print(eigres$vec[1:5,1:5])
+		#print(((diag(1./es,ncol=length(es))))[1:5,1:5])
+		ginvsig <- (eigres$vec) %*% diag(1./es,ncol=length(es)) %*% t(eigres$vec)
+		#print(ginvsig[1:5,1:5])
+	}
+	out$InvSigma <- ginvsig #ginvsig
+# END new implementation of InvSigma
 	rownames(out$InvSigma) <- phids
 	colnames(out$InvSigma) <- phids
-	pgres <- as.vector((1.-h2) * tvar * (out$InvSigma %*% out$residualY))
+	InvSigma_x_residualY <- (out$InvSigma %*% out$residualY)
+	pgres <- as.vector((1.-h2) * tvar * InvSigma_x_residualY)
 	out$measuredIDs <- mids
 # need to fix -- now only measured names, while length is >
 #	names(out$measuredIDs) <- phids
 	out$pgresidualY <- rep(NA,length(mids))
 	out$pgresidualY[mids] <- pgres
-	names(out$pgresidualY) <- phids
+	names(out$pgresidualY) <- allids #phids
 	resY <- out$residualY
 	out$residualY <- rep(NA,length(mids))
 	out$residualY[mids] <- resY
-	names(out$residualY) <- phids
+	names(out$residualY) <- allids #phids
 	out$call <- match.call()
 	out$convFGLS <- convFGLS
 	
-	a <- determinant(sigma,logarithm=T)
-	a <- a$modulus * a$sign
-	b <- (t(resY) %*% out$InvSigma %*% resY)
+# old variant
+#	time0 <- proc.time()
+#	a <- determinant(sigma,logarithm=T)
+#	a <- a$modulus * a$sign
+#	print(proc.time()-time0)
+# end old variant
+# new variant
+	a <- sum(log(abs(es))) # logarithm of determinant of sigma as sum of logarithm of eigenvalues
+# end new variant
+	b <- (t(resY) %*% InvSigma_x_residualY)
 	loglik <- a+b
 	out$h2an$minimum <- as.vector(loglik)
 	
