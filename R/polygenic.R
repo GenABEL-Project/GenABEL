@@ -192,6 +192,36 @@
 	else stop("llfun should be 'polylik' or 'polylik_eigen'")
 	
 	if (!missing(data)) attach(data,pos=2,warn.conflicts=FALSE)
+	
+# beging patch bug #1322 (by Nicola Pirastu)
+	if (is(formula, "formula")){
+		mf <- model.frame(formula, data, na.action = na.omit, 
+				drop.unused.levels = TRUE)
+		ciccio=function(x)nlevels(as.factor(x))    
+		livelli=apply(mf,2,ciccio)
+		ch=length(livelli)
+		bad=which(livelli<2)
+		if(length(bad)>0) warning(paste("Variable",names(mf)[bad],"has only one value: Dropped"))
+		livelli=livelli[livelli>1]
+		mf=mf[names(livelli)]
+		if(length(livelli)>1){
+			if(length(livelli)==2){ formula=as.formula(paste(names(mf)[1],"~",names(mf)[2]))
+				
+			}else{
+				formula=(paste(names(mf)[1],"~",names(mf)[2]))
+				for(i in 3:length(livelli)){
+					
+					formula=paste(formula,"+",names(mf)[i])
+					
+				}
+				formula=as.formula(formula)	
+			}
+		}else{
+			stop("All covariates have only one value")	
+		}
+	}
+# end patch bug #1322
+	
 	if (is(formula,"formula")) {
 		clafo <- "formula"
 		mf <- model.frame(formula,data,na.action=na.omit,drop.unused.levels=TRUE)

@@ -160,5 +160,5 @@ translate_mono_coding <- function(mono,poly,strandMono,strandPoly,forcestranduse
 		else 
 			return(mono)
 	}
-	return(newC)
+	return(mono)
 }

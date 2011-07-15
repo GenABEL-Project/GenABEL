@@ -37,6 +37,9 @@
 \alias{coding}
 \alias{coding,gwaa.data-method}
 \alias{coding,snp.data-method}
+\alias{coding<-}
+\alias{coding<-,gwaa.data-method}
+\alias{coding<-,snp.data-method}
 \alias{refallele}
 \alias{refallele,gwaa.data-method}
 \alias{refallele,snp.data-method}
@@ -103,6 +106,8 @@
 	   \code{signature(object = "snp.data")}: extracts strand}
   \item{coding}{\code{signature(object = "gwaa.data")}, 
 	   \code{signature(object = "snp.data")}: extracts coding}
+  \item{coding<-}{\code{signature(object = "gwaa.data")}, 
+	   \code{signature(object = "snp.data")}: assign coding}
   \item{refallele}{\code{signature(object = "gwaa.data")}, 
 	   \code{signature(object = "snp.data")}: extracts reference allele}
   \item{effallele}{\code{signature(object = "gwaa.data")}, 

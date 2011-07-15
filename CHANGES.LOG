@@ -1,5 +1,12 @@
 *** v. 1.6-8 (2011.07.15)
 
+Added patch of bug [#1322] + regression test (contributed 
+by Nicola Pirastu, see  
+https://lists.r-forge.r-project.org/pipermail/genabel-devel/2011-May/000276.html). 
+This is still suboptimal treatment -- the covariate is just dropped; 
+in say 'lm' it is 'kept' with NA as estimate, and IDs with missing 
+data dropped, which is not the case with 'polygenic'.
+
 Speeding up 'polygenic' by avoiding multiple inverses of 
 the matrix.
 
