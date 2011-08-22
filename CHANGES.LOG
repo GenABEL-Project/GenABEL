@@ -1,3 +1,5 @@
+The default value for the stand option to convert.snp.tped() is now "u", instead of "+". Now convert.snp.tped() and convert.snp.ped() have the same defaults.
+
 *** v. 1.6-8 (2011.07.15)
 
 Added patch of bug [#1322] + regression test (contributed 
