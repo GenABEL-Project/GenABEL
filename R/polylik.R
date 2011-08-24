@@ -45,7 +45,7 @@
 	} else {
 		qt <- y - desmat %*% fixeff
 	}
-	y_0 <- as.vector(t(eigenRes$vectors) %*% qt)
+	y_0 <- as.vector(crossprod(eigenRes$vectors, qt))
 	eigenvalueCOV <- tvar*(eigenRes$values*h2+1.-h2)
 	loglik <- sum(log(abs(eigenvalueCOV))) + sum(y_0^2/eigenvalueCOV)
 	loglik

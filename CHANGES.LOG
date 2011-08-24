@@ -1,6 +1,40 @@
-The default value for the stand option to convert.snp.tped() is now "u", instead of "+". Now convert.snp.tped() and convert.snp.ped() have the same defaults.
+*** v. 1.6-8 (2011.08.23)
 
-*** v. 1.6-8 (2011.07.15)
+Update of 'polygenic_hglm' by Xia Shen. Quote:
+We've updated the hglm package to version 1.2-2 recently on CRAN, where 
+the major updates include:
+- Sparse matrix implementation
+- Multiple random effects
+- Function hglm2() which accepts lme4-style formula input
+In this update of polygenic_hglm() the speed could be slightly faster than 
+before since the hglm() now uses sparse matrix technique (however I don't 
+expect it to be much faster since the kinship matrix is always dense). Other 
+modifications are:
+- The current update of hglm package does not spit out profile log-likelihood 
+since we haven't perfectly solved the likelihood computation for multiple random 
+effects yet. But since polygenic_hglm() only needs one random effect (polygenic 
+effect), I've re-implemented the likelihood computation directly in 
+polygenic_hglm(), and no need to specify 'method = "REML"' anymore.
+- In order to solve the problem from the forum about inputting formula as 
+'y' or 'y ~ 1', I've added a check before creating the model.frame, so now 
+ both types of inputs should work.
+
+Added 'recodeChromosome' function, which must be handy when e.g. importing data 
+from other software which uses integer for sex chromosomes and other non-autosomes
+(X, Y, mt).
+
++> tutorial genetic data QC - list all options, do not use default?
+
+'check.marker' added "none" (equal to ibs.mrk = -1); set "both" to default
+
+Updated documentation for 'scan.glm.2D'.
+
+Added GRAMMAR+ transformation and computation of GRAMMAR+ 
+correction factors to 'polygenic'.
+
+The default value for the stand option to convert.snp.tped() is now "u", 
+instead of "+". Now convert.snp.tped() and convert.snp.ped() have the 
+same defaults.
 
 Added patch of bug [#1322] + regression test (contributed 
 by Nicola Pirastu, see  

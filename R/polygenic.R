@@ -94,12 +94,14 @@
 #' heritability, (polygenic + residual variance)). The value of 
 #' twice negative maximum log-likelihood
 #' is returned as h2an\$minimum.}
+#' \item{esth2}{Estimate (or fixed value) of heritability}
 #' \item{residualY}{Residuals from analysis, based on covariate effects only; 
 #' NOTE: these are NOT grammar "environmental residuals"!}
-#' \item{esth2}{Estimate (or fixed value) of heritability}
 #' \item{pgresidualY}{Environmental residuals from analysis, based on covariate effects 
 #' and predicted breeding value.
 #' }
+#' \item{grresidualY}{GRAMMAR+ trait transformation}
+#' \item{grammarGamma}{list with GRAMMAR+ correction factors}
 #' \item{InvSigma}{Inverse of the variance-covariance matrix, computed at the 
 #' MLEs -- these are used in \code{\link{mmscore}} and \code{\link{grammar}}
 #' functions.}
@@ -120,6 +122,8 @@
 #' 
 #' Amin N, van Duijn CM, Aulchenko YS. A genomic background based method for 
 #' association analysis in related individuals. PLoS ONE. 2007 Dec 5;2(12):e1274.
+#' 
+#' G. Svischeva et al. (in preparation)
 #' 
 #' @author Yurii Aulchenko, Gulnara Svischeva
 #' 
@@ -280,7 +284,7 @@
 		eigres <- eigen(relmat,symm=TRUE)
 		if (any(eigres$values<0)) {
 			#eigres$values <- abs(eigres$values)
-			warning("some eigenvalues <=0, taking ABS for det; try option llfun='polylik'",immediate.=TRUE)
+			warning("some eigenvalues <=0, taking ABS for det; try option llfun='polylik'")
 		}
 	} else stop("cannot be here...")
 	if (!quiet) {
@@ -440,10 +444,10 @@
 	if (clafo == "formula") {
 		if (!missing(fixh2)) {fxeff <- h2an$est[1:(npar-1)]} else {fxeff <- h2an$est[1:(npar-2)]}
 		if (trait.type=="gaussian") {eY <- desmat %*% fxeff} else {ee <- exp(desmat %*% fxeff); eY <- ee/(1.+ee);}
-		out$residualY <- scay - eY
+		resY <- scay - eY
 	} else {
 		if (trait.type=="gaussian") {eY <- h2an$estimate[1]} else {ee <- exp(h2an$estimate[1]); eY <- ee/(1.+ee);}
-		out$residualY <- scay - eY
+		resY <- scay - eY
 	}
 	if (!missing(fixh2)) {
 		h2 <- fixh2
@@ -486,18 +490,40 @@
 # END new implementation of InvSigma
 	rownames(out$InvSigma) <- phids
 	colnames(out$InvSigma) <- phids
-	InvSigma_x_residualY <- (out$InvSigma %*% out$residualY)
-	pgres <- as.vector((1.-h2) * tvar * InvSigma_x_residualY)
 	out$measuredIDs <- mids
-# need to fix -- now only measured names, while length is >
-#	names(out$measuredIDs) <- phids
+# compute 'environmental' residuals for GRAMMAR-2007	
+	InvSigma_x_residualY <- (out$InvSigma %*% resY)
+	pgresY <- as.vector((1.-h2) * tvar * InvSigma_x_residualY)
 	out$pgresidualY <- rep(NA,length(mids))
-	out$pgresidualY[mids] <- pgres
+	out$pgresidualY[mids] <- pgresY
 	names(out$pgresidualY) <- allids #phids
-	resY <- out$residualY
+# compute residuals 	
 	out$residualY <- rep(NA,length(mids))
 	out$residualY[mids] <- resY
 	names(out$residualY) <- allids #phids
+	
+# compute GRAMMAR+ (G. Svischeva) residuals
+	zu <- mean(diag(out$InvSigma))*tvar
+	fi <- (1-(1-out$esth2)*zu)/(out$esth2 * tvar)
+	# 'eigen' is expensive operation -- can do faster???
+	eig <- eigen(out$InvSigma, symmetric = TRUE) 
+	# 'solve' is expensive operation -- can do faster???
+	# Bu <- t(eig$vectors) %*% diag(sqrt(eig$values)) %*% eig$vectors ???
+	Bu <- eig$vectors %*% diag(sqrt(eig$values)) %*% solve(eig$vectors)
+# GRAMMAR+ transformed outcome
+	grresY <- as.vector((1/sqrt(fi)) * (Bu %*% resY))
+	out$grresidualY <- rep(NA,length(mids))
+	out$grresidualY[mids] <- grresY
+	names(out$grresidualY) <- allids #phids
+# GRAMMAR+ correction coefficients
+	# VarYG1 <- (t(pgresY) %*% pgresY)/length(pgresY)
+	VarYG1 <- mean(pgresY^2)
+	z <- 1-(zu-1)*(1-out$esth2)/out$esth2
+	out$grammarGamma <- list()
+	out$grammarGamma$Beta <- z*(1-out$esth2)
+	out$grammarGamma$Test <- z*((1-out$esth2)^2)*tvar/VarYG1
+# END GRAMMAR+ computations
+
 	out$call <- match.call()
 	out$convFGLS <- convFGLS
 	

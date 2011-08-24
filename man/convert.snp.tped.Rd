@@ -6,7 +6,7 @@
 Converts genotypic data in transposed-ped format (.tped and .tfam) to internal genotypic data formatted file
 }
 \usage{
-convert.snp.tped(tpedfile, tfamfile, outfile,strand = "+", bcast = 10000)
+convert.snp.tped(tpedfile, tfamfile, outfile,strand = "u", bcast = 10000)
 }
 \arguments{
   \item{tpedfile}{

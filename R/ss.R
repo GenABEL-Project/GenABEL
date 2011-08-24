@@ -391,8 +391,11 @@ setMethod(
 			cod <- coding(object)
 			A1 <- substr(cod,1,1)
 			A2 <- substr(cod,2,2)
+#			res <- data.frame(Chromosome=chromosome(object),Position=map(object),
+#					Strand=strand(object),A1=A1,A2=A2,stringsAsFactors = FALSE)
+# should save space
 			res <- data.frame(Chromosome=chromosome(object),Position=map(object),
-					Strand=strand(object),A1=A1,A2=A2,stringsAsFactors = FALSE)
+					Strand=strand(object),A1=A1,A2=A2,stringsAsFactors = TRUE)
 			rownames(res) <- snpnames(object)
 			res
 		}
@@ -595,7 +598,9 @@ setMethod(
 		signature = "scan.gwaa",
 		definition = function(object) 
 		{
-			return(annotation(object)[,"Position"])
+			mp <- annotation(object)[,"Position"]
+			names(mp) <- snpnames(object)
+			return(mp)
 		}
 );
 
@@ -608,7 +613,9 @@ setMethod(
 		signature = "snp.data",
 		definition = function(object) 
 		{
-			return(as.character(object@chromosome))
+			chr <- as.character(object@chromosome)
+			names(chr) <- names(object@chromosome)
+			return(chr)
 		}
 );
 setMethod(
@@ -624,7 +631,9 @@ setMethod(
 		signature = "scan.gwaa",
 		definition = function(object) 
 		{
-			return(annotation(object)[,"Chromosome"])
+			chr <- as.character(annotation(object)[,"Chromosome"])
+			names(chr) <- snpnames(object) 
+			return(chr)
 		}
 );
 
@@ -688,7 +697,7 @@ setMethod(
 		}
 );
 
-# AAAA
+
 setGeneric(
 		name = "coding<-",
 		def = function(x,value) {standardGeneric("coding<-");}
@@ -718,7 +727,6 @@ setMethod(
 			return(x)
 		}
 );
-
 
 
 setGeneric(

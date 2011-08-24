@@ -59,12 +59,14 @@ maximal likelihood estimates (MLEs) (order: mean, betas for covariates,
 heritability, (polygenic + residual variance)). The value of 
 twice negative maximum log-likelihood
 is returned as h2an\$minimum.}
+\item{esth2}{Estimate (or fixed value) of heritability}
 \item{residualY}{Residuals from analysis, based on covariate effects only; 
 NOTE: these are NOT grammar "environmental residuals"!}
-\item{esth2}{Estimate (or fixed value) of heritability}
 \item{pgresidualY}{Environmental residuals from analysis, based on covariate effects 
 and predicted breeding value.
 }
+\item{grresidualY}{GRAMMAR+ trait transformation}
+\item{grammarGamma}{list with GRAMMAR+ correction factors}
 \item{InvSigma}{Inverse of the variance-covariance matrix, computed at the 
 MLEs -- these are used in \code{\link{mmscore}} and \code{\link{grammar}}
 functions.}
@@ -81,7 +83,9 @@ and regression: a fast and simple method for genome-wide pedigree-based quantita
 trait loci association analysis. Genetics. 2007 177(1):577-85.
 
 Amin N, van Duijn CM, Aulchenko YS. A genomic background based method for 
-association analysis in related individuals. PLoS ONE. 2007 Dec 5;2(12):e1274.}
+association analysis in related individuals. PLoS ONE. 2007 Dec 5;2(12):e1274.
+
+G. Svischeva et al. (in preparation)}
 \author{Yurii Aulchenko, Gulnara Svischeva}
 \note{Presence of twins may complicate your analysis. Check kinship matrix for 
 singularities, or rather use \code{\link{check.marker}} for identification 

@@ -1,7 +1,7 @@
 "check.marker" <-
 		function(data, snpsubset, idsubset,
 				callrate=0.95,perid.call=0.95, extr.call = 0.1, extr.perid.call = 0.1, 
-				het.fdr=0.01, ibs.threshold = 0.95, ibs.mrk = 2000, ibs.exclude="lower",
+				het.fdr=0.01, ibs.threshold = 0.95, ibs.mrk = 2000, ibs.exclude="both",
 				maf, p.level=-1, 
 				fdrate = 0.2, odds = 1000, hweidsubset, redundant="no", minconcordance = 2.0, 
 				qoption="bh95",imphetasmissing=TRUE,XXY.call=0.8, 
@@ -22,6 +22,14 @@
 	sids <- data@idnames
 	smap <- data@map
 	schr <- chromosome(data)
+	
+	possibleIbsExclude <- c("both","lower","none")
+	if (length(ibs.exclude) != 1) 
+		stop("length(ibs.exclude) <> 1")
+	if (!(ibs.exclude %in% possibleIbsExclude)) 
+		stop(paste("'ibs.exclude' should be one of",possibleIbsExclude))
+	if (ibs.exclude == "none") 
+		ibs.mrk = -1
 	
 	cat("Excluding people/markers with extremely low call rate...\n")
 	cat(nsnps(data),"markers and",nids(data),"people in total\n")

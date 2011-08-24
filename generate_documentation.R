@@ -20,6 +20,7 @@ roxy_files <- c(
 		#"phdata.R",
 		"polygenic.R",
 		"polygenic_hglm.R",
+		"recodeChromosome.R",
 		"reconstructNPs.R",
 		"qtscore.R"
 		#,
