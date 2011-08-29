@@ -1,5 +1,10 @@
 *** v. 1.6-8 (2011.08.25)
 
+added 'strand<-' method for snp.data and gwaa.daat-class
+
+added 'id' argument to 'load.gwaa.daat'. This may be handy when eg 
+importing PLINK phenotypic data id="IID"
+
 Update of 'polygenic_hglm' by Xia Shen. Quote:
 We've updated the hglm package to version 1.2-2 recently on CRAN, where 
 the major updates include:

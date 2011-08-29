@@ -146,6 +146,7 @@ exportMethods(
 	"idnames",
 	"refallele",
 	"strand",
+	"strand<-",
 	"map",
 	"phdata",
 	"phdata<-"

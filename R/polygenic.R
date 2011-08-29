@@ -503,27 +503,24 @@
 	names(out$residualY) <- allids #phids
 	
 # compute GRAMMAR+ (G. Svischeva) residuals
-	zu <- mean(diag(out$InvSigma))*tvar
+	eigValInvSig<- as.vector(1./es)
+	zu <- mean(eigValInvSig)*tvar
 	fi <- (1-(1-out$esth2)*zu)/(out$esth2 * tvar)
-	# 'eigen' is expensive operation -- can do faster???
-	eig <- eigen(out$InvSigma, symmetric = TRUE) 
-	# 'solve' is expensive operation -- can do faster???
-	# Bu <- t(eig$vectors) %*% diag(sqrt(eig$values)) %*% eig$vectors ???
-	Bu <- eig$vectors %*% diag(sqrt(eig$values)) %*% solve(eig$vectors)
+	# this is most expensive operation
+	Bu <- eigres$vec %*% diag(sqrt(eigValInvSig)) %*% t(eigres$vec)
 # GRAMMAR+ transformed outcome
 	grresY <- as.vector((1/sqrt(fi)) * (Bu %*% resY))
 	out$grresidualY <- rep(NA,length(mids))
 	out$grresidualY[mids] <- grresY
 	names(out$grresidualY) <- allids #phids
 # GRAMMAR+ correction coefficients
-	# VarYG1 <- (t(pgresY) %*% pgresY)/length(pgresY)
 	VarYG1 <- mean(pgresY^2)
 	z <- 1-(zu-1)*(1-out$esth2)/out$esth2
 	out$grammarGamma <- list()
 	out$grammarGamma$Beta <- z*(1-out$esth2)
 	out$grammarGamma$Test <- z*((1-out$esth2)^2)*tvar/VarYG1
 # END GRAMMAR+ computations
-
+	
 	out$call <- match.call()
 	out$convFGLS <- convFGLS
 	

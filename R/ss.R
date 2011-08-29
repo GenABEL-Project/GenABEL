@@ -314,7 +314,7 @@ setMethod(
 		definition = function(x,i,j,drop)
 		{
 			res <- results(x)
-			return(res[i,j,drop])
+			return(res[i,j,drop=drop])
 		}
 );
 
@@ -666,6 +666,31 @@ setMethod(
 			return(annotation(object)[,"Strand"])
 		}
 );
+
+setGeneric(
+		name = "strand<-",
+		def = function(x,value) {standardGeneric("strand<-");}
+);
+setMethod(
+		f = "strand<-",
+		signature = "snp.data",
+		definition = function(x,value) 
+		{
+			x <- patch_strand(data=x,snpid=snpnames(x),strand=value)
+			return(x)
+		}
+);
+setMethod(
+		f = "strand<-",
+		signature = "gwaa.data",
+		definition = function(x,value) 
+		{
+			strand(x@gtdata) <- value
+			return(x)
+		}
+);
+
+
 
 setGeneric(
 		name = "coding",

@@ -100,7 +100,7 @@
 		cat(length(out.nxt$Xmrkfail),"X-linked markers are likely to be autosomal (odds >",odds,")\n")
 		cat(length(out.nxt$isfemale),"male are likely to be female (odds >",odds,")\n")
 		cat(length(out.nxt$ismale),"female are likely to be male (odds >",odds,")\n")
-		cat(length(out.nxt$otherSexErr)," people have intermediate inbreeding (",Ffemale," > F > ",Fmale,")\n",sep="")
+		cat(length(out.nxt$otherSexErr)," people have intermediate X-chromosome inbreeding (",Ffemale," > F > ",Fmale,")\n",sep="")
 		out <- update.check.marker(out,out.nxt)
 		updat <- 1
 		out.nxt <- Xcheck(data[out$idok,out$snpok[out$snpok %in% data@snpnames[chromosome(data)=="X"]]],Pgte=0.001,Pssw=0.01,Pmsw=0.01,odds=odds,tabonly=T)

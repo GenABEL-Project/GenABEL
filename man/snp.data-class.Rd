@@ -34,6 +34,9 @@
 \alias{strand}
 \alias{strand,gwaa.data-method}
 \alias{strand,snp.data-method}
+\alias{strand<-}
+\alias{strand<-,gwaa.data-method}
+\alias{strand<-,snp.data-method}
 \alias{coding}
 \alias{coding,gwaa.data-method}
 \alias{coding,snp.data-method}
@@ -104,6 +107,8 @@
 	   \code{signature(object = "snp.data")}: extracts chromosome}
   \item{strand}{\code{signature(object = "gwaa.data")}, 
 	   \code{signature(object = "snp.data")}: extracts strand}
+  \item{strand<-}{\code{signature(object = "gwaa.data")}, 
+	   \code{signature(object = "snp.data")}: assign strand}
   \item{coding}{\code{signature(object = "gwaa.data")}, 
 	   \code{signature(object = "snp.data")}: extracts coding}
   \item{coding<-}{\code{signature(object = "gwaa.data")}, 

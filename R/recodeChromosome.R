@@ -39,7 +39,6 @@ recodeChromosome <- function(data,rules,quiet=FALSE)
 	if (any( names(rules) %in% unlist(rules) )) stop("overlap in 'rules' between from and to entries")
 	for (fromName in names(rules)) {
 		toName <- rules[[fromName]]
-		print("aaa")
 		if (length(toName) != 1) 
 			stop(paste('rules list element with name',fromName,'has #entries <> 1'))
 		saveOpt <- getOption("warn")
@@ -48,7 +47,6 @@ recodeChromosome <- function(data,rules,quiet=FALSE)
 			warning(paste("to-name",toName,"is neither integer nor one of 'X', 'Y', 'mt'"))
 		}
 		options("warn" = saveOpt)
-		print("bbb")
 		toBeRecoded <- which(chrom == as.character(fromName))
 		chrom[toBeRecoded] <- as.character(toName)
 		if (length(toBeRecoded) >= 1) {

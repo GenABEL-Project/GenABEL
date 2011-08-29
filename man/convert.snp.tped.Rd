@@ -21,7 +21,7 @@ convert.snp.tped(tpedfile, tfamfile, outfile,strand = "u", bcast = 10000)
   \item{strand}{
 	Specification of strand, one of "u" (unknown), "+", "-" or "file".
 	In the latter case, extra column specifying the strand (again, one of 
-	"u", "+", or "-") should be included on the infile.
+	"u", "+", or "-") should be included on the tpedfile.
 	}
   \item{bcast}{
 	Reports progress every time this number of SNPs have been read
