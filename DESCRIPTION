@@ -4,7 +4,7 @@ Title: genome-wide SNP association analysis
 Version: 1.6-9
 Date: 2011-08-30
 Author: GenABEL developers
-Maintainer: GenABEL developers <genabel@gmail.com>
+Maintainer: GenABEL developers <genabel.project@gmail.com>
 Depends: R (>= 2.10.0), methods, MASS
 Suggests: qvalue, genetics, haplo.stats, DatABEL (>= 0.9-0), hglm, MetABEL, PredictABEL
 Description: a package for genome-wide association analysis between 
