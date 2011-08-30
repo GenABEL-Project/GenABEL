@@ -1,4 +1,7 @@
-*** v. 1.6-8 (2011.08.25)
+*** v. 1.6-8 (2011.08.30)
+
+Change the name of 'maintainer' to genabel@gmail.com to avoid spamming 
+CRAN people
 
 added 'strand<-' method for snp.data and gwaa.daat-class
 
