@@ -1,7 +1,7 @@
 Package: GenABEL
 Type: Package
 Title: genome-wide SNP association analysis
-Version: 1.6-8
+Version: 1.6-9
 Date: 2011-08-30
 Author: GenABEL developers
 Maintainer: GenABEL developers <genabel@gmail.com>
