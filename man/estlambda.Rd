@@ -7,7 +7,7 @@ The major use of this procedure is the Genomic Control, but can also be used to
 visualise the distribution of P-values coming from other tests.
 }
 \usage{
-estlambda(data, plot = TRUE, proportion = 1.0, ... )
+estlambda(data, plot = FALSE, proportion = 1.0, method="regression", filter=TRUE, ... )
 }
 \arguments{
   \item{data}{A vector of reals. If all are <=1, it is assumed that this 
@@ -16,6 +16,10 @@ estlambda(data, plot = TRUE, proportion = 1.0, ... )
   \item{plot}{Wether the prot should be presented}
   \item{proportion}{The proportion of lowest P (Chi2) to be used when 
 		estimating the inflation factor Lambda}
+	\item{method}{Either "regression" or "median", the method 
+		to be used for Lambda estimation}
+	\item{filter}{if the test statistics with 0-value of chi-square 
+		should be excluded prior to estimation of Lambda}
  \item{...}{arguments passed to \code{\link{plot}} function}
 }
 %\details{

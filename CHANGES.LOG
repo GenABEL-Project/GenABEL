@@ -1,3 +1,12 @@
+*** v. 1.7-0 (2011.09.10)
+
+Deal with exceptional situation in merge.snp.data / monomorphic part; 
+added case of no overlap in SNPs (skip monomorphic staff then) 
+
+Modifications in 'estlambda': plot=FALSE by default, added option 
+to estimate Lambda with median method; added option 'filter' for 
+filtering SNPs with 0-statistics
+
 *** v. 1.6-9 (2011.08.30)
 
 Change the name of 'maintainer' to genabel.project@gmail.com to avoid spamming 

@@ -71,7 +71,7 @@
 #' from previous regression, these are expected to change little from the 
 #' initial estimate. The default value of 1000 proved to work rather well under a 
 #' range of conditions.
-#' @param quiet If FALSE (default), details of optimisation process are reported.
+#' @param quiet If FALSE (default), details of optimisation process are reported
 #' @param steptol steptal parameter of "nlm"
 #' @param gradtol gradtol parameter of "nlm" 
 #' @param optimbou fixed effects boundary scale parameter for 'optim'
@@ -168,7 +168,7 @@
 #' 
 "polygenic" <-
 		function(formula,kinship.matrix,data,fixh2,starth2=0.3,trait.type="gaussian",
-				opt.method="nlm",scaleh2=1,quiet=FALSE,
+				opt.method="nlm",scaleh2=1,quiet=FALSE,  
 				steptol=1e-8, gradtol = 1e-8, optimbou = 8, 
 				fglschecks=TRUE,maxnfgls=8,maxdiffgls=1e-4, patchBasedOnFGLS = TRUE, 
 				llfun = "polylik_eigen", ...) {

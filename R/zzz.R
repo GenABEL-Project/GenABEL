@@ -1,6 +1,6 @@
 .onLoad <- function(lib, pkg) {
-	GenABEL.version <- "1.6-9"
-	cat("GenABEL v.",GenABEL.version,"(August 30, 2011) loaded\n")
+	GenABEL.version <- "1.7-0"
+	cat("GenABEL v.",GenABEL.version,"(September 10, 2011) loaded\n")
 	
 	# check for updates and news
 	address <- c(

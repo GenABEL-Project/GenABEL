@@ -1,5 +1,5 @@
 "estlambda" <-
-function(data,plot=TRUE,proportion=1.0, ...) {
+		function(data,plot = FALSE, proportion=1.0, method="regression", filter=TRUE,...) {
 	data <- data[which(!is.na(data))]
 	if (proportion>1.0 || proportion<=0) stop("proportion argument should be greater then zero and less than or equal to one")
 	ntp <- round(proportion*length(data))
@@ -18,6 +18,10 @@ function(data,plot=TRUE,proportion=1.0, ...) {
 #		}
 		data <- qchisq(data,1,low=FALSE)
 	}
+	if (filter) 
+	{
+		data[which(abs(data)<1e-8)] <- NA
+	}
 	data <- sort(data)
 	ppoi <- ppoints(data)
 	ppoi <- sort(qchisq(1-ppoi,1))
@@ -25,7 +29,6 @@ function(data,plot=TRUE,proportion=1.0, ...) {
 	ppoi <- ppoi[1:ntp]
 #	s <- summary(lm(data~offset(ppoi)))$coeff
 # 	bug fix thanks to Franz Quehenberger
-	s <- summary(lm(data~0+ppoi))$coeff
 	if (plot) {
 		lim <- c(0,max(data,ppoi,na.rm=T))
 #		plot(ppoi,data,xlim=lim,ylim=lim,xlab="Expected",ylab="Observed", ...)
@@ -34,7 +37,15 @@ function(data,plot=TRUE,proportion=1.0, ...) {
 		abline(a=0,b=(s[1,1]),col="red")
 	}
 	out <- list()
-	out$estimate <- s[1,1]
-	out$se <- s[1,2]
+	if (method=="regression") {
+		s <- summary(lm(data~0+ppoi))$coeff
+		out$estimate <- s[1,1]
+		out$se <- s[1,2]
+	} else if (method=="median") {
+		out$estimate <- median(data,na.rm=TRUE)/qchisq(0.5,1)
+		out$se <- NA
+	} else {
+		stop("'method' should be either 'regression' or 'median'!")
+	}
 	out
 }
