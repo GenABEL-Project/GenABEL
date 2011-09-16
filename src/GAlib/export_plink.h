@@ -1,9 +1,11 @@
 #ifndef __export_plink_H__
 #define __export_plink_H__
 
-#include <vector.h>
+#include <string>
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <vector>
 #include <math.h>
 #include <Rdefines.h>
 

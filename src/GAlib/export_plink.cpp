@@ -20,7 +20,7 @@ std::string* getGenotype(std::string coding,std::string sep)
 SEXP export_plink(SEXP Ids, SEXP Snpdata, SEXP Nsnps, SEXP NidsTotal, SEXP Coding, SEXP From, SEXP To,
 		SEXP Male, SEXP Traits, SEXP Pedfilename, SEXP Plink, SEXP Append)
 {
-	vector<unsigned short int> sex;
+	std::vector<unsigned short int> sex;
 	unsigned short int sx;
 	for(unsigned int i=0;i<((unsigned int) length(Male));i++) {
 		sx = INTEGER(Male)[i];
@@ -28,11 +28,11 @@ SEXP export_plink(SEXP Ids, SEXP Snpdata, SEXP Nsnps, SEXP NidsTotal, SEXP Codin
 		sex.push_back(sx);
 	}
 
-	vector<std::string> ids;
+	std::vector<std::string> ids;
 	for(unsigned int i=0;i<((unsigned int) length(Ids));i++)
 		ids.push_back(CHAR(STRING_ELT(Ids,i)));
 
-	vector<std::string> coding;
+	std::vector<std::string> coding;
 	for(unsigned int i=0;i<((unsigned int) length(Coding));i++)
 		coding.push_back(CHAR(STRING_ELT(Coding,i)));
 
@@ -93,7 +93,7 @@ SEXP export_plink(SEXP Ids, SEXP Snpdata, SEXP Nsnps, SEXP NidsTotal, SEXP Codin
 			//fileWoA << " x" << Letter0 << Letter1 << Genotype[0] << Genotype[1] << Genotype[2] << Genotype[3];
 		}
 		// end unwrap
-		fileWoA << endl;
+		fileWoA << "\n";
 	}
 	//Rprintf("C\n");
 	fileWoA.close();

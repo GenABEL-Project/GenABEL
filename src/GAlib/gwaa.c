@@ -1121,7 +1121,7 @@ void mmscore_20110915_nostrat(char *gdata, double *pheno, double *invS, int *Nid
 {
 	int nsnps = (*Nsnps);
 	int nstra = (*Nstra);
-	if (nstra!=1) return 100;
+	if (nstra!=1) return;
 	int nids = (*Nids);
 	int gt[nids];
 	int i, j, igt, i1=1;
