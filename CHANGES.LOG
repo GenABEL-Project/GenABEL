@@ -1,4 +1,9 @@
-*** v. 1.7-0 (2011.09.10)
+*** v. 1.7-0 (2011.09.16)
+
+speeding-up 'mmscore' by x1.8 through more efficient vector-matrix 
+product computations 
+
+export.merlin, export.plink now runs much faster (exports on C++ code)
 
 Deal with exceptional situation in merge.snp.data / monomorphic part; 
 added case of no overlap in SNPs (skip monomorphic staff then) 
