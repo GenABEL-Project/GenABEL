@@ -82,7 +82,7 @@
 #' @param patchBasedOnFGLS if FGLS checks not passed, 'patch' fixed 
 #' effect estimates based on FGLS expectation
 #' @param llfun function to compute likelihood (default 'polylik_eigen', also 
-#' avalable -- but not recommeneded -- 'polylik')
+#' available -- but not recommended -- 'polylik')
 #' @param ... Optional arguments to be passed to \code{\link{nlm}} or (\code{\link{optim}}) 
 #' minimisation function
 #' 
@@ -128,16 +128,17 @@
 #' @author Yurii Aulchenko, Gulnara Svischeva
 #' 
 #' @note 
-#' Presence of twins may complicate your analysis. Check kinship matrix for 
+#' Presence of twins may complicate your analysis. Check the kinship matrix for 
 #' singularities, or rather use \code{\link{check.marker}} for identification 
 #' of twin samples. Take special care in interpretation.
 #' 
-#' If a trait (no covarites) is used, make sure that order of IDs in 
+#' If a trait (no covarites) is used, make sure that the order of IDs in the
 #' kinship.matrix is exactly the same as in the outcome
 #' 
 #' Please note that there is alternative to 'polygenic', 
 #' \code{\link{polygenic_hglm}}, which is faster than 
-#' 'polygenic'.
+#' polygenic() with the llfun='polylik' option, but slightly slower than the
+#' default polygenic().
 #' 
 #' @seealso 
 #' \code{\link{polygenic_hglm}},
@@ -148,7 +149,7 @@
 #' # note that procedure runs on CLEAN data
 #' data(ge03d2ex.clean)
 #' gkin <- ibs(ge03d2ex.clean,w="freq")
-#' h2ht <- polygenic(height ~ sex + age,kin=gkin,ge03d2ex.clean)
+#' h2ht <- polygenic(height ~ sex + age, kin=gkin, ge03d2ex.clean)
 #' # estimate of heritability
 #' h2ht$esth2
 #' # other parameters
@@ -158,8 +159,8 @@
 #' # twice maximum log-likelihood
 #' -h2ht$h2an$minimum
 #' 
-#' #for binary trait (experimental)
-#' h2dm <- polygenic(dm2 ~ sex + age,kin=gkin,ge03d2ex.clean,trait="binomial")
+#' # for binary trait (experimental)
+#' h2dm <- polygenic(dm2 ~ sex + age, kin=gkin, ge03d2ex.clean, trait="binomial")
 #' # estimated parameters
 #' h2dm$h2an
 #' 
