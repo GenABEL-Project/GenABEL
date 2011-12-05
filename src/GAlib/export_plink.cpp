@@ -107,6 +107,98 @@ SEXP export_plink(SEXP Ids, SEXP Snpdata, SEXP Nsnps, SEXP NidsTotal, SEXP Codin
 	return R_NilValue;
 }
 
+SEXP export_plink_tped(SEXP Snpnames, SEXP Chromosomes, SEXP Map,
+		SEXP Snpdata, SEXP Nsnps, SEXP Nids, SEXP Coding, SEXP Pedfilename,
+		SEXP ExportNumeric)
+{
+	std::vector<std::string> snpName;
+	for(unsigned int i=0;i<((unsigned int) length(Snpnames));i++)
+		snpName.push_back(CHAR(STRING_ELT(Snpnames,i)));
+
+	std::vector<std::string> coding;
+	for(unsigned int i=0;i<((unsigned int) length(Coding));i++)
+		coding.push_back(CHAR(STRING_ELT(Coding,i)));
+
+	std::vector<std::string> chromosome;
+	for(unsigned int i=0;i<((unsigned int) length(Chromosomes));i++)
+		chromosome.push_back(CHAR(STRING_ELT(Chromosomes,i)));
+
+	std::vector<double> position;
+	for(unsigned int i=0;i<((unsigned int) length(Map));i++)
+		position.push_back(REAL(Map)[i]);
+
+	//Rprintf("0\n");
+	unsigned int nsnps = INTEGER(Nsnps)[0];
+	int nids = INTEGER(Nids)[0];
+	bool exportNumeric = LOGICAL(ExportNumeric)[0];
+	std::string filename = CHAR(STRING_ELT(Pedfilename,0));
+	std::ofstream fileWoA;
+	int gtint[nids];
+	int ieq1 = 1;
+	char * snpdata = (char *) RAW(Snpdata);
+	//Rprintf("nsnps=%d\n",nsnps);
+	//Rprintf("nids=%d\n",nids);
+
+	//Rprintf("1\n");
+	std::string* Genotype;
+	std::string sep=" ";
+	int nbytes;
+
+	//Rprintf("nsnps=%d\n",nsnps);
+	//Rprintf("nids=%d\n",nids);
+
+	if ((nids % 4) == 0) nbytes = nids/4; else nbytes = ceil(1.*nids/4.);
+
+	fileWoA.open(filename.c_str(),std::fstream::trunc);
+
+	//Rprintf("A\n");
+	for (unsigned int csnp=0;csnp<nsnps;csnp++) {
+		// collect SNP data
+		get_snps_many(snpdata+nbytes*csnp, &nids, &ieq1, gtint);
+		Genotype = getGenotype(coding[csnp],sep);
+		fileWoA << chromosome[csnp] << " " << snpName[csnp] << " 0 " << (unsigned long int) position[csnp];
+		if (!exportNumeric) {
+			for (int i=0;i<nids;i++) {
+				fileWoA << " " << Genotype[gtint[i]];
+			}
+		} else {
+			for (int i=0;i<nids;i++) {
+				if (gtint[i]==0)
+					fileWoA << " NA";
+				else
+					fileWoA << " " << (gtint[i]-1);
+			}
+		}
+		fileWoA << "\n";
+		//Rprintf("\n");
+	}
+	//Rprintf("B\n");
+	/**
+	for (int i=0;i<nids;i++) {
+		fileWoA << i+from << " " << ids[i] << " 0 0 " << sex[i];
+		for (int j=0;j<ntraits;j++) fileWoA << " " << 0;
+		// unwrap genotypes
+		for (unsigned int csnp=0;csnp<nsnps;csnp++) {
+			Genotype = getGenotype(coding[csnp],sep);
+			// figure out the coding
+			fileWoA << " " << Genotype[gtMatrix[i][csnp]];
+			//fileWoA << " x" << Letter0 << Letter1 << Genotype[0] << Genotype[1] << Genotype[2] << Genotype[3];
+		}
+		// end unwrap
+		fileWoA << "\n";
+	}
+	 **/
+	//Rprintf("C\n");
+	fileWoA.close();
+
+	//Rprintf("oooo!" );
+	//for (int i=0;i<10;i++) Rprintf("%d ",sex[i]);
+	//Rprintf("oooo!\n" );
+
+	delete [] Genotype;
+
+	return R_NilValue;
+}
 
 #ifdef __cplusplus
 }

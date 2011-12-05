@@ -912,6 +912,8 @@ void mmscore_20110916(char *gdata, double *pheno, double *invS, int *Nids, int *
 	double Ttotg,dgt,totg[nstra],eG[nstra],ePH[nstra],svec[nids],gtctr[nids],phctr[nids];
 	double Tsg, sg[nstra],sph[nstra];
 	double u, v;
+	double temp1,temp2;
+
 	if ((nids % 4) == 0) nbytes = nids/4; else nbytes = ceil(1.*nids/4.);
 
 	for (igt=0;igt<nsnps;igt++) {
@@ -947,6 +949,7 @@ void mmscore_20110916(char *gdata, double *pheno, double *invS, int *Nids, int *
 				phctr[i] = pheno[i] - ePH[cstr];
 			}
 		}
+
 		/**
 		for (i=0;i<nids;i++) {
 			svec[i] = 0.;
@@ -958,7 +961,6 @@ void mmscore_20110916(char *gdata, double *pheno, double *invS, int *Nids, int *
 		**/
 		for (i=0;i<nids;i++) svec[i] = 0.;
 
-		double temp1,temp2;
 		for (i=0;i<nids;i++) {
 			int offS = nids*i;
 			temp1 = gtctr[i];
@@ -1499,7 +1501,7 @@ void ibsnew(char *indata, unsigned int *Nids, unsigned int *Nsnps, double *freqs
 			}
 		}
 		noninf=0;
-		if (option > 0) {
+		if (option == 1) {
 			//			count[0]=count[1]=count[2]=count[3]=sumgt=0;
 			//			for (i=0;i<nids;i++) count[gt[i]]++;
 			//			sumgt = count[1]+count[2]+count[3];

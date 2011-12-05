@@ -125,7 +125,7 @@ respect to changes in other parameters. As other parameters are estimated
 from previous regression, these are expected to change little from the 
 initial estimate. The default value of 1000 proved to work rather well under a 
 range of conditions.}
-\item{quiet}{If FALSE (default), details of optimisation process are reported.}
+\item{quiet}{If FALSE (default), details of optimisation process are reported}
 \item{steptol}{steptal parameter of "nlm"}
 \item{gradtol}{gradtol parameter of "nlm"}
 \item{optimbou}{fixed effects boundary scale parameter for 'optim'}

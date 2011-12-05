@@ -20,6 +20,10 @@ std::string* getGenotype(std::string coding, std::string sep);
 SEXP export_plink(SEXP idnames, SEXP snpdata, SEXP Nsnps, SEXP NidsTotal, SEXP Coding, SEXP from, SEXP to,
 		SEXP male, SEXP traits, SEXP pedfilename, SEXP plink, SEXP append);
 
+SEXP export_plink_tped(SEXP snpnames, SEXP chromosomes, SEXP map,
+		SEXP snpdata, SEXP Nsnps, SEXP Nids, SEXP Coding, SEXP pedfilename,
+		SEXP exportNumeric);
+
 #ifdef __cplusplus
 }
 #endif

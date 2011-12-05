@@ -25,7 +25,8 @@ test.exports <- function()
 	data(ge03d2.clean)
 	nTestIds <- sample(c(10:min(100,nids(ge03d2.clean))),1)
 	nTestSnps <- sample(c(10:min(1000,nsnps(ge03d2.clean))),1)
-	dta <- ge03d2.clean[sample(1:nids(ge03d2.clean),nTestIds),sample(1:nsnps(ge03d2.clean),nTestSnps)]
+	dta <- ge03d2.clean[sort(sample(1:nids(ge03d2.clean),nTestIds)),
+			sort(sample(1:nsnps(ge03d2.clean),nTestSnps))]
 
 	export.plink(dta,filebasename="tmpOld",dpieceFun="old")
 	export.plink(dta,filebasename="tmpNew",dpieceFun="new")
@@ -60,6 +61,22 @@ test.exports <- function()
 	checkIdentical(xN,xO)
 	
 	unlink("tmpOld*")
-	unlink("tmpNew*")
-
+	unlink("tmpNew*")	
+	
+	export.plink(dta,filebasename="tmpTrans",transpose=TRUE)
+	convert.snp.tped(tpedfile="tmpTrans.tped",tfamfile="tmpTrans.tfam",out="tmpTrans.raw")
+	xBack <- load.gwaa.data(gen="tmpTrans.raw",phe="tmpTrans.phe",id="IID")
+	strand(xBack) <- strand(dta)
+	phdata(xBack) <- phdata(xBack)[,-1]
+	sameCode <- which(coding(dta) == coding(xBack))
+	checkIdentical(xBack[,sameCode],dta[,sameCode])
+	swappedCode <- which(refallele(dta)==effallele(xBack) & effallele(dta)==refallele(xBack))
+	for (i in swappedCode) {
+		gtDta <- c(2,1,0)[as.vector(as.numeric(dta[,i]))+1]
+		gtBack <- as.vector(as.numeric(xBack[,i]))
+		print(checkIdentical(gtBack,gtDta))
+	}
+	
+	unlink("tmpTrans*")
+	
 }

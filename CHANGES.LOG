@@ -1,12 +1,23 @@
-*** v. 1.7-0 (2011.09.16)
+*** v. 1.7-0 (2011.11.15)
+
+Added 'KS' method to estimate lambda in 'estlambda'. Generates rather 
+good results (under null) and may be considered as default option in the future, 
+after testing under the alternative. 
+
+Account for situation when HGLM fails to converge (s.e.'s set to NA in 
+h2$h2an$se) 
+
+added option 'transposed' to 'export.plink' to export TPED files
 
 speeding-up 'mmscore' by x1.8 through more efficient vector-matrix 
 product computations 
 
 export.merlin, export.plink now runs much faster (exports on C++ code)
 
-Deal with exceptional situation in merge.snp.data / monomorphic part; 
-added case of no overlap in SNPs (skip monomorphic staff then) 
+Bug [#1641] reported by Karl Froner fixed. Now GenABEL 
+deals with exceptional situation in merge.snp.data / monomorphic part; 
+added case of no overlap in SNPs (skip monomorphic staff then). RUnit 
+regression test runit.merge.R/test.merge.bug1641 added.   
 
 Modifications in 'estlambda': plot=FALSE by default, added option 
 to estimate Lambda with median method; added option 'filter' for 

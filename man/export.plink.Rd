@@ -1,7 +1,8 @@
 \name{export.plink}
 \alias{export.plink}
 \title{Export GenABEL data in PLINK format...}
-\usage{export.plink(data, filebasename, phenotypes="all", ...)}
+\usage{export.plink(data, filebasename="plink", phenotypes="all",
+    transpose=FALSE, export012na=FALSE, ...)}
 \description{Export GenABEL data in PLINK format}
 \details{Export GenABEL data in PLINK format. This function is 
 a simple wrapper to \code{\link{export.merlin}} function 

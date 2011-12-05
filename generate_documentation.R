@@ -4,6 +4,7 @@ roxy_files <- c(
 		"arrange_probabel_phe.R",
 		"blurGenotype.R",
 		"del.phdata.R",
+		"estlambda.R",
 		"export.plink.R",
 		"extract.annotation.impute.R",
 		"extract.annotation.mach.R",
