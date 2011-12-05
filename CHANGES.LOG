@@ -1,5 +1,7 @@
 *** v. 1.7-0 (2011.11.15)
 
+Addressed bug [#1676], added unit test runit.merge.R/test.merge.bug1676
+
 Added 'KS' method to estimate lambda in 'estlambda'. Generates rather 
 good results (under null) and may be considered as default option in the future, 
 after testing under the alternative. 

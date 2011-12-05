@@ -22,10 +22,21 @@ if(FALSE) {
 
 test.merge.bug1641 <- function()
 {
-	library(GenABEL)
-	print(  packageVersion("GenABEL") )
 	data(srdta)
 	x1 <- srdta[1:4,1]
 	x2 <- srdta[5:10, 2]
 	xy <- merge(x1, x2, intersected_snps_only=FALSE)
+}
+
+test.merge.bug1676 <- function() 
+{
+	data(srdta)
+	x1 <- srdta[1:4,1]
+	x2 <- srdta[5:10, 2]
+	xy <- merge(x1,x2)
+	phdata(x1)
+	phdata(x2)
+	phdata(xy)
+	checkIdentical(phdata(xy)[1:dim(phdata(x1))[1],],phdata(x1))
+	checkIdentical(phdata(xy)[(dim(phdata(x1))[1]+1):(dim(phdata(x1))[1]+dim(phdata(x2))[1]),],phdata(x2))
 }
