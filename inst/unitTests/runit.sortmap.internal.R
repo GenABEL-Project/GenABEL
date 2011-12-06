@@ -22,7 +22,6 @@ if(FALSE) {
 
 test.sortmap.internal.bug1673 <- function()
 {
-	source("../R/sortmap.internal.R")
 	nmrkInChr <- c(7,5,3)
 	chrLevels <- c("cH1","X","Y")
 	chroms <- mappos <- rep(NA,sum(nmrkInChr))

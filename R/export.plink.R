@@ -16,6 +16,12 @@
 #' all phenotypes or a vector of character with names of phneotypes 
 #' to be exported 
 #' 
+#' @param transpose if FALSE, regular 'tped' files produced, else 
+#' 'ped' files are produced 
+#' 
+#' @param export012na if true, export in numeric (0, 1, 2, NA) format 
+#' (as opposed to ATGC format)
+#' 
 #' @param ... arguments passed to \code{\link{export.merlin}}
 #' 
 #' @author Yurii Aulchenko

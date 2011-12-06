@@ -1,4 +1,8 @@
-*** v. 1.7-0 (2011.11.15)
+*** v. 1.7-0 (2011.12.05)
+
+Addressed bug [#1383] (message about upgrade on loading the library 
+not entirely correct) by adding new function checkPackageVersionOnCRAN() 
+and re-writing zzz.R using it.  
 
 Addressed bug [#1673] (bug in load.gwaa.data and export.merlin when 
 sorting is enabled, filed in by Daniel Taliun), added unit test 

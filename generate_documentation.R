@@ -3,6 +3,7 @@ roxy_files <- c(
 		#"annotation",
 		"arrange_probabel_phe.R",
 		"blurGenotype.R",
+		"checkPackageVersionOnCRAN.R",
 		"del.phdata.R",
 		"estlambda.R",
 		"export.plink.R",
@@ -23,6 +24,7 @@ roxy_files <- c(
 		"polygenic_hglm.R",
 		"recodeChromosome.R",
 		"reconstructNPs.R",
+		"sortmap.internal.R",
 		"qtscore.R"
 		#,
 		#"summary.scan.gwaa.R"

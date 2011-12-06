@@ -8,3 +8,21 @@ estLambdaKS <- function(chi2values,limits=c(0.5,100)) {
 	optRes <- optimize(lossFunctionLambdaKS, interval=limits, chi2values=chi2values, "pchisq", 1)
 	return(optRes$minimum)
 }
+chrom.char2num <- function(chrom) {
+	chrom <- as.character(chrom)
+	chdesU <- unique(chrom)
+	chnumU <- suppressWarnings(as.numeric(chdesU))
+	chCHU <- sort(chdesU[is.na(chnumU)])
+	if (any(!is.na(chnumU))) {
+		maxch <- max(chnumU,na.rm=T)
+	} else {
+		maxch <- 0
+	}
+	j <- 1
+	for (i in chCHU) {
+		chrom[which(chrom==i)] <- as.character(maxch+j)
+		j <- j + 1
+	}
+	chnum <- as.numeric(chrom)
+	chnum
+}

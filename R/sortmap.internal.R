@@ -1,3 +1,17 @@
+#' Internal function for map-sorting
+#' 
+#' Internal function for map-sorting, not supposed 
+#' to be used directly by user (is open for regression 
+#' testing reasons)
+#' 
+#' @param chrom vector of markers' chromosomes
+#' @param map vector of marlers' map ositions
+#' @param delta step to do between chroms when building cumulative map
+#' 
+#' @return list, withe elements 'ix' ('sorted' order), etc.
+#' 
+#' @author Yurii Aulchenko
+#'
 "sortmap.internal" <-
 		function(chrom,map,delta=1) {
 	chnum <- chrom.char2num(chrom)
@@ -16,23 +30,4 @@
 	out$cummap <- cummap
 	out$chnum <- chnum
 	out
-}
-
-chrom.char2num <- function(chrom) {
-	chrom <- as.character(chrom)
-	chdesU <- unique(chrom)
-	chnumU <- suppressWarnings(as.numeric(chdesU))
-	chCHU <- sort(chdesU[is.na(chnumU)])
-	if (any(!is.na(chnumU))) {
-		maxch <- max(chnumU,na.rm=T)
-	} else {
-		maxch <- 0
-	}
-	j <- 1
-	for (i in chCHU) {
-		chrom[which(chrom==i)] <- as.character(maxch+j)
-		j <- j + 1
-	}
-	chnum <- as.numeric(chrom)
-	chnum
 }
