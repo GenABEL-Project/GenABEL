@@ -56,13 +56,14 @@ void decomp(char *indata, int nids, int *gt) {
 		for (j=0;j<4;j++) {
 			gt[idx] = str & msk[j]; 
 			gt[idx++] >>= ofs[j];
-			printf("%i (%i);",idx-1,gt[idx-1]);
+			//printf("%i (%i);",idx-1,gt[idx-1]);
 			if (idx>=nids) {idx=0;break;}
 		}
 	}
-	printf("going out of decomp...\n");
+	//printf("going out of decomp...\n");
 }
 
+/*
 void temp(char *indata, int *Nids, int *g) {
 	int i;
 	int nids = (*Nids);
@@ -71,6 +72,7 @@ void temp(char *indata, int *Nids, int *g) {
 	for (i=0;i<nids;i++) printf("%i ",g[i]);
 	printf("\n");
 }
+*/
 
 void get_snps_many(char *a, int *Nsnps, int *Nrows, int *b) {
 	int i,j,m,idx=0;

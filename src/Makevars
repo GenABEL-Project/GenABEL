@@ -1,4 +1,4 @@
-PKG_CXXFLAGS=-DCOMPILE_WITH_R# -Wall -pedantic
+PKG_CXXFLAGS=-DCOMPILE_WITH_R -Wall -pedantic
 
 all: $(SHLIB) cleanNoSo
 
