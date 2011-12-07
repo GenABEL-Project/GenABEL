@@ -1,19 +1,21 @@
 .onLoad <- function(lib, pkg) {
-	pkgDescription <- packageDescription(pkg)
-	pkgVersion <- pkgDescription$Version
-	pkgDate <- pkgDescription$Date
-	welcomeMessage <- paste(pkg," v. ",pkgVersion," (",pkgDate,") loaded\n",sep="")
-	# check if CRAN version is the same as loaded
-	cranVersion <- checkPackageVersionOnCRAN(pkg)
-	if (!is.null(cranVersion)) 
-		if (pkgVersion != cranVersion) {
-			welcomeMessage <- paste(welcomeMessage,
-					"\nInstalled ",pkg," version (",pkgVersion,") is not the same as stable\n",
-					"version available from CRAN (",cranVersion,"). Unless used intentionally,\n",
-					"consider updating to the latest CRAN version. For that, use\n",
-					"'install.packages(\"",pkg,"\")', or ask your system administrator\n",
-					"to update the package.\n\n",sep="")
-		}
+	if (require(utils)) {
+		pkgDescription <- packageDescription(pkg)
+		pkgVersion <- pkgDescription$Version
+		pkgDate <- pkgDescription$Date
+		welcomeMessage <- paste(pkg," v. ",pkgVersion," (",pkgDate,") loaded\n",sep="")
+		# check if CRAN version is the same as loaded
+		cranVersion <- checkPackageVersionOnCRAN(pkg)
+		if (!is.null(cranVersion)) 
+			if (pkgVersion != cranVersion) {
+				welcomeMessage <- paste(welcomeMessage,
+						"\nInstalled ",pkg," version (",pkgVersion,") is not the same as stable\n",
+						"version available from CRAN (",cranVersion,"). Unless used intentionally,\n",
+						"consider updating to the latest CRAN version. For that, use\n",
+						"'install.packages(\"",pkg,"\")', or ask your system administrator\n",
+						"to update the package.\n\n",sep="")
+			}
+	}
 	# check for news
 	address <- c(
 			"http://genabel.r-forge.r-project.org/version_and_news.html",

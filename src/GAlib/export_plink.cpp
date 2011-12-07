@@ -47,13 +47,19 @@ SEXP export_plink(SEXP Ids, SEXP Snpdata, SEXP Nsnps, SEXP NidsTotal, SEXP Codin
 	bool plink = LOGICAL(Plink)[0];
 	std::string filename = CHAR(STRING_ELT(Pedfilename,0));
 	std::ofstream fileWoA;
-	int gtint[nidsTotal];
 	int ieq1 = 1;
 	char * snpdata = (char *) RAW(Snpdata);
+
+	//	int gtint[nidsTotal];
+	int *gtint = new (std::nothrow) int[nidsTotal];
+
 	//Rprintf("nsnps=%d\n",nsnps);
 	//Rprintf("nids=%d\n",nids);
 
-	char gtMatrix[nids][nsnps];
+	//char gtMatrix[nids][nsnps];
+	char **gtMatrix = new (std::nothrow) char*[nids];
+	for (unsigned int i=0;i<nids;i++) gtMatrix[i] = new (std::nothrow) char[nsnps];
+
 	//Rprintf("1\n");
 	std::string* Genotype;
 	std::string sep="/";
@@ -102,7 +108,9 @@ SEXP export_plink(SEXP Ids, SEXP Snpdata, SEXP Nsnps, SEXP NidsTotal, SEXP Codin
 	//for (int i=0;i<10;i++) Rprintf("%d ",sex[i]);
 	//Rprintf("oooo!\n" );
 
+	delete [] gtMatrix;
 	delete [] Genotype;
+	delete [] gtint;
 
 	return R_NilValue;
 }
@@ -133,9 +141,12 @@ SEXP export_plink_tped(SEXP Snpnames, SEXP Chromosomes, SEXP Map,
 	bool exportNumeric = LOGICAL(ExportNumeric)[0];
 	std::string filename = CHAR(STRING_ELT(Pedfilename,0));
 	std::ofstream fileWoA;
-	int gtint[nids];
 	int ieq1 = 1;
 	char * snpdata = (char *) RAW(Snpdata);
+
+	//	int gtint[nids];
+	int *gtint = new (std::nothrow) int[nids];
+
 	//Rprintf("nsnps=%d\n",nsnps);
 	//Rprintf("nids=%d\n",nids);
 
@@ -196,6 +207,7 @@ SEXP export_plink_tped(SEXP Snpnames, SEXP Chromosomes, SEXP Map,
 	//Rprintf("oooo!\n" );
 
 	delete [] Genotype;
+	delete [] gtint;
 
 	return R_NilValue;
 }

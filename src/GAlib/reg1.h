@@ -78,8 +78,8 @@ public:
 		double prev = (rdata.Y).column_mean(0);
 		if (prev>=1. || prev <=0.)
 		{
-			fprintf(stderr,"prevalence not within (0,1)\n");
-			exit(1);
+			//fprintf(stderr,"prevalence not within (0,1)\n");
+			error("prevalence not within (0,1)");
 		}
 		for (int i = 0;i<length_beta;i++) beta.put(0.,i,0);
 		beta.put(log(prev/(1.-prev)),0,0);
@@ -164,7 +164,10 @@ public:
 		mematrix<double> u(cdata.X.nrow,1);
 		mematrix<double> imat(cdata.X.nrow,cdata.X.nrow);
 		double * work = new (nothrow) double[cdata.X.ncol*2+2*(cdata.X.nrow)*(cdata.X.nrow)+3*(cdata.X.nrow)];
-		if (!work) {perror("can not allocate work matrix");exit(1);}
+		if (!work) {
+			//perror("can not allocate work matrix");exit(1);
+			error("can not allocate work matrix");
+		}
 		double loglik[2];
 		int flag;
 		double sctest=1.0;
