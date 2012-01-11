@@ -13,6 +13,7 @@ roxy_files <- c(
 		"GenABEL-package.R",
 		"generateOffspring.R",
 		"getLogLikelihoodGivenRelation.R",
+		"ibs.R",
 		"impute2databel.R",
 		"impute2mach.R",
 		#"LiLogCC.R",

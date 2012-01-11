@@ -1,3 +1,9 @@
+*** v. 1.7-1 (2012.01.11)
+
+Added option weight = "eVar" to 'ibs'. This uses empirical variance of 
+genotypes when estimating kinship matrix. This is useful when working with 
+such data as Arabidopsis.  
+
 *** v. 1.7-0 (2011.12.20)
 
 Addressed bug [#1383] (message about upgrade on loading the library 
