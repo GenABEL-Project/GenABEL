@@ -183,7 +183,7 @@ findRelatives <- function(gtdata,nmeivec=c(1:2),q=NULL,epsilon=0.01,
 	} else {
 		testUs <- rep(TRUE,lengthOut)
 	}
-	if (all(testUs==FALSE)) stop("no test to be performed according to specifid criteria")
+	if (all(testUs==FALSE)) stop("no test to be performed according to specified criteria")
 # prepare 2-way meiotic table to iterate over
 	meiTab <- list()
 	#print(nmeivec)
