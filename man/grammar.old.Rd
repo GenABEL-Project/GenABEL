@@ -1,5 +1,5 @@
-\name{grammar}
-\alias{grammar}
+\name{grammar.old}
+\alias{grammar.old}
 \title{Approximate score test for association in related people}
 \description{
 Fast approximate score test for association between a trait and genetic polymorphism, 
@@ -7,17 +7,17 @@ in samples of related individuals. When used with argument "times=1", it is equi
 running \code{\link{qtscore}} on "environmental residuals" from \code{\link{polygenic}}.
 However, it does not produce correct results with permutations, because the raw 
 trait values, which are not exchangeable, are permuted. Use \code{\link{qtscore}} 
-on "environmental residuals" when you want to have empirical GW significance with GRAMMAR 
+on "environmental residuals" when you want to have empirical GW significance with grammar.old 
 method.
 }
 \usage{
-grammar(h2object,data,snpsubset,idsubset,strata,times=1,quiet=FALSE,bcast=10,clambda=FALSE,propPs=1.0)
+grammar.old(h2object,data,snpsubset,idsubset,strata,times=1,quiet=FALSE,bcast=10,clambda=FALSE,propPs=1.0)
 }
 \arguments{
   \item{h2object}{An object returned by \code{\link{polygenic}} polygenic mixed model analysis 
 	routine. The sub-objects used are measuredIDs, residualY, h2an\$estimates (last element, 
 	total variance, only), and InvSigma. 
-	One can supply grammar with a fake h2object, containing these list elements. 
+	One can supply grammar.old with a fake h2object, containing these list elements. 
 	}
   \item{data}{An object of \code{\link{gwaa.data-class}}}
   \item{snpsubset}{Index, character or logical vector with subset of SNPs to run analysis on. 
@@ -35,7 +35,7 @@ grammar(h2object,data,snpsubset,idsubset,strata,times=1,quiet=FALSE,bcast=10,cla
   \item{clambda}{If inflation facor Lambda is estimated as lower then one, this parameter 
 		controls if the original P1df (clambda=TRUE) to be reported in Pc1df, 
 		or the original 1df statistics is to be multiplied onto this "deflation" 
-		factor (clambda=FALSE). With GRAMMAR, Lambda is expected ot be less than 1.
+		factor (clambda=FALSE). With grammar.old, Lambda is expected ot be less than 1.
 		If a numeric value is provided, it is used as a correction factor.}
   \item{propPs}{proportion of non-corrected P-values used to estimate the inflation factor Lambda,
 		passed directly to the \code{\link{estlambda}}}
@@ -57,10 +57,10 @@ grammar(h2object,data,snpsubset,idsubset,strata,times=1,quiet=FALSE,bcast=10,cla
 	InvSigma and $residualY$ are residuals from the trait analysis 
 	with \code{\link{polygenic}} procedure.
 
-	Compared to score test implemented in \code{\link{mmscore}}, grammar 
+	Compared to score test implemented in \code{\link{mmscore}}, grammar.old 
 	test is faster and computation time grows only linearly with the 
 	number of subjects (with \code{\link{mmscore}} this relation is 
-	quadratic). While raw P1df from grammar are not quite correct, 
+	quadratic). While raw P1df from grammar.old are not quite correct, 
 	the GC p-values correspond very closely to these from the \code{\link{mmscore}}.
 }
 \value{
@@ -78,13 +78,13 @@ association analysis in related individuals. PLoS ONE. 2007 Dec 5;2(12):e1274.
 \author{Yurii Aulchenko}
 %\note{}
 \seealso{
-\code{\link{grammar}},
+\code{\link{grammar.old}},
 \code{\link{qtscore}},
 \code{\link{plot.scan.gwaa}},
 \code{\link{scan.gwaa-class}}
 }
 \examples{
-# ge03d2.clean is rather bad data set to demonstrate grammar, 
+# ge03d2.clean is rather bad data set to demonstrate grammar.old, 
 # because this is a population-based study
 data(ge03d2.clean)
 #take half for speed
@@ -92,8 +92,8 @@ ge03d2.clean <- ge03d2.clean[1:100,]
 gkin <- ibs(ge03d2.clean,w="freq")
 h2ht <- polygenic(height ~ sex + age,kin=gkin,ge03d2.clean)
 h2ht$est
-# can use "grammar", but ...
-a <- grammar(h2ht,data=ge03d2.clean)
+# can use "grammar.old", but ...
+a <- grammar.old(h2ht,data=ge03d2.clean)
 # ... use rather qtscore (note clam=FALSE), which is a better alternative for the same thing
 a <- qtscore(h2ht$pgres,data=ge03d2.clean,clam=FALSE)
 # compare to GC:

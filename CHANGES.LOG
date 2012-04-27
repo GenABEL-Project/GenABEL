@@ -1,4 +1,7 @@
-*** v. 1.7-1 (2012.01.11)
+*** v. 1.7-1 (2012.04.27)
+
+Replaced 'grammar' function with new one, allowing 'raw', 'gc' 
+and 'gamma' varieties of the method.
 
 Added option weight = "eVar" to 'ibs'. This uses empirical variance of 
 genotypes when estimating kinship matrix. This is useful when working with 

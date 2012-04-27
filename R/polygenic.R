@@ -100,8 +100,8 @@
 #' \item{pgresidualY}{Environmental residuals from analysis, based on covariate effects 
 #' and predicted breeding value.
 #' }
-#' \item{grresidualY}{GRAMMAR+ trait transformation}
-#' \item{grammarGamma}{list with GRAMMAR+ correction factors}
+#' \item{grresidualY}{GRAMMAR-transform trait transformation}
+#' \item{grammarGamma}{list with GRAMMAR-gamma correction factors}
 #' \item{InvSigma}{Inverse of the variance-covariance matrix, computed at the 
 #' MLEs -- these are used in \code{\link{mmscore}} and \code{\link{grammar}}
 #' functions.}

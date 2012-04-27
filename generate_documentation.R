@@ -13,6 +13,7 @@ roxy_files <- c(
 		"GenABEL-package.R",
 		"generateOffspring.R",
 		"getLogLikelihoodGivenRelation.R",
+		"grammar.R",
 		"ibs.R",
 		"impute2databel.R",
 		"impute2mach.R",
@@ -31,7 +32,7 @@ roxy_files <- c(
 		#"summary.scan.gwaa.R"
 )
 
-library(roxygen)
+library(roxygen2)
 setwd("R")
 unlink("GenABEL",recursive=TRUE)
 package.skeleton("GenABEL",code_files=roxy_files)
