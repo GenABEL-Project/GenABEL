@@ -24,8 +24,8 @@
   this function converts IMPUTE-imputed files to DatABEL
   (filevector) format containing estimated dosages. After
   conversion, two files (outfile.fvi and outfile.fvd),
-  corresponding to single filevector object, will appear on
-  the disk; 'databel-class' object connected to these files
-  will be returned to R.
+  corresponding to a single filevector object, will appear
+  on the disk; a 'databel-class' object connected to these
+  files will be returned to R.
 }
 
