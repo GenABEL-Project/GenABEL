@@ -17,17 +17,15 @@
 #' @param index.filter Index of variables in data vector, that will be used in analysis, 
 #' if zero - all variables will be used
 #' 
-#' @return  A list with values
-#' \item {data} output vector corrected Chi square statistic
-#' \item {b} polinom coefficients
+#' @return A list with elements
+#' \item{data}{Output vector corrected Chi square statistic}
+#' \item{b}{Polinom coefficients}
 #' 
 #' @author Yakov Tsepilov
 #' 
 #' @examples
-#' a=1
-#' b=1
-#' a+b
-#' 
+#' #It will be modified soon!
+#'
 #' @keywords htest
 #' 
 

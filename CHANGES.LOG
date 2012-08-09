@@ -1,3 +1,13 @@
+(2012.08.09)
+
+Add new function GC (Genomic control for non-additive models) and GC_ovdom fot overdominant model.
+Update some functions.
+
+(2012.07.06)
+
+Removed documentation file grammar.old.Rd as obsolete
+Add new function PGC (Polynomial genomic control for non-additive models)
+
 *** v. 1.7-1 (2012.04.27)
 
 Replaced 'grammar' function with new one, allowing 'raw', 'gc' 
@@ -333,6 +343,7 @@ Default formetascore's argument transform set to "no"
 New function "var.meta" added. 
 Function is intended for pooling (meta-analysing) trait means for 
 different genotypes separately.Input files have to be like in example 
+
 below (plink generate this kind of files). At the end you have one file 
 in same format but with pooled MEANs and SDs
 

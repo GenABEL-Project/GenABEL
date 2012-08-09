@@ -28,8 +28,8 @@
   will be used}
 }
 \value{
-  A list with values \item {data} output vector corrected
-  Chi square statistic \item {b} polinom coefficients
+  A list with elements \item{data}{Output vector corrected
+  Chi square statistic} \item{b}{Polinom coefficients}
 }
 \description{
   This function estimates the genomic controls for diffrent
@@ -38,13 +38,10 @@
   diffrent error functions: regress, median and ks.test.
 }
 \examples{
-a=1
-b=1
-a+b
+#It will be modified soon!
 }
 \author{
   Yakov Tsepilov
 }
-\keyword{'}
 \keyword{htest}
 
