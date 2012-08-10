@@ -38,7 +38,12 @@
   diffrent error functions: regress, median and ks.test.
 }
 \examples{
-#It will be modified soon!
+data(ge03d2)
+qts=qtscore(phdata(ge03d2)$dm2, ge03d2)
+chi2.1df=results(qts)$chi2.1df
+s=summary(ge03d2)
+MAF=s$Q.2
+result=PGC(data=chi2.1df,method="regress",p=MAF,df=1, pol.d=3, plot=FALSE, start.corr=FALSE)
 }
 \author{
   Yakov Tsepilov

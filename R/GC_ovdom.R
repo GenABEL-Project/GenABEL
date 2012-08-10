@@ -27,7 +27,12 @@
 #' @author Yakov Tsepilov
 #' 
 #' @examples
-#' #Sorry, this block will appear later
+#' data(ge03d2)
+#' qts=mlreg(phdata(ge03d2)$dm2~1,data=ge03d2,gtmode = "overdominant")
+#' chi2.1df=results(qts)$chi2.1df
+#' s=summary(ge03d2)
+#' freq=s$Q.2
+#' result=GC_ovdom(p=freq,method = "median",data=chi2.1df,n=nids(ge03d2))
 #' 
 #' @keywords htest
 #'

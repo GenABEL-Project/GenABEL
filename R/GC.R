@@ -31,7 +31,12 @@
 #' @author Yakov Tsepilov
 #' 
 #' @examples
-#' #Sorry, this block will appear later
+#' data(ge03d2)
+#' qts=mlreg(phdata(ge03d2)$dm2~1,data=ge03d2,gtmode = "dominant")
+#' chi2.1df=results(qts)$chi2.1df
+#' s=summary(ge03d2)
+#' freq=s$Q.2
+#' result=GC(p=freq,x=1,method = "median",CA=FALSE,data=chi2.1df,n=nids(ge03d2))
 #' 
 #' @keywords htest
 #'
