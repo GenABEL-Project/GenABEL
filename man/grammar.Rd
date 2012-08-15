@@ -1,0 +1,101 @@
+\name{grammar}
+\alias{grammar}
+\title{GRAMMAR test for association in samples with genetic structure}
+\usage{
+  grammar(polyObject, data,
+    method = c("gamma", "gc", "raw"), propPs = 1, ...)
+}
+\arguments{
+  \item{polyObject}{object returned by
+  \code{\link{polygenic}} function}
+
+  \item{data}{object of \code{\link{gwaa.data-class}}}
+
+  \item{method}{to be used, one of 'gamma','gc', or 'raw'}
+
+  \item{propPs}{proportion of non-corrected P-values used
+  to estimate the inflation factor Lambda, passed directly
+  to the \code{\link{estlambda}}}
+
+  \item{...}{arguments passed to the function used for
+  computations (\code{\link{qtscore}})}
+}
+\value{
+  Object of scan.gwaa-class
+}
+\description{
+  Fast approximate test for association between a trait and
+  genetic polymorphism, in samples with genetic
+  sub-structure (e.g. relatives). The function implements
+  several varieties of GRAMMAR ('gamma','gc', and 'raw').
+}
+\details{
+  With 'raw' argument, the original GRAMMAR (Aulchenko et
+  al., 2007) is implemented. This method is conservative
+  and generates biased estimates of regression
+  coefficients.
+
+  With 'gc' argument, the GRAMMAR-GC (Amin et al., 2007) is
+  implemented. This method solves conservativity of the
+  test, but the Genomic Control (GC) lambda is by
+  definition "1" and can not serve as an indicator of
+  goodness of the model; also, the estimates of regression
+  coefficients are biased (the same as in 'raw' GRAMMAR).
+
+  GRAMMAR-Gamma ('gamma' argument) solves these problems,
+  producing correct distribution of the test statistic,
+  interpretable value of GC Lambda, and unbiased estimates
+  of the regression coefficients. All together, the default
+  'gamma' method is recommended for use.
+}
+\examples{
+# ge03d2 is rather bad data set for demonstration,
+# because this is a population-based study
+data(ge03d2.clean)
+#take half for speed
+ge03d2.clean <- ge03d2.clean[1:300,]
+# estimate genomic kinship
+gkin <- ibs(ge03d2.clean,w="freq")
+# perform polygneic analysis
+h2ht <- polygenic(height ~ sex + age,kin=gkin,ge03d2.clean)
+h2ht$est
+# compute mmscore stats
+mm <- mmscore(h2ht,data=ge03d2.clean)
+# compute grammar-gc
+grGc <- grammar(h2ht,data=ge03d2.clean,method="gc")
+#compute grammar-gamma
+grGamma <- grammar(h2ht,data=ge03d2.clean,method="gamma")
+# compare lambdas
+lambda(mm)
+estlambda(mm[,"chi2.1df"])
+lambda(grGamma)
+estlambda(grGamma[,"chi2.1df"])
+lambda(grGc)
+estlambda(grGc[,"chi2.1df"])
+#compare top results
+summary(mm)
+summary(grGamma)
+summary(grGc)
+}
+\author{
+  Gulnara Svisheva, Yurii Aulchenko
+}
+\references{
+  GRAMMAR-Raw: Aulchenko YS, de Koning DJ, Haley C.
+  Genomewide rapid association using mixed model and
+  regression: a fast and simple method for genomewide
+  pedigree-based quantitative trait loci association
+  analysis. Genetics. 2007 Sep;177(1):577-85.
+
+  GRAMMAR-GC: Amin N, van Duijn CM, Aulchenko YS. A genomic
+  background based method for association analysis in
+  related individuals. PLoS One. 2007 Dec 5;2(12):e1274.
+
+  GRAMMAR-Gamma: Svisheva et al., submitted
+}
+\seealso{
+  \code{\link{polygenic}}, \code{\link{mmscore}},
+  \code{\link{qtscore}}
+}
+\keyword{htest}
+

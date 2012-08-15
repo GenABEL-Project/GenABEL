@@ -12,7 +12,7 @@ roxy_files <- c(
 		"findRelatives.R",
 		"GC.R",
 		"GC_ovdom.R",
-		"GenABEL-package.R",
+		"GenABEL.R",
 		"generateOffspring.R",
 		"getLogLikelihoodGivenRelation.R",
 		"grammar.R",
@@ -40,6 +40,7 @@ setwd("R")
 unlink("GenABEL",recursive=TRUE)
 package.skeleton("GenABEL",code_files=roxy_files)
 roxygenize("GenABEL",roxygen.dir="GenABEL",copy=F,unlink=F)
+unlink("GenABEL/man/GenABEL-package.Rd",recursive=TRUE)
 lstf <- paste("GenABEL/man/",list.files("GenABEL/man/"),sep="")
 lstf
 file.copy(lstf,"../man/",overwrite=TRUE)

@@ -1,11 +1,14 @@
-\name{GenABEL-package}
+\docType{package}
+\name{GenABEL}
 \alias{GenABEL}
 \alias{GenABEL-package}
-\title{GenABEL: an R package for Genome Wide Association Analysis}
-\usage{
-  GenABEL-package()
-}
+\alias{genabel}
+\title{GWAS in R}
 \description{
+  GenABEL: an R package for Genome Wide Association
+  Analysis
+}
+\details{
   Genome-wide association (GWA) analysis is a tool of
   choice for identification of genes for complex traits.
   Effective storage, handling and analysis of GWA data
@@ -22,8 +25,7 @@
   GWA analysis is preferably performed using
   computationally intensive permutation test procedures,
   further increasing the computational burden.
-}
-\details{
+
   To make GWA analysis possible on standard desktop
   computers we developed GenABEL library which addresses
   the following objectives:
