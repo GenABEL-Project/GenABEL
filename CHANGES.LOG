@@ -1,3 +1,9 @@
+(2012.08.29, YA)
+
+Small changes related to CRAN release of 1.7-1; this release is to be 
+updated to 1.7-2 as soon as the Grammar-Gamma paper is published and 
+some feedback is collected for the 1.7-1
+
 (2012.08.15, YA)
 
 Small updates to documentation, verifying that checks are passed. 

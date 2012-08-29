@@ -5,7 +5,7 @@
 	#pkgVersion <- pkgDescription$Version
 	#pkgDate <- pkgDescription$Date
 	pkgVersion <- "1.7-1"
-	pkgDate <- "January 11, 2012"
+	pkgDate <- "August 29, 2012"
 	welcomeMessage <- paste(pkg," v. ",pkgVersion," (",pkgDate,") loaded\n",sep="")
 	# check if CRAN version is the same as loaded
 	cranVersion <- checkPackageVersionOnCRAN(pkg)

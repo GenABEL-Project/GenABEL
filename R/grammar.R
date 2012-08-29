@@ -14,7 +14,7 @@
 #' the model; also, the estimates of regression coefficients are biased (the 
 #' same as in 'raw' GRAMMAR). 
 #' 
-#' GRAMMAR-Gamma ('gamma' argument) solves these problems, producing 
+#' GRAMMAR-Gamma (default 'gamma' argument) solves these problems, producing 
 #' correct distribution of the test statistic, interpretable value of GC Lambda, 
 #' and unbiased estimates of the regression coefficients. All together, the 
 #' default 'gamma' method is recommended for use. 
@@ -24,7 +24,7 @@
 #' @param method to be used, one of 'gamma','gc', or 'raw'
 #' @param propPs proportion of non-corrected P-values used to estimate the inflation factor Lambda,
 #' passed directly to the \code{\link{estlambda}}
-#' @param ... arguments passed to the function used for computations 
+#' @param ... arguments passed to the function used for computations,  
 #' (\code{\link{qtscore}})
 #' 
 #' @return Object of scan.gwaa-class
@@ -42,11 +42,12 @@
 #' A genomic background based method for association analysis in related individuals.
 #' PLoS One. 2007 Dec 5;2(12):e1274.
 #' 
-#' GRAMMAR-Gamma: Svisheva et al., submitted
+#' GRAMMAR-Gamma: Svisheva GR, Axenovich TI, Belonogova MN, van Duijn CM, Aulchenko YS. 
+#' Rapid variance components–based method for whole-genome association analysis. 
+#' (in press)
 #' 
 #' @examples 
-#' # ge03d2 is rather bad data set for demonstration, 
-#' # because this is a population-based study
+#' # Using clean ge03d2 data 
 #' data(ge03d2.clean)
 #' #take half for speed
 #' ge03d2.clean <- ge03d2.clean[1:300,]
