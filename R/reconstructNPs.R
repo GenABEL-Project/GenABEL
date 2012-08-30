@@ -141,7 +141,7 @@ reconstructNPs <- function(relationshipGuessMatrix,sex)
 	}
 # identify offspring and construct NPs
 	marIs.na <- function(matr,MAR) {
-		out <- apply(matr,MAR=MAR,FUN=function(x) {any(is.na(x))})
+		out <- apply(matr,MARGIN=MAR,FUN=function(x) {any(is.na(x))})
 		out
 	}
 	colIs.na <- function(matr) {return(marIs.na(matr,MAR=2))}
