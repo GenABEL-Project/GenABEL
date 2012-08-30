@@ -166,7 +166,7 @@
 	#out$ProfLogLik <- res_hglm$ProfLogLik
 	
 	logdetSigma <- sum(log(eigen(Sigma, only.values = TRUE)$values))
-	temp <- determinant(t(desmat)%*%out$InvSigma%*%desmat, log = TRUE)
+	temp <- determinant(t(desmat)%*%out$InvSigma%*%desmat, logarithm = TRUE)
 	out$ProfLogLik <- as.numeric(- .5*logdetSigma 
 					- .5*t(out$residualY[mids])%*%out$InvSigma%*%out$residualY[mids]
 					- .5*temp$modulus*temp$sign)

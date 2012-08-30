@@ -280,9 +280,9 @@
 	tmp <- t(relmat)
 	relmat[upper.tri(relmat)] <- tmp[upper.tri(tmp)]
 	rm(tmp);gc()
-	if (llfun=="polylik") eigres <- eigen(ginv(relmat),symm=TRUE)
+	if (llfun=="polylik") eigres <- eigen(ginv(relmat),symmetric=TRUE)
 	else if (llfun=="polylik_eigen") {
-		eigres <- eigen(relmat,symm=TRUE)
+		eigres <- eigen(relmat,symmetric=TRUE)
 		if (any(eigres$values<0)) {
 			#eigres$values <- abs(eigres$values)
 			warning("some eigenvalues <=0, taking ABS for det; try option llfun='polylik'")
@@ -362,7 +362,7 @@
 # 
 #				iSigma <- ginv(h2*relmat + (1-h2)*diag(x=1,ncol=length(y),nrow=length(y)))
 # start new
-				if (llfun=="polylik") eigres <- eigen(relmat,symm=TRUE) # ensure eigres contain eigen of RelMat (not Inv(RelMat))
+				if (llfun=="polylik") eigres <- eigen(relmat,symmetric=TRUE) # ensure eigres contain eigen of RelMat (not Inv(RelMat))
 				es <- (eigres$value*h2+1.-h2)*parsave[npar]*sdy*sdy
 				iSigma <- (eigres$vec) %*% diag(1./es,ncol=length(es)) %*% t(eigres$vec)
 # END new
@@ -479,7 +479,7 @@
 	if (fglschecks && missing(fixh2)) { 
 		ginvsig <- iSigma # already computed it in FGLS checks
 	} else {
-		if (llfun=="polylik") eigres <- eigen(relmat,symm=TRUE) # ensure eigres contain eigen of RelMat (not Inv(RelMat))
+		if (llfun=="polylik") eigres <- eigen(relmat,symmetric=TRUE) # ensure eigres contain eigen of RelMat (not Inv(RelMat))
 		es <- tvar*(eigres$value*h2+1.-h2)
 		#print(es[1:5])
 		#print(eigres$vec[1:5,1:5])

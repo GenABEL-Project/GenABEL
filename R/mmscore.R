@@ -72,7 +72,7 @@
 					lambda$se <- NA
 				} else {
 					if (lenn<100) warning("Number of observations < 100, Lambda estimate is unreliable")
-					lambda <- estlambda(chi2.1df,plot=FALSE,prop=propPs)
+					lambda <- estlambda(chi2.1df,plot=FALSE,proportion=propPs)
 					if (lambda$estimate<1.0 && clambda==TRUE) {
 						warning("Lambda estimated < 1, set to 1")
 						lambda$estimate <- 1.0
@@ -122,9 +122,9 @@
 		Pc1df <- pr.c1df/times
 #		out$Pc1df <- replace(out$Pc1df,(out$Pc1df==0),1/(1+times))
 	} else {
-		P1df <- pchisq(chi2.1df,1,lower=F)
-#		out$P2df <- pchisq(chi2.2df,actdf,lower=F)
-		Pc1df <- pchisq(chi2.c1df,1,lower=F)
+		P1df <- pchisq(chi2.1df,1,lower.tail=F)
+#		out$P2df <- pchisq(chi2.2df,actdf,lower.tail=F)
+		Pc1df <- pchisq(chi2.c1df,1,lower.tail=F)
 	}
 	#out$lambda <- lambda
 	#out$effB <- effB #*var(h2object$residualY,na.rm=T)
