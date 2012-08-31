@@ -88,18 +88,18 @@
 		out@results[,"chi2.1df"] <- out[,"chi2.1df"]/polyObject$grammarGamma$Test
 		out@results[,"effB"] <- out[,"chi2.1df"]/polyObject$grammarGamma$Beta
 		# recompute p-values
-		out@results[,"P1df"] <- pchisq(out[,"chi2.1df"],df=1,low=FALSE)
+		out@results[,"P1df"] <- pchisq(out[,"chi2.1df"],df=1,lower.tail=FALSE)
 		# recompute Lambda
-		out@lambda <- estlambda(out[,"chi2.1df"],plot=FALSE,prop=propPs)
+		out@lambda <- estlambda(out[,"chi2.1df"],plot=FALSE,proportion=propPs)
 		if (out@lambda$estimate <= 1) {
 			warning("estimate of Lambda < 1, constraining to 1")
 			out@lambda$estimate <- 1.0
 			out@lambda$se <- NA
 		}
 	} else if (method == "gc") {
-		out <- qtscore(polyObject$pgres,data=data,clambda=FALSE, prop=propPs, ... )
+		out <- qtscore(polyObject$pgres,data=data,clambda=FALSE, propPs=propPs, ... )
 	} else if (method == "raw") {
-		out <- qtscore(polyObject$pgres,data=data,clambda=TRUE, prop=propPs, ... )
+		out <- qtscore(polyObject$pgres,data=data,clambda=TRUE, propPs=propPs, ... )
 	} else {
 		stop("method should be one of 'gamma','gc', or 'raw'")
 	}

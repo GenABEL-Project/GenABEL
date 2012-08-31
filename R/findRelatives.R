@@ -259,7 +259,7 @@ findRelatives <- function(gtdata,nmeivec=c(1:2),q=NULL,epsilon=0.01,
 	}
 	if (!quiet) cat("\n")
 	#print(out)
-	meiMtmp <- apply(out,MAR=1,FUN=function(x){return(which.max(x))})
+	meiMtmp <- apply(out,MARGIN=1,FUN=function(x){return(which.max(x))})
 	#print(meiMtmp)
 	if (is.null(vsIDs)) {
 		meiM <- matrix(ncol=dim(gtdata)[1],nrow=dim(gtdata)[1])
@@ -274,9 +274,9 @@ findRelatives <- function(gtdata,nmeivec=c(1:2),q=NULL,epsilon=0.01,
 		colnames(meiM) <- idnam[notVsIDs]
 	}
 	#print(meiM)
-	firstBestLik <- apply(out,MAR=1,FUN=function(x){return(max(x))})
-	which_firstBestLik <- apply(out,MAR=1,FUN=function(x){return(which.max(x))})
-	secondBestLik <- apply(out,MAR=1,FUN=function(x){x[order(x,decreasing=TRUE)[2]]})
+	firstBestLik <- apply(out,MARGIN=1,FUN=function(x){return(max(x))})
+	which_firstBestLik <- apply(out,MARGIN=1,FUN=function(x){return(which.max(x))})
+	secondBestLik <- apply(out,MARGIN=1,FUN=function(x){x[order(x,decreasing=TRUE)[2]]})
 	cndX <- !(exp(firstBestLik-secondBestLik)>OddsVsNextBest 
 				& exp(firstBestLik)>OddsVsNull & (which_firstBestLik != (length(meiTab)-1)))
 	if (is.null(vsIDs)) {
@@ -292,7 +292,7 @@ findRelatives <- function(gtdata,nmeivec=c(1:2),q=NULL,epsilon=0.01,
 	out <- data.frame(outN1,outN2,out,stringsAsFactors=FALSE)
 	names(out) <- c("id1","id2",names(meiTab))
 	tmp <- guess; diag(tmp) <- NA; 
-	todrop <- apply(tmp,MAR=1,FUN=function(x){return(all(is.na(x)))})
+	todrop <- apply(tmp,MARGIN=1,FUN=function(x){return(all(is.na(x)))})
 	compressedGuess <- guess[!todrop,!todrop] 
 	finalOut <- list(call=match.call(),profile=out,estimatedNmeioses=meiM,
 			firstBestLik=firstBestLik,
