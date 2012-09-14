@@ -44,7 +44,7 @@
 #' 
 #' GRAMMAR-Gamma: Svisheva GR, Axenovich TI, Belonogova MN, van Duijn CM, Aulchenko YS. 
 #' Rapid variance components–based method for whole-genome association analysis. 
-#' (in press)
+#' (http://dx.doi.org/10.1038/ng.2410)
 #' 
 #' @examples 
 #' # Using clean ge03d2 data 
