@@ -5,7 +5,7 @@ Version: 1.7-2
 Date: 2012-09-14
 Author: GenABEL project developers
 Contact: GenABEL project developers <genabel.project@gmail.com>
-Maintainer: Yurii Aulchenko <yurii.aulchenko@gmail.com>
+Maintainer: Yurii Aulchenko <yurii@bionet.nsc.ru>
 Depends: R (>= 2.10.0), methods, MASS, utils
 Suggests: qvalue, genetics, haplo.stats, DatABEL (>= 0.9-0), 
 	hglm, MetABEL, PredictABEL, VariABEL 
