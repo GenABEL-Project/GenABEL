@@ -114,13 +114,15 @@ df <- ge03d2.clean[,autosomal(ge03d2.clean)]
 df <- df[,sort(sample(1:nsnps(df),1000))]
 eaf <- summary(gtdata(df))$"Q.2"
 ### donotrun
-# relInfo <- findRelatives(df[27:30,],q=eaf)
-# relInfo
-## look only for 1st and 2nd degree relatives
-# relInfo1 <- findRelatives(df[27:30],q=eaf,gkinCutOff=-1,nmeivec=c(1,2,3))
-# relInfo1
-# relInfoVS <- findRelatives(df[27:30,],q=eaf,nmeivec=c(1:6),vsIDs=idnames(df[27:30,])[1:2])
-# relInfoVS
+\dontrun{
+relInfo <- findRelatives(df[27:30,],q=eaf)
+relInfo
+# look only for 1st and 2nd degree relatives
+relInfo1 <- findRelatives(df[27:30],q=eaf,gkinCutOff=-1,nmeivec=c(1,2,3))
+relInfo1
+relInfoVS <- findRelatives(df[27:30,],q=eaf,nmeivec=c(1:6),vsIDs=idnames(df[27:30,])[1:2])
+relInfoVS
+}
 ### end norun
 }
 \keyword{htest}

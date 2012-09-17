@@ -44,7 +44,7 @@ osnp <- "rs4934"
 maposnp <- srdta@gtdata@map[osnp]
 maposnp
 reg <- snp.names(srdta,begin=maposnp-100000,end=maposnp+100000,chrom="1")
-\donotrun{
+\dontrun{
 a <- scan.glm("qt3~sex+age+CRSNP",data=srdta,snps=reg)
 plot(a)
 plot(a,df=1)
@@ -52,7 +52,7 @@ add.plot(a,df=2)
 }
 
 # interaction with sex
-\donotrun{
+\dontrun{
 a <- scan.glm("qt3~age+sex*CRSNP",data=srdta,snps=reg)
 plot(a,df=1)
 add.plot(a,df=2)

@@ -46,7 +46,9 @@ chi2.1df=results(qts)$chi2.1df
 s=summary(ge03d2)
 freq=s$Q.2
 ### donotrun
-# result=GC_ovdom(p=freq,method = "median",data=chi2.1df,n=nids(ge03d2))
+\dontrun{
+result=GC_ovdom(p=freq,method = "median",data=chi2.1df,n=nids(ge03d2))
+}
 ### end norun
 }
 \author{
