@@ -23,7 +23,7 @@
 #' @author Yurii Aulchenko
 #' 
 #' @examples 
-#' nloci <- 1000
+#' nloci <- 100
 #' q <- runif(nloci,min=0.05,max=0.95)
 #' # g7---g8
 #' #   _|_

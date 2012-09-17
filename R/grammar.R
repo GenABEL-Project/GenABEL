@@ -44,15 +44,15 @@
 #' 
 #' GRAMMAR-Gamma: Svisheva GR, Axenovich TI, Belonogova MN, van Duijn CM, Aulchenko YS. 
 #' Rapid variance components–based method for whole-genome association analysis. 
-#' (http://dx.doi.org/10.1038/ng.2410)
+#' (\link{http://dx.doi.org/10.1038/ng.2410})
 #' 
 #' @examples 
 #' # Using clean ge03d2 data 
 #' data(ge03d2.clean)
-#' #take half for speed
-#' ge03d2.clean <- ge03d2.clean[1:300,]
+#' #take small piece for speed
+#' ge03d2.clean <- ge03d2.clean[1:200,]
 #' # estimate genomic kinship
-#' gkin <- ibs(ge03d2.clean,w="freq")
+#' gkin <- ibs(ge03d2.clean[,sample(autosomal(ge03d2.clean),1000)],w="freq")
 #' # perform polygneic analysis
 #' h2ht <- polygenic(height ~ sex + age,kin=gkin,ge03d2.clean)
 #' h2ht$est
