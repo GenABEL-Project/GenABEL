@@ -49,6 +49,8 @@
 }
 \examples{
 data(ge03d2)
+set.seed(1)
+ge03d2 <- ge03d2[sample(1:nids(ge03d2),200),1:1000]
 qts=mlreg(phdata(ge03d2)$dm2~1,data=ge03d2,gtmode = "dominant")
 chi2.1df=results(qts)$chi2.1df
 s=summary(ge03d2)

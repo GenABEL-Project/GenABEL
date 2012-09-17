@@ -27,7 +27,7 @@
   two parents is >2 (coded as 'NA').
 }
 \examples{
-nloci <- 1000
+nloci <- 100
 q <- runif(nloci,min=0.05,max=0.95)
 # g7---g8
 #   _|_

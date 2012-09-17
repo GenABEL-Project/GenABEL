@@ -50,7 +50,8 @@
 }
 \examples{
 data(ge03d2ex.clean)
-df <- ge03d2ex.clean[,autosomal(ge03d2ex.clean)]
+set.seed(1)
+df <- ge03d2ex.clean[sample(1:nids(ge03d2ex.clean),200),autosomal(ge03d2ex.clean)]
 gkin <- ibs(df,w="freq")
 
 # ----- for quantitative traits

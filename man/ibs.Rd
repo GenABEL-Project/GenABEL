@@ -71,7 +71,7 @@
 }
 \examples{
 data(ge03d2c)
-
+set.seed(1)
 # compute IBS based on a random sample of 1000 autosomal marker
 selectedSnps <- sample(autosomal(ge03d2c),1000,replace=FALSE)
 a <- ibs(ge03d2c,snps=selectedSnps)
@@ -87,7 +87,7 @@ cl1
 # PAINT THE OUTLIERS IN RED
 points(mds[cl1,],pch=19,col="red")
 # compute genomic kinship matrix to be used with e.g. polygenic, mmscore, etc
-a <- ibs(ge03d2c,snps=sample(autosomal(ge03d2c),1000,replace=FALSE),weight="freq")
+a <- ibs(ge03d2c,snps=selectedSnps,weight="freq")
 a[1:5,1:5]
 # now replace diagonal with EIGENSTRAT-type of diaganal to be used for egscore
 diag(a) <- hom(ge03d2c[,autosomal(ge03d2c)])$Var
@@ -95,8 +95,8 @@ a[1:5,1:5]
 ##############################
 # compare 'freq' with 'eVar'
 ##############################
-ibsFreq <- ibs(ge03d2c[,autosomal(ge03d2c)], weight="freq")
-ibsEvar <- ibs(ge03d2c[,autosomal(ge03d2c)], weight="eVar")
+ibsFreq <- ibs(ge03d2c,snps=selectedSnps, weight="freq")
+ibsEvar <- ibs(ge03d2c,snps=selectedSnps, weight="eVar")
 mdsEvar <- cmdscale( as.dist( 0.5 - ibsEvar ) )
 plot(mdsEvar)
 outliers <- (mdsEvar[,1]>0.1)
