@@ -39,13 +39,15 @@
 }
 \examples{
 data(ge03d2)
-set.seed(1)
-ge03d2 <- ge03d2[sample(1:nids(ge03d2),200),1:1000]
+set.seed(2)
+ge03d2 <- ge03d2[sample(1:nids(ge03d2),250),1:1500]
 qts=mlreg(phdata(ge03d2)$dm2~1,data=ge03d2,gtmode = "overdominant")
 chi2.1df=results(qts)$chi2.1df
 s=summary(ge03d2)
 freq=s$Q.2
-result=GC_ovdom(p=freq,method = "median",data=chi2.1df,n=nids(ge03d2))
+### donotrun
+# result=GC_ovdom(p=freq,method = "median",data=chi2.1df,n=nids(ge03d2))
+### end norun
 }
 \author{
   Yakov Tsepilov

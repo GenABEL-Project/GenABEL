@@ -91,8 +91,8 @@ summary(grGc)
   related individuals. PLoS One. 2007 Dec 5;2(12):e1274.
 
   GRAMMAR-Gamma: Svisheva GR, Axenovich TI, Belonogova MN,
-  van Duijn CM, Aulchenko YS.
-  (\link{http://dx.doi.org/10.1038/ng.2410})
+  van Duijn CM, Aulchenko YS. Nature Genetics. 2012
+  (http://dx.doi.org/10.1038/ng.2410)
 }
 \seealso{
   \code{\link{polygenic}}, \code{\link{mmscore}},
