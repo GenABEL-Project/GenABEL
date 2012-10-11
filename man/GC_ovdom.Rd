@@ -2,8 +2,9 @@
 \alias{GC_ovdom}
 \title{Genomic control for overdimunant model of inheritance using VIF}
 \usage{
-  GC_ovdom(p, method = "regress", clust = 0, vart0 = 0,
-    tmp = 0, data = 0, index.filter = 0, n)
+  GC_ovdom(data, p, method = "regress", n,
+    index.filter = NULL, proportion = 1, clust = 0,
+    vart0 = 0, tmp = 0)
 }
 \arguments{
   \item{data}{Input vector of Chi square statistic}
@@ -17,6 +18,10 @@
   use for analisis in data vector}
 
   \item{n}{size of the sample}
+
+  \item{proportion}{The proportion of lowest P (Chi2) to be
+  used when estimating the inflation factor Lambda for
+  "regress" method only}
 
   \item{clust}{For developers only}
 
@@ -39,17 +44,11 @@
 }
 \examples{
 data(ge03d2)
-set.seed(2)
-ge03d2 <- ge03d2[sample(1:nids(ge03d2),250),1:1500]
 qts=mlreg(phdata(ge03d2)$dm2~1,data=ge03d2,gtmode = "overdominant")
 chi2.1df=results(qts)$chi2.1df
 s=summary(ge03d2)
 freq=s$Q.2
-### donotrun
-\dontrun{
 result=GC_ovdom(p=freq,method = "median",data=chi2.1df,n=nids(ge03d2))
-}
-### end norun
 }
 \author{
   Yakov Tsepilov
