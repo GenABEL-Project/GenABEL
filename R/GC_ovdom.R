@@ -1,6 +1,6 @@
 #' Genomic control for overdimunant model of inheritance using VIF
 #' 
-#' This function estimates the genomic controls
+#' This function estimates the corrected statistic using genomic control
 #' for overdimunant model,
 #' using VIF. VIF coefficients are estimated
 #' by optimizing diffrent error functions: regress,

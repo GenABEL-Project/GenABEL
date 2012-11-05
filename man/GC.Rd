@@ -44,10 +44,11 @@
   \item{K}{K}
 }
 \description{
-  This function estimates the genomic controls for diffrent
-  model (recessive,dominant,additive etc.), using VIF. VIF
-  coefficients are estimated by optimizing diffrent error
-  functions: regress, median and ks.test.
+  This function estimates corrected statistic using genomic
+  control for diffrent models (recessive,dominant,additive
+  etc.), using VIF. VIF coefficients are estimated by
+  optimizing diffrent error functions: regress, median and
+  ks.test.
 }
 \examples{
 data(ge03d2)

@@ -37,10 +37,10 @@
   \item{K}{K}
 }
 \description{
-  This function estimates the genomic controls for
-  overdimunant model, using VIF. VIF coefficients are
-  estimated by optimizing diffrent error functions:
-  regress, median and ks.test.
+  This function estimates the corrected statistic using
+  genomic control for overdimunant model, using VIF. VIF
+  coefficients are estimated by optimizing diffrent error
+  functions: regress, median and ks.test.
 }
 \examples{
 data(ge03d2)
