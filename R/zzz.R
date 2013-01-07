@@ -5,11 +5,11 @@
 	#pkgVersion <- pkgDescription$Version
 	#pkgDate <- pkgDescription$Date
 	pkgVersion <- "1.7-3"
-	pkgDate <- "December 03, 2012"
+	pkgDate <- "January 07, 2013"
 	welcomeMessage <- paste(pkg," v. ",pkgVersion," (",pkgDate,") loaded\n",sep="")
 	# check if CRAN version is the same as loaded
-	cranVersion <- checkPackageVersionOnCRAN(pkg)
-	if (!is.null(cranVersion)) 
+	cranVersion <- try( checkPackageVersionOnCRAN(pkg) )
+	if (!is.null(cranVersion) & !( class(cranVersion) == "try-error") ) 
 		if (pkgVersion != cranVersion) {
 			welcomeMessage <- paste(welcomeMessage,
 					"\nInstalled ",pkg," version (",pkgVersion,") is not the same as stable\n",
