@@ -1,4 +1,9 @@
-***  v. 1.7-3 (2013.01.07)
+***  v. 1.7-3 (2013.01.09)
+
+(2013.01.09)
+Commented the parts related to non-additive GC in qtscore
+Removed calls to 'attach' from multiple procedures
+Decrease of running time for long-running examples (GC_ovdom,GC,check.marker,Xfix,srdta)
 
 (2013.01.07)
 Fixing the problem which prevents the package from loading while checking the version on CRAN

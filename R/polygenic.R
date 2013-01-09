@@ -201,7 +201,11 @@
 	else if (llfun == "polylik") llFUN <- polylik
 	else stop("llfun should be 'polylik' or 'polylik_eigen'")
 	
-	if (!missing(data)) attach(data,pos=2,warn.conflicts=FALSE)
+	if ( is(try(formula,silent=TRUE),"try-error") ) { 
+		formula <- data[[as(match.call()[["formula"]],"character")]] 
+	}
+	
+#	if (!missing(data)) attach(data,pos=2,warn.conflicts=FALSE)
 	
 # beging patch bug #1322 (by Nicola Pirastu)
 	if (is(formula, "formula")){
@@ -281,7 +285,7 @@
 		}
 	}
 	
-	if (!missing(data)) detach(data)
+#	if (!missing(data)) detach(data)
 	tmp <- t(relmat)
 	relmat[upper.tri(relmat)] <- tmp[upper.tri(tmp)]
 	rm(tmp);gc()

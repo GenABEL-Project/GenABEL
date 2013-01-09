@@ -27,7 +27,7 @@
 #' 
 #' @examples
 #' data(ge03d2)
-#' qts=qtscore(phdata(ge03d2)$dm2, ge03d2)
+#' qts=qtscore(dm2, ge03d2)
 #' chi2.1df=results(qts)$chi2.1df
 #' s=summary(ge03d2)
 #' MAF=s$Q.2
