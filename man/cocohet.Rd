@@ -20,9 +20,15 @@ cocohet(data, trait, window, return_all_result=TRUE, manhettan_filename="manhett
 }
 \details{
 
-The function is an inplementation of the method aimed to detect a gene-phenotype association caused by recessive and compound heterozygote genotype states of multiple 
-rare variants at a particular gene locus. The paper 'Detecting rare recessive and compound heterozygote alleles in genome wide association and sequencing studies with red hair color as example'; Fan Liu, Maksim V. Struchalin, Kate van Duijn, Albert Hofman, Andre Uitterlinden2 Yurii S. Aulchenko2 and Manfred Kayser1.
-Submited to 'PLoS Genetics'.
+The function is an inplementation of the method aimed to detect a
+gene-phenotype association caused by recessive and compound heterozygote
+genotype states of multiple rare variants at a particular gene
+locus. This method is described in 'Detecting Low Frequent
+Loss-of-Function Alleles in Genome Wide Association Studies with Red
+Hair Color as Example'; Fan Liu, Maksim V. Struchalin, Kate van Duijn,
+Albert Hofman, André G. Uitterlinden, Yurii S. Aulchenko, and Manfred
+Kayser. PLoS ONE 6(11): e28145. doi:10.1371/journal.pone.0028145
+
 
 The three tests are implemented: Pearson's chi-square test, Pearson's chi-square test with Yates correction, Fisher exact test. 
 In case when the input parameter min_expected_cut_off is <0 the choosen in the input parameter "test" test is performed. If min_expected_cut_off >= 0
