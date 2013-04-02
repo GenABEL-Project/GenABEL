@@ -30,7 +30,7 @@
 #'
 
 "export.plink" <- function(data, filebasename="plink", phenotypes= "all",
-                           transpose=FALSE, export012na=FALSE, ...)
+                           transpose=TRUE, export012na=FALSE, ...)
 {
 
   if (!is.null(phenotypes)) {
@@ -53,6 +53,8 @@
   }
 
   if (!transpose) {
+    warning("Setting transpose=TRUE in export.plink() can lead to problems, ",
+            "especially for large data sets")
     pedf <- paste(filebasename, ".ped", sep="")
     mapf <- paste(filebasename, ".map", sep="")
 
