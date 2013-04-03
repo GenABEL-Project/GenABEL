@@ -55,7 +55,7 @@
 #' 
 #' @examples 
 #' data(ge03d2c)
-#' set.seed(1)
+#' set.seed(7)
 #' # compute IBS based on a random sample of 1000 autosomal marker
 #' selectedSnps <- sample(autosomal(ge03d2c),1000,replace=FALSE)
 #' a <- ibs(ge03d2c,snps=selectedSnps)

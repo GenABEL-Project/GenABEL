@@ -1,6 +1,11 @@
 ***  v. 1.7-5
 
-(2013.04.03) Upgraded the version number to 1.7-5
+(2013.04.03) 
+Added patch to bug [#1287] - example(ibs) producing strange clusters.  
+Thanks to Vladimir Naumov for submitting the patch!
+
+(2013.04.03) 
+Upgraded the version number to 1.7-5
 
 (2013.04.02)
 Changed default behaviour of the export.plink() version. Export to .tped is now
