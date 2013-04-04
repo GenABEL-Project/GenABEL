@@ -31,7 +31,7 @@
 #' 
 #' The variance (Var) is estimated as
 #' 
-#' \deqn{ V_{i} = \frac(1)(N) \Sigma_k \frac{(x_{i,k} - p_k)^2}{(p_k * (1 -
+#' \deqn{ V_{i} = \frac{1}{N} \Sigma_k \frac{(x_{i,k} - p_k)^2}{(p_k * (1 -
 #' p_k))} }
 #' 
 #' where k changes from 1 to N = number of SNPs, \eqn{x_{i,k}} is a genotype of

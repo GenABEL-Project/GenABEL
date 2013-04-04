@@ -6,7 +6,7 @@
 #' The idea of this test is to use genomic kinship matrix to first, derive axes
 #' of genetic variation (principal components), and, second, adjust both trait
 #' and genotypes onto these axes. Note that the diagonal of the kinship matrix
-#' should be replaced (default it is .5+F, and for EIGENSTRAT one needs
+#' should be replaced (default it is 0.5*(1+F), and for EIGENSTRAT one needs
 #' variance).  These variances are porduced by \code{\link{hom}} function (see
 #' example).
 #' 
