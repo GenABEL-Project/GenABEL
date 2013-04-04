@@ -1,6 +1,9 @@
 ***  v. 1.7-5
 
 (2013.04.04)
+Fixing bug [#2525] (http://r-forge.r-project.org/tracker/index.php?func=detail&aid=2525&group_id=505&atid=2058)
+Thanks to Vladimir Naumov for submitting the patch!
+
 Updated documentation files
  
 (2013.04.03) 
