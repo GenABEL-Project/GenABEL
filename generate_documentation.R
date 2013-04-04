@@ -5,6 +5,7 @@ roxy_files <- c(
 		"blurGenotype.R",
 		"checkPackageVersionOnCRAN.R",
 		"del.phdata.R",
+		"egscore.R",
 		"estlambda.R",
 		"export.plink.R",
 		"extract.annotation.impute.R",
