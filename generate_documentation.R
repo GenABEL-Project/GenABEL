@@ -17,6 +17,7 @@ roxy_files <- c(
 		"generateOffspring.R",
 		"getLogLikelihoodGivenRelation.R",
 		"grammar.R",
+		"hom.R",
 		"ibs.R",
 		"impute2databel.R",
 		"impute2mach.R",
@@ -28,10 +29,10 @@ roxy_files <- c(
 		"PGC.R",
 		"polygenic.R",
 		"polygenic_hglm.R",
+		"qtscore.R",
 		"recodeChromosome.R",
 		"reconstructNPs.R",
-		"sortmap.internal.R",
-		"qtscore.R"
+		"sortmap.internal.R"
 		#,
 		#"summary.scan.gwaa.R"
 )
