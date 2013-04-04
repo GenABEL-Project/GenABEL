@@ -1,4 +1,3 @@
-
 \name{cocohet}
 \alias{cocohet}
 \alias{chi2_CG}
@@ -26,7 +25,7 @@ genotype states of multiple rare variants at a particular gene
 locus. This method is described in 'Detecting Low Frequent
 Loss-of-Function Alleles in Genome Wide Association Studies with Red
 Hair Color as Example'; Fan Liu, Maksim V. Struchalin, Kate van Duijn,
-Albert Hofman, André G. Uitterlinden, Yurii S. Aulchenko, and Manfred
+Albert Hofman, Andre G. Uitterlinden, Yurii S. Aulchenko, and Manfred
 Kayser. PLoS ONE 6(11): e28145. doi:10.1371/journal.pone.0028145
 
 
