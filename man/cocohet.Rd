@@ -1,12 +1,11 @@
 \name{cocohet}
 \alias{chi2_CG}
 \alias{cocohet}
-\title{Detecting rare recessive and compound heterozygote alleles in genome wide
-association.}
+\title{Test for compound heterozygote effects}
 \usage{
   cocohet(data, trait, window, return_all_result = TRUE,
-    manhettan_filename = "manhettan_plot.jpeg",
-    test = "CHI2", min_expected_cut_off = -1)
+    makePlot = FALSE, test = "CHI2",
+    min_expected_cut_off = -1)
 }
 \arguments{
   \item{data}{Genotype data for analysis. Object of class
@@ -26,9 +25,8 @@ association.}
   chisq's for all tests are stored. Object of class
   \code{\link{logical}}}
 
-  \item{manhettan_filename}{File name where manhettan plot
-  will be saved after analysis. Object of class
-  \code{\link{character}}}
+  \item{makePlot}{whether the Manhattan-type plot should be
+  produced (TRUE or FALSE)}
 
   \item{test}{Name of the test to be performed. Available
   tests are "CHI2", "YATES" (chi2 with Yates correction),
@@ -46,6 +44,10 @@ association.}
   A list is returned.
 }
 \description{
+  Detecting rare recessive and compound heterozygote
+  alleles in genome wide association.
+}
+\details{
   The function is an inplementation of the method aimed to
   detect a gene-phenotype association caused by recessive
   and compound heterozygote genotype states of multiple
@@ -56,8 +58,7 @@ association.}
   van Duijn, Albert Hofman, Andre G. Uitterlinden, Yurii S.
   Aulchenko, and Manfred Kayser. PLoS ONE 6(11): e28145.
   doi:10.1371/journal.pone.0028145
-}
-\details{
+
   The three tests are implemented: Pearson's chi-square
   test, Pearson's chi-square test with Yates correction,
   Fisher exact test.  In case when the input parameter
@@ -71,7 +72,8 @@ association.}
 }
 \examples{
 data(srdta)
-chis2_nocorrection <- cocohet(data=srdta
+chis2_nocorrection <- cocohet(data=gtdata(srdta),
+trait=phdata(srdta)$bt, window=3, test="CHI2")
 }
 \author{
   Maksim Struchalin

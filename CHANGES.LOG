@@ -1,5 +1,12 @@
 ***  v. 1.7-5
 
+(2013.04.09)
+Fixing bug [#2672] (GenABEL::cocohet default graph output). Now by 
+default the function does not produce graphics (makePlot = FALSE); if 
+graphics is requested (makePlot = TRUE) it is produced using a default 
+plot device (so a user can redirect the output to a file if (s)he 
+desires and in the way (s)he desires). 
+
 (2013.04.04)
 Fixing bug [#2525] (http://r-forge.r-project.org/tracker/index.php?func=detail&aid=2525&group_id=505&atid=2058)
 Thanks to Vladimir Naumov for submitting the patch!
