@@ -53,8 +53,7 @@
   }
 
   if (!transpose) {
-    warning("Setting transpose=TRUE in export.plink() can lead to problems, ",
-            "especially for large data sets")
+    ## Export to .ped and .map
     pedf <- paste(filebasename, ".ped", sep="")
     mapf <- paste(filebasename, ".map", sep="")
 
