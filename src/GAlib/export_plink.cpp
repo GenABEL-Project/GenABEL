@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-std::string* getGenotype(std::string coding,std::string sep)
+std::string* getGenotype(std::string coding, std::string sep)
 {
     std::string* Genotype = new (std::nothrow) std::string [4];
     std::string Letter0 = coding.substr(0,1);
@@ -109,7 +109,7 @@ SEXP export_plink(SEXP Ids, SEXP Snpdata, SEXP Nsnps, SEXP NidsTotal,
             Genotype = getGenotype(coding[csnp], sep);
             // figure out the coding
             fileWoA << " " << Genotype[gtMatrix[i][csnp]];
-            //fileWoA << " x" << Letter0 << Letter1 << Genotype[0] << Genotype[1] << Genotype[2] << Genotype[3];
+            delete [] Genotype;
         }
         // end unwrap
         fileWoA << "\n";
@@ -122,8 +122,12 @@ SEXP export_plink(SEXP Ids, SEXP Snpdata, SEXP Nsnps, SEXP NidsTotal,
     //Rprintf("oooo!\n" );
 
     sex.clear();
+
+    for(int i=0; i<nids; i++) {
+        delete [] gtMatrix[i];
+    }
     delete [] gtMatrix;
-    delete [] Genotype;
+
     delete [] gtint;
 
     return R_NilValue;
