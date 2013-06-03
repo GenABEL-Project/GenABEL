@@ -28,8 +28,8 @@ test.exports <- function()
   dta <- ge03d2.clean[sort(sample(1:nids(ge03d2.clean), nTestIds)),
                       sort(sample(1:nsnps(ge03d2.clean), nTestSnps))]
 
-  export.plink(dta, filebasename="tmpOld", dpieceFun="old")
-  export.plink(dta, filebasename="tmpNew", dpieceFun="new")
+  export.plink(dta, filebasename="tmpOld", dpieceFun="old", transpose=FALSE)
+  export.plink(dta, filebasename="tmpNew", dpieceFun="new", transpose=FALSE)
   xO <- read.table(file="tmpOld.ped", head=FALSE, strings=FALSE)
   xN <- read.table(file="tmpNew.ped", head=FALSE, strings=FALSE)
   checkIdentical(xN, xO)
