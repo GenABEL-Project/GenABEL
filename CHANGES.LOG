@@ -1,5 +1,9 @@
 ***  v. 1.7-
 
+(2013.06.03)
+Fixed bug #2664 in export.merlin() (exported files differ when using
+different settings for the stepids argument). 
+
 (2013.05.30)
 Fixed memory leak in export.plink() when exporting to .ped format (Bug #2055).
 
