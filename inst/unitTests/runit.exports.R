@@ -63,6 +63,7 @@ test.exports <- function()
   xN <- read.table(file="tmpNew.dat", head=FALSE, strings=FALSE)
   checkIdentical(xN, xO)
 
+  ## Clean up the files we created
   unlink("tmpOld*")
   unlink("tmpNew*")
 
@@ -84,6 +85,7 @@ test.exports <- function()
     print(checkIdentical(gtBack, gtDta))
   }
 
+  ## Clean up the files we created
   unlink("tmpTrans*")
 }
 
@@ -102,4 +104,30 @@ test.export.merlin.bug2525 <- function()
   xO <- read.table(file="tmpOld.ped", head=FALSE, strings=FALSE)
   xN <- read.table(file="tmpNew.ped", head=FALSE, strings=FALSE)
   checkIdentical(xN, xO)
+
+  ## Clean up the files we created
+  unlink("tmpOld*")
+  unlink("tmpNew*")
+}
+
+
+test.export.merlin.bug2664 <- function() {
+  data(srdta)
+  export.merlin(
+    srdta[1:200, 1:10], dpieceFun="new",
+    mapfile="tmp.s1.map", pedfile="tmp.s1.ped", datafile="tmp.s1.dat",
+    stepids=1
+    )
+  export.merlin(
+    srdta[1:200, 1:10], dpieceFun="new",
+    mapfile="tmp.s10.map", pedfile="tmp.s10.ped", datafile="tmp.s10.dat",
+    stepids=10
+    )
+  x1  <- read.table(file="tmp.s1.ped",  header=FALSE, stringsAsFactors=FALSE)
+  x10 <- read.table(file="tmp.s10.ped", header=FALSE, stringsAsFactors=FALSE)
+  checkIdentical(x1, x10)
+
+  ## Clean up the files we created
+  unlink("tmp.s1.*")
+  unlink("tmp.s10.*")
 }
