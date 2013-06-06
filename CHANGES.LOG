@@ -1,5 +1,12 @@
 ***  v. 1.7-
 
+(2013.06.06)
+Two new functions added: LiLog() and palinear2LiLog() for the
+estimation of logistic beta's from a linear regression. Thanks to
+Nicola Pirastu for this contribution. The paper that describes these
+methods has been submitted (see the help of both functions for the
+citation). 
+
 (2013.06.03)
 Fixed bug #2664 in export.merlin() (exported files differ when using
 different settings for the stepids argument). 
