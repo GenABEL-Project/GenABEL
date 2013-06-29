@@ -309,9 +309,9 @@
 			eigres <- eigenOfRel
 		else
 			eigres <- eigen(relmat,symmetric=TRUE)
-		if (any(eigres$values<1e-16)) {
-			eigres$values[eigres$values<1e-16] <- 1e-16
-            msg <- paste("some eigenvalues close/less than 1e-16, setting them to 1e-16\nyou can also try option llfun='polylik' instead")
+		if (any(eigres$values<1e-8)) {
+			eigres$values[eigres$values<1e-8] <- 1e-8
+            msg <- paste("some eigenvalues close/less than 1e-8, setting them to 1e-8\nyou can also try option llfun='polylik' instead")
 			warning(msg)
 		}
 	} else stop("cannot be here...")

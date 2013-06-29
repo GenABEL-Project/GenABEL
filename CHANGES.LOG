@@ -1,6 +1,8 @@
 ***  v. 1.7-7
 
 (2013.06.29)
+Changed the 'polygenic' nullification threshold to 1e-8
+
 Added references for Grammar+ transformation
 
 Allowed for user-specified output data type in '*2databel' functions
