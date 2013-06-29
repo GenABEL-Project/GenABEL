@@ -1,4 +1,11 @@
-***  v. 1.7-
+***  v. 1.7-7
+
+(2013.06.29)
+Added references for Grammar+ transformation
+
+Allowed for user-specified output data type in '*2databel' functions
+
+Changed version number to 1.7-7
 
 (2013.06.06)
 Two new functions added: LiLog() and palinear2LiLog() for the

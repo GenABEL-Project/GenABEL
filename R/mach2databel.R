@@ -11,6 +11,8 @@
 #' @param outfile output file name
 #' @param isprobfile whether imputedgenofile is a prob-file 
 #' (default is FALSE, that is dose-file assumed) 
+#' @param dataOutType the output data type, either "FLOAT" or "DOUBLE" (or
+#'        other DatABEL/filevector type) 
 #' 
 #' @return databel-class object
 #' 
@@ -21,7 +23,8 @@
 #' 
 
 
-mach2databel <- function(imputedgenofile,mlinfofile,outfile,isprobfile=FALSE) 
+mach2databel <- function(imputedgenofile,mlinfofile,outfile,
+                         isprobfile=FALSE, dataOutType = "FLOAT") 
 {
 	if (!require(DatABEL))
 		stop("this function requires DatABEL package to be installed")
@@ -52,12 +55,14 @@ mach2databel <- function(imputedgenofile,mlinfofile,outfile,isprobfile=FALSE)
 				colnames=tmpname,
 				rownames=1,skipcols=2,
 				#skiprows,
-				transpose=FALSE,R_matrix=FALSE,type="FLOAT",readonly=FALSE)
+				transpose=FALSE,R_matrix=FALSE,
+                                       type = dataOutType, readonly = FALSE)
 	else 
 		dfaobj <- text2databel(infile=imputedgenofile,outfile=outfile,
 				rownames=1,skipcols=2,
 				#skiprows,
-				transpose=FALSE,R_matrix=FALSE,type="FLOAT",readonly=FALSE)
+				transpose=FALSE,R_matrix=FALSE,
+                                       type = dataOutType, readonly = FALSE)
 
 	dnames <- get_dimnames(dfaobj)
 	subjs <- dnames[[1]]

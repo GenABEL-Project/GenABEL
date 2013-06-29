@@ -12,6 +12,8 @@
 #' @param outfile output file name
 #' @param makeprob whether probability-files are also to be arranged
 #' @param old for developers' use only
+#' @param dataOutType the output data type, either "FLOAT" or "DOUBLE" (or
+#'        other DatABEL/filevector type) 
 #'
 #' @return 'databel-class' object
 #'
@@ -19,7 +21,7 @@
 
 
 impute2databel <- function(genofile, samplefile, outfile,
-                           makeprob=TRUE, old=FALSE)
+                           makeprob = TRUE, old = FALSE, dataOutType = "FLOAT")
 {
   if (!require(DatABEL))
     stop("this function requires the DatABEL package to be installed")
@@ -36,7 +38,7 @@ impute2databel <- function(genofile, samplefile, outfile,
   ##            colnames=tmpname,
   ##            rownames=2,skipcols=5,
   ##            #skiprows,
-  ##            transpose=TRUE,R_matrix=FALSE,type="FLOAT")
+  ##            transpose=TRUE,R_matrix=FALSE,type = dataOutType)
   ## else
   tmpname <- get_temporary_file_name()
   tmp_fv  <- text2databel(infile=genofile,
@@ -46,7 +48,7 @@ impute2databel <- function(genofile, samplefile, outfile,
                           ## skiprows,
                           transpose=TRUE,
                           R_matrix=FALSE,
-                          type="FLOAT")
+                          type = dataOutType)
   if ((dim(tmp_fv)[1] %% 3) != 0)
     stop("strange data in IMPUTE geno file: ",
          "number of columns - 5 not dividable by 3")
@@ -64,7 +66,7 @@ impute2databel <- function(genofile, samplefile, outfile,
   ## dosefile <- make_empty_fvf(paste(outfile, ".dose", sep=""),
   ##                            nvariables = dim(tmp_fv)[2],
   ##                            nobservations = round(dim(tmp_fv)[1]/3),
-  ##                            type = "FLOAT")
+  ##                            type = dataOutType)
 
   ## print(dimnames(tmp_fv)[[2]])
   ## print(dim(tmp_fv))
@@ -93,7 +95,7 @@ impute2databel <- function(genofile, samplefile, outfile,
                           prob=get("SNP"),
                           outclass="databel",
                           outfile=paste(outfile, ".dose", sep=""),
-                          type="FLOAT",
+                          type=dataOutType,
                           transpose=FALSE)
     if (makeprob) {
       stop("makeprob is not possible with 'old' style")
