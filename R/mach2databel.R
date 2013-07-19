@@ -31,6 +31,9 @@ mach2databel <- function(imputedgenofile,mlinfofile,outfile,
 	if (missing(imputedgenofile))
 		stop("mldose file must be specified")
 	if (missing(outfile)) outfile <- imputedgenofile
+    if (dataOutType != "FLOAT") 
+        warning("The non-float dataOutType os not fully supported; your outputs may be in 'FLOAT'...",
+                immediate. = TRUE);
 # extract snp names (varnames)
 	tmpname <- ""
 	if (!missing(mlinfofile))

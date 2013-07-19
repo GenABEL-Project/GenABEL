@@ -32,6 +32,10 @@ impute2databel <- function(genofile, samplefile, outfile,
   if (missing(outfile))
     outfile <- genofile
 
+  if (dataOutType != "FLOAT") 
+      warning("The non-float dataOutType os not fully supported; your outputs may be in 'FLOAT'...",
+              immediate. = TRUE);
+
   ## extract snp names (varnames)
   ## if (tmpname != "")
   ##     text2databel(infile=genofile,outfile=outfile,

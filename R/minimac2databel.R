@@ -34,7 +34,10 @@ minimac2databel <- function(imputedgenofile, infofile, outfile,
   if (missing(imputedgenofile))
     stop("A dose file must be specified")
   if (missing(outfile)) outfile <- imputedgenofile
-  ## extract snp names (varnames)
+  if (dataOutType != "FLOAT") 
+      warning("The non-float dataOutType os not fully supported; your outputs may be in 'FLOAT'...",
+              immediate. = TRUE);
+## extract snp names (varnames)
   tmpname <- ""
   if (!missing(infofile))
     {

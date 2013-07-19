@@ -44,4 +44,4 @@ plot(a)
 a1 <- qtscore(bt,srdta,snps=c(1:100))
 add.plot(a1,col="red",type="l")
 }
-\keyword{hplot}% at least one, from doc/KEYWORDS
+\keyword{aplot}% at least one, from doc/KEYWORDS
