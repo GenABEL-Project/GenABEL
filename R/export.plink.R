@@ -16,7 +16,7 @@
 #' all phenotypes or a vector of character with names of phenotypes
 #' to be exported.
 #'
-#' @param transpose if FALSE (default), 'tped' files will be produced, else
+#' @param transpose if TRUE (default), 'tped' files will be produced, else
 #' 'ped' files are produced.
 #'
 #' @param export012na if TRUE, export in numeric (0, 1, 2, NA) format,
