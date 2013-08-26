@@ -13,7 +13,7 @@
 #' @param makeprob whether probability-files are also to be arranged
 #' @param old for developers' use only
 #' @param dataOutType the output data type, either "FLOAT" or "DOUBLE" (or
-#'        other DatABEL/filevector type) 
+#'        another DatABEL/filevector type)
 #'
 #' @return 'databel-class' object
 #'
@@ -32,8 +32,8 @@ impute2databel <- function(genofile, samplefile, outfile,
   if (missing(outfile))
     outfile <- genofile
 
-  if (dataOutType != "FLOAT") 
-      warning("The non-float dataOutType os not fully supported; your outputs may be in 'FLOAT'...",
+  if (dataOutType != "FLOAT")
+      warning("The non-float dataOutType is not fully supported; your outputs may be in 'FLOAT'...",
               immediate. = TRUE);
 
   ## extract snp names (varnames)
@@ -107,12 +107,14 @@ impute2databel <- function(genofile, samplefile, outfile,
   } else {
     res <- .Call("iterator", tmp_fv@data, as.integer(0), as.integer(0),
                  as.character("databel_impute_prob_2_databel_mach_dose"),
-                 paste(outfile, ".dose", sep=""), as.integer(2), as.integer(0))
+                 paste(outfile, ".dose", sep=""), as.integer(2),
+                 as.integer(0), PACKAGE="DatABEL")
     dosefile <- databel(paste(outfile, ".dose", sep=""), 64, readonly=FALSE)
     if (makeprob) {
       res <- .Call("iterator", tmp_fv@data, as.integer(0), as.integer(0),
                    as.character("databel_impute_prob_2_databel_mach_prob"),
-                   paste(outfile, ".prob", sep=""), as.integer(2), as.integer(0))
+                   paste(outfile, ".prob", sep=""), as.integer(2),
+                   as.integer(0), PACKAGE="DatABEL")
       probfile <- databel(paste(outfile, ".prob", sep=""), 64, readonly=FALSE)
     }
 
