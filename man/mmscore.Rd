@@ -7,7 +7,7 @@ in samples of related individuals
 }
 \usage{
 mmscore(h2object,data,snpsubset,idsubset,strata,times=1,quiet=FALSE,
-		bcast=10,clambda=TRUE,propPs=1.0,cppFun="new")
+		bcast=10,clambda=TRUE,propPs=1.0)
 }
 \arguments{
   \item{h2object}{An object returned by \code{\link{polygenic}} polygenic mixed model analysis 
@@ -37,7 +37,6 @@ mmscore(h2object,data,snpsubset,idsubset,strata,times=1,quiet=FALSE,
 		If a numeric value is provided, it is used as a correction factor.}
   \item{propPs}{proportion of non-corrected P-values used to estimate the inflation factor Lambda,
 		passed directly to the \code{\link{estlambda}}}
-  \item{cppFun}{Serves for testing purposes; do use default.}
 }
 \details{
 	Score test is performed using the formula

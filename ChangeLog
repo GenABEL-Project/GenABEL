@@ -1,5 +1,11 @@
 ***  v. 1.7-7
 
+(2013.08.27)
+Removed CRAN version checks following the request from B. Ripley, 
+fixing other problems identified by --as-cran checks ("iterator" 
+package changed from "DatABEL" to "GenABEL"; renaming CHANGES.LOG to 
+ChangeLog), releasing this version on CRAN
+
 (2013.07.19)
 Added warning that *2databel's may not produce output in desired data type 
 and fall onto float 

@@ -108,13 +108,13 @@ impute2databel <- function(genofile, samplefile, outfile,
     res <- .Call("iterator", tmp_fv@data, as.integer(0), as.integer(0),
                  as.character("databel_impute_prob_2_databel_mach_dose"),
                  paste(outfile, ".dose", sep=""), as.integer(2),
-                 as.integer(0), PACKAGE="DatABEL")
+                 as.integer(0), PACKAGE="GenABEL")
     dosefile <- databel(paste(outfile, ".dose", sep=""), 64, readonly=FALSE)
     if (makeprob) {
       res <- .Call("iterator", tmp_fv@data, as.integer(0), as.integer(0),
                    as.character("databel_impute_prob_2_databel_mach_prob"),
                    paste(outfile, ".prob", sep=""), as.integer(2),
-                   as.integer(0), PACKAGE="DatABEL")
+                   as.integer(0), PACKAGE="GenABEL")
       probfile <- databel(paste(outfile, ".prob", sep=""), 64, readonly=FALSE)
     }
 

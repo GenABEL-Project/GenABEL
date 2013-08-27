@@ -1,4 +1,4 @@
-.onAttach <- function(lib, pkg) {
+DISABLED.onAttach <- function(lib, pkg) {
 	## this is something which should be fixed: both version 
 	## and date can come from DESCRIPTION!
 	#pkgDescription <- packageDescription(pkg)
