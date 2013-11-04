@@ -173,7 +173,7 @@ export.merlin, export.plink now runs much faster (exports on C++ code)
 Bug [#1641] (regression bug with merge.snp.data in version 1.6.9;
 filed in by Karl Froner) fixed. Now GenABEL deals with exceptional
 situation in merge.snp.data / monomorphic part; added case of no overlap
-in SNPs (skip monomorphic staff then). RUnit regression test
+in SNPs (skip monomorphic stuff then). RUnit regression test
 runit.merge.R/test.merge.bug1641 added.
 
 Modifications in 'estlambda': plot=FALSE by default, added option

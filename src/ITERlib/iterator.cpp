@@ -1,5 +1,5 @@
 #include <cstdarg>
-#include "Rstaff.h"
+#include "Rstuff.h"
 #include "iterator_functions.h"
 #include "iterator.h"
 #include "gwaa_cpp.h"
@@ -409,7 +409,7 @@ extern "C" {
 
 	/**
 	// OLD STUFF BELOW HERE:
-	// iterator and other staff
+	// iterator and other stuff
 	SEXP databel_impute_prob_2_databel_mach_dose(SEXP imputedata, SEXP OutFileName, SEXP CacheSizeMb)
 	{
 		CHECK_PTR(imputedata);

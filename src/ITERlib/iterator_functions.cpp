@@ -1,5 +1,5 @@
 #include <new>
-#include "Rstaff.h"
+#include "Rstuff.h"
 #include "iterator_functions.h"
 
 #ifdef __cplusplus
