@@ -77,7 +77,7 @@
 #' summary(grGamma)
 #' summary(grGc)
 #'
-#' @author Gulnara Svisheva, Yurii Aulchenko
+#' @author Gulnara Svischeva, Yurii Aulchenko
 #'
 #' @keywords htest
 #'

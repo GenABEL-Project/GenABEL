@@ -77,7 +77,7 @@ summary(grGamma)
 summary(grGc)
 }
 \author{
-  Gulnara Svisheva, Yurii Aulchenko
+  Gulnara Svischeva, Yurii Aulchenko
 }
 \references{
   GRAMMAR-Raw: Aulchenko YS, de Koning DJ, Haley C.

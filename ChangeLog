@@ -1,5 +1,7 @@
 ***  v. 1.7-7
-
+(2013.11.04)
+Fixed bug #5040: Spelling of the name of G. Svischeva incorrect.
+	
 (2013.08.27)
 Removed CRAN version checks following the request from B. Ripley, 
 fixing other problems identified by --as-cran checks ("iterator" 
