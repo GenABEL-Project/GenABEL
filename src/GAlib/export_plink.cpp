@@ -23,10 +23,15 @@ SEXP export_plink(SEXP Ids, SEXP Snpdata, SEXP Nsnps, SEXP NidsTotal,
 {
     int from = INTEGER(From)[0];
     int to = INTEGER(To)[0];
-    std::vector<unsigned short int> sex;
+    
+		
+		if(from <1 || from > to) {error("The function SEXP export_plink(SEXP Ids, SEXP Snpdata, SEXP Nsnps, SEXP NidsTotal,... reports: the variable FROM should be >=1 and less then the variable TO.");} //Maksim 
+
+		
+		std::vector<unsigned short int> sex;
     sex.clear();
     unsigned short int sx;
-    for(unsigned int i=(from - 1); i<to; i++) {
+    for(int i=(from - 1); i<to; i++) {
         sx = INTEGER(Male)[i];
         if (sx==0) sx=2;
         //Rprintf("%d %d\n",i,sx);
@@ -62,7 +67,7 @@ SEXP export_plink(SEXP Ids, SEXP Snpdata, SEXP Nsnps, SEXP NidsTotal,
 
     //char gtMatrix[nids][nsnps];
     char **gtMatrix = new (std::nothrow) char*[nids];
-    for (unsigned int i=0; i<nids; i++) {
+    for (int i=0; i<nids; i++) {
         gtMatrix[i] = new (std::nothrow) char[nsnps];
     }
 

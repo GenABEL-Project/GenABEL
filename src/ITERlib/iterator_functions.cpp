@@ -101,12 +101,12 @@ extern "C" {
                 int nids =  (*Nids);
                 int type = (*Type);
                 //int gt[nids];
-                int i, j, cstr, igt, i1=1;
-                int nbytes;
+                int i, j, cstr, igt=0;
+                //int nbytes;
                 int dgt;
                 double Ttotg, mx, bb;
                 double Tsg0, Tsg1, Tsg2;
-                double u, v, u0, u1, u2, m0, m1, m2, v00, v02, v11, v12, v22, det;
+                double u, v, u0, u1, u2, m0, m1, m2, v00, v02, v11, v12, v22;//, det;
 
                 double * totg = new (std::nothrow) double [nstra];if (totg == NULL) {Rprintf("cannot allocate RAM");return;}
                 double * x2 = new (std::nothrow) double [nstra];if (x2 == NULL) {Rprintf("cannot allocate RAM");return;}
@@ -119,7 +119,7 @@ extern "C" {
                 double * xg2 = new (std::nothrow) double [nstra];if (xg2 == NULL) {Rprintf("cannot allocate RAM");return;}
 
                 mx = -999.99;
-                if ((nids % 4) == 0) nbytes = nids/4; else nbytes = ceil(1.*nids/4.);
+                //if ((nids % 4) == 0) nbytes = nids/4; else nbytes = ceil(1.*nids/4.);
         //	char chgt[nbytes];
 
                 /*
@@ -166,7 +166,7 @@ extern "C" {
                                 Tsg1 += sg1[j];
                                 Tsg2 += sg2[j];
                         }
-                        chi2[igt+6*nsnps]=Ttotg;
+                        chi2[igt+6*nsnps]=Ttotg; //What is it and why igt was never initilized? (Maksim)
                         if (Ttotg == 0) {
                                 chi2[igt] = -999.99;
                                 chi2[igt+nsnps] = -999.99;
@@ -215,7 +215,7 @@ extern "C" {
                                         chi2[igt+3*nsnps]=u/(Tsg1+4.*Tsg2-Ttotg*((Tsg1+2.*Tsg2)/Ttotg)*((Tsg1+2.*Tsg2)/Ttotg));
                                   }
                                 }
-                                det = v11*v22 - v12*v12;
+                               // det = v11*v22 - v12*v12;
         //			double rho2 = v12*v12/(v11*v22);
         //			if (v00 <= 0. || v11<=0. || v22<=0. || rho2<1.e-16 || abs(det)<1.e-16) {
                                         chi2[igt+nsnps] = -999.99;

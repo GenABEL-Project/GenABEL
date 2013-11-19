@@ -85,7 +85,7 @@ public:
 		beta.put(log(prev/(1.-prev)),0,0);
 		mematrix<double> tX = transpose(rdata.X);
 
-		double N;
+		//double N;
 
 		for (int iter=0;iter<maxiter;iter++) 
 		{
@@ -108,7 +108,7 @@ public:
 			mematrix<double> tmp = productMatrDiag(tX,W);
 			if (verbose) {Rprintf("tXW:\n");tmp.print();}
 			mematrix<double> tXWX = tmp*(rdata.X);
-			N = tXWX.get(0,0);
+			//N = tXWX.get(0,0);
 
 			if (verbose) {Rprintf("tXWX:\n");tXWX.print();}
 			tXWX_i=invert(tXWX);
