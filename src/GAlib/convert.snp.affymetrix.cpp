@@ -229,8 +229,8 @@ for(unsigned snp=0 ; snp<snp_amount ; snp++)
 	outfile<<"\n";
 	}
 
-delete gtps_for_one_snp;	
-delete rearrangement_array;
+delete[] gtps_for_one_snp;	
+delete[] rearrangement_array;
 
 Rprintf("%i SNPs excluded bacause of absent in annotation\n", snp_excludet_from_output_data);
 Rprintf("Total %i SNPs are written into output file\n", snp_amount-snp_excludet_from_output_data);

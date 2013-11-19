@@ -435,8 +435,10 @@ void convert_snp_merlin_wslash (char** pedfilename, char** mapfilename,
 		}
 		outfile << endl;
 
-		delete [] tmp_gtype;
 	}
+	
+	delete [] tmp_gtype;
+	delete [] gnum;
 
 	if (verbose) {
 		Rprintf("... done.\n");

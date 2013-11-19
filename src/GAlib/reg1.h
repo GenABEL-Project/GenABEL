@@ -152,6 +152,7 @@ public:
 	double sigma2;
 	coxph_reg(coxph_data cdata, int maxiter, double eps, double tol_chol)
 	{
+		sigma2 = 0;
 		beta.reinit(cdata.X.nrow,1);
 		sebeta.reinit(cdata.X.nrow,1);
 		mematrix<double> newoffset = cdata.offset;

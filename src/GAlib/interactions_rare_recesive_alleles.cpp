@@ -106,8 +106,8 @@ static unsigned int window_current;
 window_current = snp_number - central_snp_position;
 if(window_current > window) window_current=window;
 
-if(central_snp_position >= snp_number || central_snp_position <0) {Rprintf("snp_snp_interaction_results::push_chi2: error: central_snp_position is out of bound"); return -1;}
-if(window_snp_position > window_current || window_snp_position<0) {Rprintf("snp_snp_interaction_results::push_chi2: error: window is out of bound"); return -1;}	
+if(central_snp_position >= snp_number) {Rprintf("snp_snp_interaction_results::push_chi2: error: central_snp_position is out of bound"); return -1;}
+if(window_snp_position > window_current) {Rprintf("snp_snp_interaction_results::push_chi2: error: window is out of bound"); return -1;}	
 chi2_results[central_snp_position][window_snp_position] = chi2;
 //std::cout<<"snp_snp_interaction_results::push_chi2 end\n";
 return 0;
@@ -618,8 +618,8 @@ else
 
 UNPROTECT(1);
 
-delete snp1;
-delete snp2;
+delete [] snp1;
+delete [] snp2;
 
 return(results_R);
 } //end of interaction_rare_recesive_allele_C_

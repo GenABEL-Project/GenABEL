@@ -33,6 +33,9 @@ rearrangement_array[3] = 0;
 
 
 
+local_person_number = 0; // Mr. Jenkins likes when everything is initilized in constructor
+our_byte_number = 1;
+
 
 
 gtps_array = gtps_array_;	
@@ -60,8 +63,10 @@ rearrangement_array[2] = 2;
 rearrangement_array[3] = 0;
 
 
-
-
+local_person_number = 0; // Mr. Jenkins likes when everything is initilized in constructor
+strand_array = NULL;
+our_byte_number = 1;
+coding_array = NULL;
 
 gtps_array = gtps_array_;	
 id_numbers = id_numbers_;

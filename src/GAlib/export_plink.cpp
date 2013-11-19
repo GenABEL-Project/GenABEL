@@ -212,6 +212,7 @@ SEXP export_plink_tped(SEXP Snpnames, SEXP Chromosomes, SEXP Map,
             }
         }
         fileWoA << "\n";
+    delete [] Genotype;
         //Rprintf("\n");
     }
     //Rprintf("B\n");
@@ -237,7 +238,6 @@ SEXP export_plink_tped(SEXP Snpnames, SEXP Chromosomes, SEXP Map,
     //for (int i=0; i<10; i++) Rprintf("%d ",sex[i]);
     //Rprintf("oooo!\n" );
 
-    delete [] Genotype;
     delete [] gtint;
 
     return R_NilValue;

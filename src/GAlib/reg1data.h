@@ -82,6 +82,7 @@ public:
 
 	coxph_data(regdata regdat) 
 	{
+		maxiter = 0;
 		nids = regdat.nids;
 		ncov = regdat.ncov;
 		if (regdat.noutcomes != 2)

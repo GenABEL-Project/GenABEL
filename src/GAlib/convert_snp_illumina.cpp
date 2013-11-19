@@ -43,7 +43,7 @@ void convert_snp_illumina (char** filename, char** outfilename, int* Strandid, i
 	long unsigned int bcast = *Bcast;
 
 	bool loud = TRUE;
-	if (bcast <= 0) loud = FALSE;
+	//if (bcast <= 0) loud = FALSE;
 
 	long unsigned int nsnps=0;
 	long unsigned int nids=0;
@@ -100,13 +100,14 @@ void convert_snp_illumina (char** filename, char** outfilename, int* Strandid, i
 	//
 	//Processing rest of the file
 	//
+		
+	char gdata;
 
 	while (getline(illfile,data)) {
 		nsnps++;
 
 		istringstream datas (data);
 
-		char gdata;
 
 		if (!(datas >> tmp_snpnam >> tmp_chrom >> tmp_map))
 			error("First three fields are missing in line %i!\n",(nsnps+1));
@@ -238,7 +239,12 @@ void convert_snp_illumina (char** filename, char** outfilename, int* Strandid, i
 				lasti += 1;
 			}
 
+		delete [] gnum;
+		delete [] tmp_gtype;
 		}
+	
+	
+	
 	}
 
 	const ios_base::fmtflags hex = ios_base::hex;
@@ -294,13 +300,12 @@ void convert_snp_illumina (char** filename, char** outfilename, int* Strandid, i
 		}
 		outfile << endl;
 
-		delete [] tmp_gtype;
 	}
 
 	if (loud) {
 		Rprintf("... done.\n");
 	}
 
-
+    delete [] chgt;
 }
 }

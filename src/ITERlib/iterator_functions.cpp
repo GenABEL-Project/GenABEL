@@ -276,6 +276,8 @@ extern "C" {
                 delete [] xg1;
                 delete [] xg2;
 
+
+
         }
 
 #ifdef __cplusplus

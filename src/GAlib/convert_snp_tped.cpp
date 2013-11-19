@@ -291,10 +291,12 @@ void convert_snp_tped (char** tpedfilename, char** tfamfilename, char** outfilen
 		}
 		outfile << endl;
 
-		delete [] tmp_gtype;
 
 		//      gtype.pop_front();
 	} //while (!gtype.empty());
+		
+	delete [] tmp_gtype;
+	delete [] gnum;
 
 	if (verbose) {
 		Rprintf("... done.\n");

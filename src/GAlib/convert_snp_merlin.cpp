@@ -422,10 +422,12 @@ void convert_snp_merlin (char** pedfilename, char** mapfilename, char** outfilen
 		}
 		outfile << endl;
 
-		delete [] tmp_gtype;
 	}
 
-	if (verbose) {
+		delete [] gnum;
+		delete [] tmp_gtype;
+
+		if (verbose) {
 		Rprintf("... done.\n");
 	}
 
