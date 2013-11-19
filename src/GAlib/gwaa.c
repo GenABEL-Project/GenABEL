@@ -2091,12 +2091,13 @@ void qtscore_glob(char *gdata, double *pheno, int *Type, int *Nids, int *Nsnps, 
 	int dgt;
 	double Ttotg, mx, bb, totg[nstra], x2[nstra], sumx[nstra];
 	double Tsg0, Tsg1, Tsg2, sg0[nstra], sg1[nstra], sg2[nstra], xg0[nstra], xg1[nstra], xg2[nstra];
-	double u, v, u0, u1, u2, m0, m1, m2, v00, v02, v11, v12, v22, det; 
+	double u, v, u0, u1, u2, m0, m1, m2, v00, v02, v11, v12, v22;//, det; 
 	mx = -999.99;
 	if ((nids % 4) == 0) nbytes = nids/4; else nbytes = ceil(1.*nids/4.);
 	//	char chgt[nbytes];
 
 	for (igt=0;igt<nsnps;igt++) {
+		static double det;
 		get_snps_many(gdata+nbytes*igt,Nids,&i1,gt);
 		for (j=0;j<nstra;j++) {
 			totg[j] = 0.;

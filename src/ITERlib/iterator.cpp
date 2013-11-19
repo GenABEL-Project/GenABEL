@@ -265,6 +265,7 @@ extern "C" {
 
 		if ((ncol % step) != 0) {
 			error_R("ncol not divisable by step\n");
+			delete [] argList;
 			return R_NilValue;
 		}
 

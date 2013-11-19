@@ -104,9 +104,9 @@ extern "C" {
                 int i, j, cstr, igt=0;
                 //int nbytes;
                 int dgt;
-                double Ttotg, mx, bb;
+                double Ttotg, mx;
                 double Tsg0, Tsg1, Tsg2;
-                double u, v, u0, u1, u2, m0, m1, m2, v00, v02, v11, v12, v22;//, det;
+                //double v, u1, u2, m0, m1, m2, v00, v02, v11, v12, v22;//, det;
 
                 double * totg = new (std::nothrow) double [nstra];if (totg == NULL) {Rprintf("cannot allocate RAM");return;}
                 double * x2 = new (std::nothrow) double [nstra];if (x2 == NULL) {Rprintf("cannot allocate RAM");return;}
@@ -119,15 +119,6 @@ extern "C" {
                 double * xg2 = new (std::nothrow) double [nstra];if (xg2 == NULL) {Rprintf("cannot allocate RAM");return;}
 
                 mx = -999.99;
-                //if ((nids % 4) == 0) nbytes = nids/4; else nbytes = ceil(1.*nids/4.);
-        //	char chgt[nbytes];
-
-                /*
-                 * The following loop has been disabled since iterator calls the qtscore_glob function
-                 * iterating over all snps.
-                 */
-                //for (igt=0;igt<nsnps;igt++) {
-                //	get_snps_many(gdata+nbytes*igt,Nids,&i1,gt);
                         for (j=0;j<nstra;j++) {
                                 totg[j] = 0.;
                                 x2[j] = 0.;
@@ -178,7 +169,12 @@ extern "C" {
                                 chi2[igt+8*nsnps] = -999.99;
                                 chi2[igt+9*nsnps] = -999.99;
                         } else {
-                                u0 = u1 = u2 = m0 = m1 = m2 = v00 = v02 = v11 = v12 = v22 = 0.;
+                								double v, u1, u2, m0, m1, m2, v00, v02, v11, v12, v22;//, det;
+																double u0;
+																double bb;
+																double u;
+                                
+																u0 = u1 = u2 = m0 = m1 = m2 = v00 = v02 = v11 = v12 = v22 = 0.;
                                 for (j=0;j<nstra;j++) if (totg[j]>0) {
                                         mx = sumx[j]/totg[j];
         //				if (type == 0)
@@ -200,7 +196,9 @@ extern "C" {
                                 if (Tsg0>0) m0 = m0/Tsg0; else m0 = 1.e-16;
                                 if (Tsg1>0) m1 = m1/Tsg1; else m1 = 1.e-16;
                                 if (Tsg2>0) m2 = m2/Tsg2; else m2 = 1.e-16;
-                                u = u1+2.*u2;
+                                
+																
+																u = u1+2.*u2;
                                 v = v11+4.*v12+4.*v22;
                                 if (v<1.e-16) {
                                   chi2[igt]=-999.99;
