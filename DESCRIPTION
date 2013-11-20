@@ -8,7 +8,7 @@ Contact: GenABEL project developers <genabel.project at gmail.com>
 Maintainer: Yurii Aulchenko <yurii@bionet.nsc.ru>
 Depends: R (>= 2.15.0), methods, MASS, utils
 Suggests: qvalue, genetics, haplo.stats, DatABEL (>= 0.9-0), 
-	hglm, MetABEL, PredictABEL, VariABEL, bigRR, RUnit
+	hglm, MetABEL, PredictABEL, VariABEL, bigRR
 Description: a package for genome-wide association analysis between 
              quantitative or binary traits and single-nucleotide
              polymorphisms (SNPs). 
