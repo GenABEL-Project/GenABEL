@@ -2097,7 +2097,7 @@ void qtscore_glob(char *gdata, double *pheno, int *Type, int *Nids, int *Nsnps, 
 	//	char chgt[nbytes];
 
 	for (igt=0;igt<nsnps;igt++) {
-		static double det;
+		//static double det;
 		get_snps_many(gdata+nbytes*igt,Nids,&i1,gt);
 		for (j=0;j<nstra;j++) {
 			totg[j] = 0.;
@@ -2185,7 +2185,7 @@ void qtscore_glob(char *gdata, double *pheno, int *Type, int *Nids, int *Nsnps, 
 					chi2[igt+3*nsnps]=u/(Tsg1+4.*Tsg2-Ttotg*((Tsg1+2.*Tsg2)/Ttotg)*((Tsg1+2.*Tsg2)/Ttotg));
 				}
 			}
-			det = v11*v22 - v12*v12;
+			//det = v11*v22 - v12*v12;
 			//			double rho2 = v12*v12/(v11*v22);
 			//			if (v00 <= 0. || v11<=0. || v22<=0. || rho2<1.e-16 || abs(det)<1.e-16) {
 			chi2[igt+nsnps] = -999.99;

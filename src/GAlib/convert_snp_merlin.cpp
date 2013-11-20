@@ -55,6 +55,8 @@ void convert_snp_merlin (char** pedfilename, char** mapfilename, char** outfilen
 	long int linecount=0;
 	string data;
 	string token;
+				
+	char gdata;
 
 	vector<string> iid; string tmp_iid;
 	vector<string> chrom; string tmp_chrom;
@@ -159,9 +161,9 @@ void convert_snp_merlin (char** pedfilename, char** mapfilename, char** outfilen
 
 			istringstream datas (data);
 
-			char gdata;
 
 			if (datas >> token >> tmp_iid >> token >> token >> token) {
+				//char gdata;
 				for (int i=0;i<traits;i++) {datas >> token;}
 				iid.push_back(tmp_iid);
 				if (!(chgt[2*(linecount-1)] = new char [2*nsnps])) error ("ran out of memory ...\n");
@@ -194,7 +196,7 @@ void convert_snp_merlin (char** pedfilename, char** mapfilename, char** outfilen
 
 			istringstream datas (data);
 
-			char gdata;
+			//char gdata;
 
 			if (datas >> token >> tmp_iid >> token) {
 				iid.push_back(tmp_iid);
@@ -236,7 +238,7 @@ void convert_snp_merlin (char** pedfilename, char** mapfilename, char** outfilen
 	int nbytes = (int)ceil((double)nids/4.);
 
 	int idx;
-	char gdata;
+//	char gdata;
 	int* gnum = new int [nids*2];
 
 	int byte;
@@ -249,14 +251,6 @@ void convert_snp_merlin (char** pedfilename, char** mapfilename, char** outfilen
 
 		char allele1 = 0;
 		char allele2 = 0;
-		/**
-	if (strandid==3) {
-	  char at[10];
-	  sprintf(at,"%s",coding[snp].c_str());
-	  allele1 = at[0];
-	  allele2 = at[1];
-	}
-		 **/
 
 
 		unsigned long int ca1 = 0;
@@ -273,12 +267,6 @@ void convert_snp_merlin (char** pedfilename, char** mapfilename, char** outfilen
 			} else if (gdata == '0') {
 				gnum[idx] = 0;
 			} else {
-				/**
-	      if (strandid==3) {
-		error ("Annotation ('%s') and pedigree ('%c%c') coding contradicts in snp '%s' file '%s' line %li !",
-		       coding[snp].c_str(),allele1,allele2,snpnm[snp].c_str(),pedfilename[0],linecount);
-	      } else {
-				 **/
 				if (allele1 == 0) {
 					allele1 = gdata;
 					gnum[idx] = 1;
@@ -296,7 +284,6 @@ void convert_snp_merlin (char** pedfilename, char** mapfilename, char** outfilen
 
 		}
 
-		//    if (strandid!=3) {
 		if (!allele1 && !allele2) tmp_coding="12"; // all genotypes missing
 		else if (!allele1 && allele2) sprintf(tmp_chcoding,"%c%c",allele2,allele2); // only one allele present
 		else if (allele1 && !allele2) sprintf(tmp_chcoding,"%c%c",allele1,allele1); // only one allele present
