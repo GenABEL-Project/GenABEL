@@ -18,7 +18,7 @@
   \item{old}{for developers' use only}
 
   \item{dataOutType}{the output data type, either "FLOAT"
-  or "DOUBLE" (or other DatABEL/filevector type)}
+  or "DOUBLE" (or another DatABEL/filevector type)}
 }
 \value{
   'databel-class' object

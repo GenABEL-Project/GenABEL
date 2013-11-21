@@ -18,7 +18,7 @@
   (default) for all phenotypes or a vector of character
   with names of phenotypes to be exported.}
 
-  \item{transpose}{if FALSE (default), 'tped' files will be
+  \item{transpose}{if TRUE (default), 'tped' files will be
   produced, else 'ped' files are produced.}
 
   \item{export012na}{if TRUE, export in numeric (0, 1, 2,
