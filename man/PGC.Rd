@@ -63,8 +63,6 @@ chi2.1df <- results(qts)$chi2.1df
 s <- summary(ge03d2)
 freq <- s$Q.2
 result=PGC(data=chi2.1df,method="median",p=freq,df=1, pol.d=2, plot=TRUE, lmax=1.1,start.corr=FALSE)
-#"group_regress" is better to use when we have more than 50K SNPs
-#result=PGC(data=chi2.1df,method="group_regress",p=freq,df=1, pol.d=2, plot=TRUE, start.corr=FALSE,n_quiantile=3)
 }
 \author{
   Yakov Tsepilov
