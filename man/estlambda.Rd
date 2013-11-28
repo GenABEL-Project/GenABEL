@@ -14,7 +14,7 @@
   (default).}
 
   \item{proportion}{The proportion of lowest P (or
-  \eqn{\chi^2}{chi^2) values to be used when estimating the
+  \eqn{\chi^2}{chi^2}) values to be used when estimating the
   inflation factor \eqn{\lambda}{lambda}.}
 
   \item{method}{"regression" (default), "median", or "KS":
