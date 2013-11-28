@@ -132,6 +132,7 @@ void convert_snp_illumina (char** filename, char** outfilename, int* Strandid, i
 				sprintf(sd,"%s",tempstr.c_str());
 				chgt[idx++] = sd[0];
 				chgt[idx++] = sd[1];
+				//std::cout<<"sd[0]="<<sd[0]<<", sd[1]="<<sd[1]<<"\n";
 			}
 
 			//
@@ -144,32 +145,46 @@ void convert_snp_illumina (char** filename, char** outfilename, int* Strandid, i
 			char allele2 = 0;
 			unsigned long int ca1 = 0;
 			unsigned long int ca2 = 0;
-			for (unsigned long int idx = 0; idx < 2*nids; idx++) {
 
+
+			for (unsigned long int idx = 0; idx < 2*nids; idx++) 
+				{
 				gdata = chgt[idx];
-				if (gdata == allele1) {
+				if (gdata == allele1) 
+					{
 					gnum[idx] = 1;
 					ca1++;
-				} else if (gdata == allele2) {
+					}
+			 	else if (gdata == allele2) 
+					{
 					gnum[idx] = 3;
 					ca2++;
-				} else if (gdata == '0' || gdata == '-') {
+					}
+			 	else if (gdata == '0' || gdata == '-') 
+					{
 					gnum[idx] = 0;
-				} else {
-					if (allele1 == 0) {
+					}
+			 	else 
+					{
+					if (allele1 == 0)
+				 		{
 						allele1 = gdata;
 						gnum[idx] = 1;
 						ca1++;
-					} else if (allele2 == 0) {
+						}
+				 	else if (allele2 == 0) 
+						{
 						allele2 = gdata;
 						gnum[idx] = 3;
 						ca2++;
-					} else {
-						error ("illegal genotype (three alleles) for SNP '%s' (line %li)!",
-								snpnam[nsnps-1].c_str(),(nsnps+1));
+						}
+				 	else 
+						{
+						error ("illegal genotype (three alleles) for SNP '%s' (line %li)!", snpnam[nsnps-1].c_str(),(nsnps+1));
+						}
 					}
+				//std::cout<<"gnum["<<idx<<"]="<<gnum[idx]<<"\n";
 				}
-			}
 
 			if (!allele1 && !allele2) tmp_coding="12"; // all genotypes missing
 			else if (!allele1 && allele2) sprintf(tmp_chcoding,"%c%c",allele2,allele2); // only one allele present
@@ -230,6 +245,8 @@ void convert_snp_illumina (char** filename, char** outfilename, int* Strandid, i
 					idx += 2;
 					if (idx >= 2*nids) break;
 				}
+			
+			//std::cout<<"tmp_gtype["<<byte<<"]="<<int(tmp_gtype[byte])<<"\n";
 			}
 
 			gtype.push_back(tmp_gtype);
@@ -240,7 +257,7 @@ void convert_snp_illumina (char** filename, char** outfilename, int* Strandid, i
 			}
 
 		delete [] gnum;
-		delete [] tmp_gtype;
+//		delete [] tmp_gtype;   We should not delete it here because it stores our data. Delete it at the very end.
 		}
 	
 	
@@ -290,21 +307,28 @@ void convert_snp_illumina (char** filename, char** outfilename, int* Strandid, i
 	outfile << endl;
 
 	for (unsigned long int i=0;i<nsnps;i++) {
-		tmp_gtype = gtype[i];
 
 		for (byte = 0; byte < nbytes; ++byte) {
 			outfile.width(2);
 			outfile.fill('0');
-			outfile << (unsigned int)tmp_gtype[byte];
+			outfile << (unsigned int)gtype[i][byte];
+			//std::cout<<"(unsigned int)gtype["<<i<<"]["<<byte<<"]="<<(unsigned int)gtype[i][byte]<<" ";
 			outfile << " ";
 		}
 		outfile << endl;
+		//std::cout<<"\n";
 
 	}
 
 	if (loud) {
 		Rprintf("... done.\n");
 	}
+
+	for (unsigned long int i=0;i<nsnps;i++) 
+		{
+		delete [] gtype[i];
+		}
+
 
     delete [] chgt;
 }
