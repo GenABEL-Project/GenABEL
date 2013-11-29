@@ -1,9 +1,9 @@
 ***  v. 1.8-0
 (2013.12.06)
 
-Fixed WARNINGs and NOTEs from R CMD check --as-cran. Fixed many errors reported by Jenkins: corrected coding style, fixed memory leaks, deleted unused variables. 
-Repaired the convert.snp.illumina() function.
-Moved data objects ge03d2.clean, ge03d2c, ge03d2ex.clean, ge03d2ex,  ge03d2 and srdta to a new R package called GenABEL.data. This made GenABEL distribution much smaller.
+
+Fixed memory leak in a number of functions and deleted unused variables.
+Moved data objects ge03d2.clean, ge03d2c, ge03d2ex.clean, ge03d2ex,  ge03d2 and srdta to a specially created new R package called GenABEL.data.
 
 ***  v. 1.7-7
 (2013.11.04)
