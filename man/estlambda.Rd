@@ -45,6 +45,7 @@
   fit by use of Kolmogorov-Smirnov test)
 }
 \examples{
+require(GenABEL.data)
 data(srdta)
 pex <- summary(gtdata(srdta))[,"Pexact"]
 estlambda(pex, plot=TRUE)

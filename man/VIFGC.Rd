@@ -69,6 +69,7 @@
   and ks.test.
 }
 \examples{
+require(GenABEL.data)
 data(ge03d2)
 # truncate the data to make the example faster
 ge03d2 <- ge03d2[seq(from=1,to=nids(ge03d2),by=2),seq(from=1,to=nsnps(ge03d2),by=3)]

@@ -51,6 +51,7 @@
 #'
 #' @examples
 #' # Using clean ge03d2 data
+#' require(GenABEL.data)
 #' data(ge03d2.clean)
 #' # take only a small piece for speed
 #' ge03d2.clean <- ge03d2.clean[1:200,]

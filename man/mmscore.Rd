@@ -72,6 +72,7 @@ scans. Am J Hum Genet. 2007 Nov;81(5):913-26.
 \examples{
 # ge03d2 is rather bad data set to demonstrate, 
 # because this is a population-based study
+require(GenABEL.data)
 data(ge03d2.clean)
 #take half for speed
 ge03d2.clean <- ge03d2.clean[1:100,]

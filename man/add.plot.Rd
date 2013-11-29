@@ -38,6 +38,7 @@ add.plot(x, ..., df = 1,  col=c("lightgreen","lightblue"), sort=TRUE, delta = 1)
 	\code{\link{scan.glm.2D}}
 }
 \examples{
+require(GenABEL.data)
 data(srdta)
 a <- ccfast("bt",srdta,snps=c(1:100))
 plot(a)

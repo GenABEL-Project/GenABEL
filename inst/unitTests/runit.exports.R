@@ -22,6 +22,7 @@ if(FALSE) {
 
 test.exports <- function()
 {
+  require(GenABEL.data)
   data(ge03d2.clean)
   nTestIds <- sample(c(10:min(100, nids(ge03d2.clean))), 1)
   nTestSnps <- sample(c(10:min(1000, nsnps(ge03d2.clean))), 1)
@@ -92,7 +93,8 @@ test.exports <- function()
 
 test.export.merlin.bug2525 <- function()
 {
-  data(srdta)
+  require(GenABEL.data)
+	data(srdta)
   export.merlin(
     srdta[, 1:2], dpieceFun="new",
     mapfile="tmpNew.map", pedfile="tmpNew.ped", datafile="tmpNew.dat"
@@ -112,7 +114,8 @@ test.export.merlin.bug2525 <- function()
 
 
 test.export.merlin.bug2664 <- function() {
-  data(srdta)
+  require(GenABEL.data)
+	data(srdta)
   export.merlin(
     srdta[1:200, 1:10], dpieceFun="new",
     mapfile="tmp.s1.map", pedfile="tmp.s1.ped", datafile="tmp.s1.dat",

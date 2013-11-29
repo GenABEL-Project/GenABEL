@@ -178,6 +178,7 @@
 }
 \examples{
 # note that procedure runs on CLEAN data
+require(GenABEL.data)
 data(ge03d2ex.clean)
 gkin <- ibs(ge03d2ex.clean,w="freq")
 h2ht <- polygenic(height ~ sex + age, kin=gkin, ge03d2ex.clean)

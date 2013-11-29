@@ -22,6 +22,7 @@ if(FALSE) {
 
 test.mmscore <- function()
 {
+  require(GenABEL.data)
 	data(ge03d2.clean)
 	dta <- ge03d2.clean[1:200,autosomal(ge03d2.clean)[1:3000]]
 	gkin <- ibs(dta[,1:2000],w="freq")

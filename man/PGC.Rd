@@ -56,6 +56,7 @@
   ks.test or group regress.
 }
 \examples{
+require(GenABEL.data)
 data(ge03d2)
 ge03d2 <- ge03d2[seq(from=1,to=nids(ge03d2),by=2),seq(from=1,to=nsnps(ge03d2),by=3)]
 qts <- mlreg(dm2~1,data=ge03d2,gtmode = "additive")
