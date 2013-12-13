@@ -247,7 +247,7 @@ extern "C" {
 		if (argList == NULL) {error_R("can not allocate RAM for argList\n");return R_NilValue;}
 		va_list ap;
 		va_start(ap, nrarg); // nrarg is last known parameter
-		for (unsigned register int i = 0; i < narg; i++) {
+		for (unsigned int i = 0; i < narg; i++) {
 			argList[i] = va_arg(ap, SEXP);
 		}
 		va_end(ap);

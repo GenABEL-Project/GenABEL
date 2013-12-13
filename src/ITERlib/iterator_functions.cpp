@@ -11,7 +11,7 @@ extern "C" {
 double prod(double *mydata, unsigned int size)
     {
     double prodtotal = mydata[0];
-    for (register unsigned int i = 1; i < size; i++)
+    for (unsigned int i = 1; i < size; i++)
         {
         prodtotal *= mydata[i];
         }
@@ -38,7 +38,7 @@ double sum(double *mydata, unsigned int size, bool dropNA)
     double sumtotal = 0.;
     double zero = 0;
     //Rprintf("%f\n", mydata[0]);
-    for (register unsigned int i = 0; i < size; i++)
+    for (unsigned int i = 0; i < size; i++)
         {
 
         if (!ISNAN(mydata[i]))
@@ -72,7 +72,7 @@ void sumWrapper(double *indata, unsigned long int indataHeight,
 double sumpower(double *mydata, unsigned int size, int power)
     {
     double sumpowertotal = 0.;
-    for (register unsigned int i = 0; i < size; i++)
+    for (unsigned int i = 0; i < size; i++)
         {
         sumpowertotal += pow(mydata[i], power);
         }
