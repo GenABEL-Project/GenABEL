@@ -4,16 +4,16 @@
 #' This function converts mach-imputed files to \code{DatABEL} (filevector)
 #' format.
 #' After conversion, two files (outfile.fvi and outfile.fvd), corresponding
-#' to single filevector object, will appear on the disk; 'databel-class'
+#' to a single filevector object, will appear on the disk; a 'databel-class'
 #' object connected to these files will be returned to R
 #'
 #' @param imputedgenofile MACH mldose (or mlprob) file name
 #' @param mlinfofile MACH mlinfo file name
 #' @param outfile output file name
 #' @param isprobfile whether imputedgenofile is a prob-file
-#' (default is FALSE, that is dose-file assumed)
+#' (default is FALSE, i.e. a dose-file is assumed)
 #' @param dataOutType the output data type, either "FLOAT" or "DOUBLE" (or
-#'        other DatABEL/filevector type)
+#'        another DatABEL/filevector type)
 #'
 #' @return databel-class object
 #'
@@ -25,10 +25,10 @@
 
 
 mach2databel <- function(imputedgenofile, mlinfofile, outfile,
-                         isprobfile=FALSE, dataOutType = "FLOAT")
+                         isprobfile=FALSE, dataOutType="FLOAT")
 {
     if (!require(DatABEL)) {
-        stop("this function requires DatABEL package to be installed")
+        stop("this function requires the DatABEL package to be installed")
     }
 
     if (missing(imputedgenofile)) {
@@ -40,7 +40,7 @@ mach2databel <- function(imputedgenofile, mlinfofile, outfile,
     }
 
     if (dataOutType != "FLOAT") {
-        warning(paste0("The non-float dataOutType os not fully supported;",
+        warning(paste0("A non-float dataOutType is not fully supported;",
                        " your outputs may be in 'FLOAT'..."),
                 immediate. = TRUE);
     }
