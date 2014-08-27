@@ -12,7 +12,7 @@
 #'   vector of P-values, else it is treated as a vector of chi-squares
 #' @param plot Whether the plot should be shown or not (default).
 #' @param proportion The proportion of lowest P (or
-#'   \eqn{\chi^2}{chi^2) values to be used when estimating the inflation
+#'   \eqn{\chi^2}{chi^2}) values to be used when estimating the inflation
 #'   factor \eqn{\lambda}{lambda}.
 #' @param method "regression" (default), "median", or "KS": method to
 #'   be used for \eqn{\lambda}{lambda} estimation.
