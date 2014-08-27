@@ -42,13 +42,15 @@
 #' field is >min_expected_cut_off. Otherwise the specified test is performed.
 #' Object of class \code{\link{integer}} or \code{\link{numeric}}
 #' @return A list is returned.
-#' @returnItem chi2_max A vector where each element is a test statistic choosen
+#' \describe{
+#'  \item{chi2_max} A vector where each element is a test statistic choosen
 #' as a maximum chisq among tests where a SNP and SNPs on the right within a
 #' window are involved.
-#' @returnItem chi2_all Statistics of all tests done in the analysis. Each row
+#'  \item{chi2_all} Statistics of all tests done in the analysis. Each row
 #' of the matrix contains tests statistics for a SNP and all SNPs on the right
 #' of him within of a given window.  For example: the ellement chi2_all[1,1]
 #' stands for a test
+#' }
 #' @references 
 #' Fan Liu, Maksim V. Struchalin, Kate van Duijn, Albert Hofman, Andre G. 
 #' Uitterlinden, Yurii S. Aulchenko, and Manfred Kayser. Detecting Low 

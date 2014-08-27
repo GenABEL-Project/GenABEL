@@ -65,7 +65,6 @@
 #' while for tranforming the output from ProbABEL use \code{\link{palinear2LiLog}}
 #'
 #' @examples
-#'
 #' # simulate a snp with q = 0.3
 #' snp <- rbinom(n=1000, size=2, prob=0.3)
 #' # estimate the probability according to a logistic model with beta 0.4
@@ -92,12 +91,12 @@
 #' snp <- as.numeric(srdta[, 100])
 #' probabil <- 1/(1 + exp( -(snp * 0.4 - 1) ))
 #' bin.trait <- rbinom(n=nids(srdta), size=1, prob=probabil)
-#' srdta@phdata$binary <- bin.trait
+#' phdata(srdta)$binary <- bin.trait
 #' res <- qtscore(binary, data=srdta)
 #' sum <- summary(srdta)
 #'
-#' lilog.res <- LiLog(prev=mean(bin.trait), beta=res@results$effB,
-#'                    SEbeta=res@results$se_effB, q=sum$Q.2)
+#' lilog.res <- LiLog(prev=mean(bin.trait), beta=results(res)$effB,
+#'                    SEbeta=results(res)$se_effB, q=sum$Q.2)
 #' summary(glm(bin.trait~snp,
 #'         family=binomial)$coefficients)["snp"1:2,] # logistic regression
 #' lilog.res[100, ] # lilog result
