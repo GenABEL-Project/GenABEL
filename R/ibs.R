@@ -1,4 +1,4 @@
-#' Computes (average) Idenity-by-State for a set of people and markers
+#' Computes (average) Identity-by-State for a set of people and markers
 #' 
 #' Given a set of SNPs, computes a matrix of average IBS for a group 
 #' of individuals. 
@@ -7,14 +7,16 @@
 #' duplicated samples (or twins), simply high values of IBS may 
 #' indicate relatives. 
 #' 
-#' When weight "freq" is used, IBS for a pair of people i and j is computed as
+#' When weight "freq" is used, IBS for a pair of people \eqn{i} and
+#' \eqn{j} is computed as
 #' 
 #' \deqn{
 #' f_{i,j} = \frac{1}{N} \Sigma_k \frac{(x_{i,k} - p_k) * (x_{j,k} - p_k)}{(p_k * (1 - p_k))}
 #' }
 #' 
-#' where k changes from 1 to N = number of SNPs GW, \eqn{x_{i,k}} is 
-#' a genotype of ith person at the kth SNP, coded as 0, 1/2, 1 and 
+#' where \eqn{k} changes from 1 to \eqn{N} = number of SNPs GW,
+#' \eqn{x_{i,k}} is 
+#' a genotype of \eqn{i}th person at the \eqn{k}th SNP, coded as 0, 1/2, 1 and 
 #' \eqn{p_k} is the frequency 
 #' of the "+" allele. This apparently provides an unbiased estimate of the 
 #' kinship coefficient.
@@ -27,9 +29,9 @@
 #' Var(g_k) = \frac{1}{M} \Sigma_i g_{ik}^2 - E[g_k]^2
 #' }
 #' 
-#' where M is the number of people
+#' where \eqn{M} is the number of people
 #' 
-#' Only with "freq" option monomorphic SNPs are regarded as non-informative.
+#' Only with the "freq" option monomorphic SNPs are regarded as non-informative.
 #' 
 #' ibs() operation may be very lengthy for a large number of people.
 #'  
@@ -100,8 +102,7 @@
 #' 
 #' @keywords htest
 #' 
-#' '
-
+#' 
 "ibs" <- 
 		function (data,snpsubset,idsubset=NULL,cross.idsubset=NULL,weight="no",snpfreq=NULL) {
 # idsubset, cross.idsubset: should be real names, not indexes!
