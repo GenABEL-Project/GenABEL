@@ -21,7 +21,8 @@ Suggests:
     MetABEL,
     PredictABEL,
     VariABEL,
-    bigRR
+    bigRR,
+    RUnit
 Description: a package for genome-wide association analysis between
     quantitative or binary traits and single-nucleotide
     polymorphisms (SNPs).
