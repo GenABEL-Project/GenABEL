@@ -136,8 +136,9 @@ VIFGC_ovdom=function (data, p, method = "regress", n, index.filter = NULL,
     if (ntp < 1) 
         stop("no valid measurments")
     if (ntp == 1) {
-        warning(paste("One measurment, Lambda = 1 returned"))
-        return(list(estimate = 1, se = 999.99))
+        stop("Only one measurment. Stoped.")
+        #warning(paste("One measurment, Lambda = 1 returned"))
+        #return(list(estimate = 1, se = 999.99))
     }
     if (ntp < 10) 
         warning(paste("number of points is too small:", ntp))
