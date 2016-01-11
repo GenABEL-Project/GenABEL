@@ -1,6 +1,10 @@
 *** v.
 ()
 
+- Fixed bug #6280: The convert.snp.affymetrix() function uses a
+  system("ls") call, which doesn't work on MS Windows. We now use R's
+  list.files() function, which is portable and works on all platforms.
+  Thanks to forum user Jrecoq for reporting this bug! (L.C. Karssen)
 - Fixed some spelling errors in the documentation.
 
 
