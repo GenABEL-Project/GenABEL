@@ -32,11 +32,7 @@
         stop("Wrong data class: the third argument should be character")
     }
 
-    command <- paste("ls ", dir, sep="")
-    fileslist <- system(command, intern = TRUE)
-    files_amount <- length(fileslist)
-
-    if (files_amount == 0) {
+    if (length(list.files(dir)) == 0) {
         stop("\ndirectory ", dir, " is empty or doesn't exsist\n")
     }
 
