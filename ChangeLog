@@ -1,6 +1,9 @@
 *** v.
 ()
-
+- impute2databel() now accepts the option "snpfile", a file that contains
+  (short) SNP names. This is useful when using 1000 Genomes data with SNP
+  names that are (too) long for GenABEL/ProbABEL to handle. Thanks to
+  Matthias Wuttke for contributing this patch!
 - Fixed bug #6280: The convert.snp.affymetrix() function uses a
   system("ls") call, which doesn't work on MS Windows. We now use R's
   list.files() function, which is portable and works on all platforms.

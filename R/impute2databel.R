@@ -14,6 +14,7 @@
 #' @param old for developers' use only
 #' @param dataOutType the output data type, either "FLOAT" or "DOUBLE" (or
 #'        another DatABEL/filevector type)
+#' @param snpfile file with SNP names in each line (same order as columns in IMPUTE genotype file)
 #'
 #' @return 'databel-class' object
 #'
@@ -21,7 +22,7 @@
 
 
 impute2databel <- function(genofile, samplefile, outfile,
-                           makeprob = TRUE, old = FALSE, dataOutType = "FLOAT")
+                           makeprob = TRUE, old = FALSE, dataOutType = "FLOAT", snpfile = NA)
 {
   if (!require(DatABEL))
     stop("this function requires the DatABEL package to be installed")
@@ -36,6 +37,13 @@ impute2databel <- function(genofile, samplefile, outfile,
       warning("The non-float dataOutType is not fully supported; your outputs may be in 'FLOAT'...",
               immediate. = TRUE);
 
+  rowNamesSetting = 2
+  if (!is.na(snpfile)) {
+    if (missing(snpfile))
+      stop("snpfile file not found")
+    rowNamesSetting = snpfile
+  }
+
   ## extract snp names (varnames)
   ## if (tmpname != "")
   ##     text2databel(infile=genofile,outfile=outfile,
@@ -47,7 +55,7 @@ impute2databel <- function(genofile, samplefile, outfile,
   tmpname <- get_temporary_file_name()
   tmp_fv  <- text2databel(infile=genofile,
                           outfile=tmpname,
-                          rownames=2,
+                          rownames=rowNamesSetting,
                           skipcols=5,
                           ## skiprows,
                           transpose=TRUE,
