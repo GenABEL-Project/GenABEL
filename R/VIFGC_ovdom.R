@@ -52,10 +52,8 @@ VIFGC_ovdom=function (data, p, method = "regress", n, index.filter = NULL,
     }
     else ind.function = index.filter
     ind.function = ind.function[which(!is.na(data[ind.function]))]
-    if (!(method == "regress" | method == "median" | method == 
-        "ks.test")) {
-        print("Error. I do not know this method")
-        break
+    if (!(method == "regress" | method == "median" | method == "ks.test")) {
+        stop(paste0("Error. Method \"", method, "\" is not known to this function.\n"))
     }
     Zx = data
     inf = which(!is.na(Zx))

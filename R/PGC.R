@@ -63,8 +63,7 @@ PGC=function (data, method = "group_regress", p, df, pol.d = 3, plot = TRUE,
     }
 	
     if (!(method == "regress" | method == "median" | method == "ks.test" | method == "group_regress")) {
-        print("Error. I do not know this method")
-        break
+        stop(paste0("Error. Method \"", method, "\" is not known to this function.\n"))
     }
 	
     if (start.corr) {
