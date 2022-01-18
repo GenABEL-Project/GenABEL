@@ -1,0 +1,5 @@
+/.project
+/src/*.o
+/src/*.so
+/tests/test.raw
+/tests/big_data/*.*
